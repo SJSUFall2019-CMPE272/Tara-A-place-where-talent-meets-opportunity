@@ -69,4 +69,20 @@ https://stanfordnlp.github.io/CoreNLP/ <br />
 https://kafka.apache.org/documentation/streams/ <br />
 
 
-### IDEA C <br />
+### IDEA C
+
+1. Project Title: ThinkFood
+
+2. Project Idea description <br />
+Several times you get excited about cooking a dish you recently discovered on the internet or a nearby cafe. 
+You go to shop to buy the ingredients. Although when you return home, you realize you’ve missed a couple of items.
+ Now you’re disappointed and completely drop the idea of cooking that dish.
+ 
+3. Goal of the project <br />
+We have a solution to this problem. THINKFOOD app where you can choose a dish from a variety of dishes from all cuisines 
+and it will generate a list of all the ingredients you will need to prepare it. Considering your interest and taste,
+Thinkfood will recommends you the dishes through its smart recommendation system. 
+As an extension to this, we will also have the feature to send this list to your favorite grocery shop’s shopping cart. 
+
+4. Technology stack: <br />
+Frontend - html, css,react, Django/ flask on python for web services and backend pytorch
