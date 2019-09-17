@@ -37,6 +37,7 @@ https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/secti
 http://feeds.bbci.co.uk/news/world/rss.xml <br />
 
 Public NLP APIs: <br />
+https://www.ibm.com/watson/natural-language-processing <br />
 https://aws.amazon.com/comprehend/ <br />
 https://cloud.google.com/natural-language/docs/ <br />
 
