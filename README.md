@@ -47,5 +47,26 @@ https://www.nltk.org/ <br />
 Kubernetes Custom Resource: <br />
 https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
 
-### IDEA B <br />
+### IDEA B 
+
+1. Project Title: Real time plagiarism check and AutoCitation
+
+2. Project Idea description <br />
+Plagiarism is considered a critical issue in the world of academia and innovation. Plagiarism is not just copying content or somebody else's work but to steal or use sources without crediting the source. It is equivalent to committing literary theft. Although this is of major concern, a lot of students tend to not spend as much effort on proper citations and bibliography as it turns out to be time consuming for them in the midst of doing the actual work of writing papers. 
+
+3. Goal of the project <br />
+We will develop an application that provides you with a text editor where one can directly start writing their thoughts and content, your content will, in real time, be searched/compared in the large corpus of papers and documents on the web and will prompt you if your content is matching word-to-word to somebody else's. This app will also auto cite your references without you having to dedicate time for citations. 
+Tags: autocitation, academia
+
+4. Technology stack: <br />
+Kafka streams to search for statements as they're being typed, Information retrieval techniques with ranking algorithms(Vector Space Model), NLP using NLTK and CoreNLP,  Remaining TBD
+
+References:<br />
+
+https://en.wikipedia.org/wiki/Vector_space_model <br />
+https://www.nltk.org/ <br />
+https://stanfordnlp.github.io/CoreNLP/ <br />
+https://kafka.apache.org/documentation/streams/ <br />
+
+
 ### IDEA C <br />
