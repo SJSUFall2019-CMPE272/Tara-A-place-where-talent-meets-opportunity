@@ -2,7 +2,7 @@
 
 ### Project Title 1: Helping Hand
 
-#  Project Idea description
+a.  Project Idea description <br />
 
 In Developing Countries like India, there are many financial constraints for the young generation to achieve their dreams. Most of the times they get inhibited and drop the ideas(like higher education(in India or abroad), startup ideas, etc..,). This problem exists in many parts of India.
 
@@ -13,7 +13,7 @@ B. Rural people can't approach big financial firms for a loan.
 On the other side of it. There are many people who want to fund the people for their ideas or for their Education based on their caliber and assessing them whether they can repay the amount that they are offering. If they feel it is a very good investment the one in need gets his funding to chase his dream.
 
 
-# Goal of the project
+ b.Goal of the project <br />
 
 We want to give a solution to this problem through our HelpingHand.
 
@@ -28,7 +28,7 @@ On the other hand, we will match this particular need person with one of the spo
 Note: The donor's are not donating money they are giving it as a loan with their mutual terms where we are not involved.
 
 
-# Technology stack: 
+c Technology stack <br />: 
 Frontend - html,css,react,Express,Machine learning libraries(pandas,numpy,scikit) ,Information retrieval techniques with ranking algorithms(Vector Space Model),NLP,NodeJs,Mongodb deploy with Docker.
 
 References:<br />
@@ -39,7 +39,7 @@ https://www.nltk.org/ <br />
 
 ### Project Title 2: Uplifting News
 
-2. Project idea description <br />
+a. Project idea description <br />
 Whenever we open any news app, it's filled with pessimist stories about global warming, democracy in turmoil, human suffering, 
 and many other unsavory happenings. Since these stories are sensational and eye-grabbing, they occupy most of the top headlines.
 Browsing through this feed, not only we feel demoralized and anxious about the state of the world we live in, but also we remain unaware 
@@ -49,11 +49,11 @@ around the world, and apply basic sentiment analysis to select positive stories.
 This will result in a news feed which is populated with uplifting stories which makes us cognizant of all the progress and optimistic
 developments happening in the world.
 
-3. Goal of the project: <br />
+b. Goal of the project: <br />
 This application is targeted towards news consumers who want to cut out the noise of the usual news cycles and instead focus on positive 
 and uplifting stories. It can also be used by editors of news organizations to create category-wise listicles for their consumers.
 
-4. Technology stack: <br />
+c. Technology stack: <br />
 We'll use Kafka Streams to ingest RSS feeds from major international publications and apply sentiment analysis on the incoming stream
 of news stories to classify them as positive or negative. For performing sentiment analysis, we'll use either public NLP APIs or develop
 a custom model using BERT NLP pre-trained models. The news feed will be displayed on a web portal which can be refreshed to publish the incoming stories. 
