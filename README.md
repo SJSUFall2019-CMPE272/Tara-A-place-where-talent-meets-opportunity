@@ -22,7 +22,7 @@ developed for any platform like web or mobile applications.
 4. Technology stack: <br />
 We'll use Kafka Streams to ingest RSS feeds from major international publications and apply sentiment analysis on the incoming stream
 of news stories to classify them as positive or negative. For performing sentiment analysis, we'll use either public NLP APIs or develop
-a custom model using NLTK. The news feed will be displayed on a web portal which can be refreshed to publish the incoming stories. 
+a custom model using BERT NLP pre-trained models. The news feed will be displayed on a web portal which can be refreshed to publish the incoming stories. 
 In order to adhere to the best practices, we'll design the application with a microservice oriented architecture in mind. 
 If possible, we'll also develop a custom Kubernetes Operator and a Custom Resource to automate and seamlessly update and deploy our
 application.
@@ -41,8 +41,9 @@ https://www.ibm.com/watson/natural-language-processing <br />
 https://aws.amazon.com/comprehend/ <br />
 https://cloud.google.com/natural-language/docs/ <br />
 
-NLTK: <br />
-https://www.nltk.org/ <br />
+Custom NLP Frameworks: <br />
+BERT: https://github.com/google-research/bert <br />
+NLTK: https://www.nltk.org/ <br />
 
 Kubernetes Custom Resource: <br />
 https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
