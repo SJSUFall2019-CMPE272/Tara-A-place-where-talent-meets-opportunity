@@ -27,8 +27,7 @@ On the other hand, we will match this particular need person with one of the spo
 
 Note: The donor's are not donating money they are giving it as a loan with their mutual terms where we are not involved.
 
-
-c Technology stack <br />: 
+c.Technology stack <br />
 Frontend - html,css,react,Express,Machine learning libraries(pandas,numpy,scikit) ,Information retrieval techniques with ranking algorithms(Vector Space Model),NLP,NodeJs,Mongodb deploy with Docker.
 
 References:<br />
