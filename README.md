@@ -1,8 +1,43 @@
 # ProjectGroup-18
 
-### IDEA A
+### Project Title 1: Helping Hand
 
-1. Project Title: Uplifting News
+#  Project Idea description
+
+In Developing Countries like India, there are many financial constraints for the young generation to achieve their dreams. Most of the times they get inhibited and drop the ideas(like higher education(in India or abroad), startup ideas, etc..,). This problem exists in many parts of India.
+
+Few reasons are
+A. Banks are not ready to finance them
+B. Rural people can't approach big financial firms for a loan.
+
+On the other side of it. There are many people who want to fund the people for their ideas or for their Education based on their caliber and assessing them whether they can repay the amount that they are offering. If they feel it is a very good investment the one in need gets his funding to chase his dream.
+
+
+# Goal of the project
+
+We want to give a solution to this problem through our HelpingHand.
+
+So what is this HELPING HAND?
+Helping Hand is an application that fills the gap between need and surplus.
+
+How are we doing it?
+In our case, it's gonna be Student who registers on the website and fills the details and explains his portfolio and then we run the sentiment analysis with machine learning and combine his other metrics through  Information retrieval techniques with ranking algorithms and summarize his whole need.
+
+On the other hand, we will match this particular need person with one of the sponsors who want to contribute (idea is to find nearby contributors through location coordinates). If the contributor approves this case they can connect and discuss the next steps to proceed further.
+
+Note: The donor's are not donating money they are giving it as a loan with their mutual terms where we are not involved.
+
+
+# Technology stack: 
+Frontend - html,css,react,Express,Machine learning libraries(pandas,numpy,scikit) ,Information retrieval techniques with ranking algorithms(Vector Space Model),NLP,NodeJs,Mongodb deploy with Docker.
+
+References:<br />
+
+https://en.wikipedia.org/wiki/Vector_space_model <br />
+https://www.nltk.org/ <br />
+
+
+### Project Title 2: Uplifting News
 
 2. Project idea description <br />
 Whenever we open any news app, it's filled with pessimist stories about global warming, democracy in turmoil, human suffering, 
@@ -47,42 +82,4 @@ NLTK: https://www.nltk.org/ <br />
 Kubernetes Custom Resource: <br />
 https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
 
-### IDEA B 
 
-1. Project Title: Real time plagiarism check and AutoCitation
-
-2. Project Idea description <br />
-Plagiarism is considered a critical issue in the world of academia and innovation. Plagiarism is not just copying content or somebody else's work but to steal or use sources without crediting the source. It is equivalent to committing literary theft. Although this is of major concern, a lot of students tend to not spend as much effort on proper citations and bibliography as it turns out to be time consuming for them in the midst of doing the actual work of writing papers. 
-
-3. Goal of the project <br />
-We will develop an application that provides you with a text editor where one can directly start writing their thoughts and content, your content will, in real time, be searched/compared in the large corpus of papers and documents on the web and will prompt you if your content is matching word-to-word to somebody else's. This app will also auto cite your references without you having to dedicate time for citations. 
-Tags: autocitation, academia
-
-4. Technology stack: <br />
-Kafka streams to search for statements as they're being typed, Information retrieval techniques with ranking algorithms(Vector Space Model), NLP using NLTK and CoreNLP,  Remaining TBD
-
-References:<br />
-
-https://en.wikipedia.org/wiki/Vector_space_model <br />
-https://www.nltk.org/ <br />
-https://stanfordnlp.github.io/CoreNLP/ <br />
-https://kafka.apache.org/documentation/streams/ <br />
-
-
-### IDEA C
-
-1. Project Title: ThinkFood
-
-2. Project Idea description <br />
-Several times you get excited about cooking a dish you recently discovered on the internet or a nearby cafe. 
-You go to shop to buy the ingredients. Although when you return home, you realize you’ve missed a couple of items.
- Now you’re disappointed and completely drop the idea of cooking that dish.
- 
-3. Goal of the project <br />
-We have a solution to this problem. THINKFOOD app where you can choose a dish from a variety of dishes from all cuisines 
-and it will generate a list of all the ingredients you will need to prepare it. Considering your interest and taste,
-Thinkfood will recommends you the dishes through its smart recommendation system. 
-As an extension to this, we will also have the feature to send this list to your favorite grocery shop’s shopping cart. 
-
-4. Technology stack: <br />
-Frontend - html, css,react, Django/ flask on python for web services and backend pytorch
