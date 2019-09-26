@@ -15,15 +15,14 @@ This will result in a news feed which is populated with uplifting stories which 
 developments happening in the world.
 
 3. Goal of the project: <br />
-This application can be utilized by anyone who wants to cut out the noise of the usual news cycles and instead focus on positive 
-and uplifting stories. Since the application will be served as a set of APIs, it can be consumed easily and clients can be 
-developed for any platform like web or mobile applications.
+This application is targeted towards news consumers who want to cut out the noise of the usual news cycles and instead focus on positive 
+and uplifting stories. It can also be used by editors of news organizations to create category-wise listicles for their consumers.
 
 4. Technology stack: <br />
 We'll use Kafka Streams to ingest RSS feeds from major international publications and apply sentiment analysis on the incoming stream
 of news stories to classify them as positive or negative. For performing sentiment analysis, we'll use either public NLP APIs or develop
 a custom model using BERT NLP pre-trained models. The news feed will be displayed on a web portal which can be refreshed to publish the incoming stories. 
-In order to adhere to the best practices, we'll design the application with a microservice oriented architecture in mind. 
+In order to adhere to the best practices, we'll design the application with a microservice oriented architecture in mind packaged as containers. Since the application will be served as a set of APIs, it can be consumed easily and clients can be developed for any platform like web or mobile applications.
 If possible, we'll also develop a custom Kubernetes Operator and a Custom Resource to automate and seamlessly update and deploy our
 application.
 
