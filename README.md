@@ -1,6 +1,29 @@
 # ProjectGroup-18
 
-### Project Title 1: Helping Hand
+
+### Project Title 1: MyBuddy
+
+a.  Project Idea description <br />
+
+As programming engineers, we need to utilize various innovations at the work environment to complete work. Sometimes we are
+lazy to go and check the status of the deployment task in docker etc.. The innovation stack different significantly from
+instruments like GitHub, other repositories to form source code, item fabricate frameworks like Jenkins, Bamboo. These tools
+are normally worked in with API's to connect with. A platform to  collaborate with every one of these tools and recover
+essential data would be helpful to improve the engineer involvement.
+
+b.Goal of the project <br />
+
+We have a solution. We are coming up with a chat bot that communicates with your item by structure drawing in voice and
+content based conversational interfaces controlled by Artificial Intelligence.
+
+It's basically one buddy at your workplace to get information related to things that you are working or owning.
+
+c.Technology stack <br />
+    Google's AI , Dialogflow  and on similar lines with Siri and TBD.
+
+
+
+### Project Title 2: Helping Hand
 
 a.  Project Idea description <br />
 
@@ -10,7 +33,9 @@ Few reasons are
 A. Banks are not ready to finance them
 B. Rural people can't approach big financial firms for a loan.
 
-On the other side of it. There are many people who want to fund the people for their ideas or for their Education based on their caliber and assessing them whether they can repay the amount that they are offering. If they feel it is a very good investment the one in need gets his funding to chase his dream.
+On the other side of it. There are many people who want to fund the people for their ideas or for their Education based on
+their caliber and assessing them whether they can repay the amount that they are offering. If they feel it is a very good
+investment the one in need gets his funding to chase his dream.
 
 
  b.Goal of the project <br />
@@ -21,9 +46,13 @@ So what is this HELPING HAND?
 Helping Hand is an application that fills the gap between need and surplus.
 
 How are we doing it?
-In our case, it's gonna be Student who registers on the website and fills the details and explains his portfolio and then we run the sentiment analysis with machine learning and combine his other metrics through  Information retrieval techniques with ranking algorithms and summarize his whole need.
+In our case, it's gonna be Student who registers on the website and fills the details and explains his portfolio and then we
+run the sentiment analysis with machine learning and combine his other metrics through  Information retrieval techniques with
+ranking algorithms and summarize his whole need.
 
-On the other hand, we will match this particular need person with one of the sponsors who want to contribute (idea is to find nearby contributors through location coordinates). If the contributor approves this case they can connect and discuss the next steps to proceed further.
+On the other hand, we will match this particular need person with one of the sponsors who want to contribute (idea is to find 
+nearby contributors through location coordinates). If the contributor approves this case they can connect and discuss the next
+steps to proceed further.
 
 Note: The donor's are not donating money they are giving it as a loan with their mutual terms where we are not involved.
 
@@ -36,7 +65,7 @@ https://en.wikipedia.org/wiki/Vector_space_model <br />
 https://www.nltk.org/ <br />
 
 
-### Project Title 2: Uplifting News
+### Project Title 3: Uplifting News
 
 a. Project idea description <br />
 Whenever we open any news app, it's filled with pessimist stories about global warming, democracy in turmoil, human suffering, 
