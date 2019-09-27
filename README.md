@@ -121,3 +121,22 @@ The chatbot interacts with the user by initiating normal conversations like "how
 
 c.Technology stack <br />
     TBD
+
+
+
+### Project Title 5: StepItUp
+
+a.  Project Idea description <br />
+A way for fundraising and encouraging physical exercise. Just take 10,000 steps a day whenever you like, wherever you like, and log your steps online to raise money for the cause you feel most passionately about. You can start your own fundraiser to save someone or the world, one step at a time. 
+
+b. Goal of the project: <br />
+Raise awareness of certain issues and encourage good health. 
+
+c. Technology stack: <br />
+Python, pydometer package, Rest TBD
+
+##### References: <br />
+Inspired from the following: 
+https://www.steptember.org.au/about-us/
+https://www.steptember.us
+https://www.change.org 
