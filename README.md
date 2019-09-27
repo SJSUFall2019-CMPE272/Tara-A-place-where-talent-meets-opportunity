@@ -136,7 +136,7 @@ c. Technology stack: <br />
 Python, pydometer package, Rest TBD
 
 ##### References: <br />
-Inspired from the following: 
-https://www.steptember.org.au/about-us/
-https://www.steptember.us
-https://www.change.org 
+Inspired from the following:   <br />
+https://www.steptember.org.au/about-us/  <br />
+https://www.steptember.us  <br />
+https://www.change.org  <br />
