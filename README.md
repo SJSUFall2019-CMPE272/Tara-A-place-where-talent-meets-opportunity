@@ -127,7 +127,7 @@ c.Technology stack <br />
 ### Project Title 5: StepItUp
 
 a.  Project Idea description <br />
-A way for fundraising and encouraging physical exercise. Just take 10,000 steps a day whenever you like, wherever you like, and log your steps online to raise money for the cause you feel most passionately about. You can start your own fundraiser to save someone or the world, one step at a time. 
+A way for fundraising and encouraging physical exercise. Just take 10,000 steps a day whenever you like, wherever you like, and log your steps online to raise money for the cause you feel most passionately about. You can start your own fundraiser to save someone or the world, one step at a time. Anybody with this app can then contribute to the cause. 
 
 b. Goal of the project: <br />
 Raise awareness of certain issues and encourage good health. 
