@@ -110,4 +110,14 @@ NLTK: https://www.nltk.org/ <br />
 Kubernetes Custom Resource: <br />
 https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
 
+### Project Title 4: AMI : friend
 
+a.  Project Idea description <br />
+To analyse and understand the user's mental health by asking normal day to day questions through a chatbot.
+
+b.Goal of the project <br />
+The project aims to identify if the user is suffering from any such mental disorder. 
+The chatbot interacts with the user by initiating normal conversations like "how did the day go?", "what went good" ; provinding therapy and posting therapy center contacts for further help.
+
+c.Technology stack <br />
+    TBD
