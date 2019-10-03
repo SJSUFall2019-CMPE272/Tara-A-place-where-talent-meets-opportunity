@@ -140,3 +140,14 @@ Inspired from the following:   <br />
 https://www.steptember.org.au/about-us/  <br />
 https://www.steptember.us  <br />
 https://www.change.org  <br />
+
+
+### Project Title 6: Loglytics
+a. Project Idea description <br/>
+Production enterprise application deployments are deployed on cluster of machines running varied software stacks serving hundreds of applications. Each application has different format and contain critical data which is invaluable for system diagnostics and debugging. However, since these logs are created and managed by each application in their own custom manner, it becomes very difficult to get a single system-wide operational view of the system. It also becomes cumbersome to predict any outages or reasons for occured disruptions. These logs (infrastructure logs, application logs, trace logs, etc) contain a wealth of information which, if collated and analysed intelligently, can not only help in finding the root cause of a system failure, but also help predict any future outages and suggest preventive measures. We intend to implement real time machine learning on the log events occuring in the application. Another feature of this model will be to classify the service interruption root cause and automatically create tickets in the Issue Tracking System based on the logs generated.
+
+b. Goal of the project: <br />
+This application is targetted towards SysAdmins and Site Reliability Engineering teams who want to leverage analytics to gain better observability of their systems.
+
+c. Technology stack: <br />
+We'll use opensource lightweight data shippers (like fluentd) to transfer the log contents to a Kafka cluster, and Kafka Streams to process the incoming stream of data. We'll use the historic log data to train our predictive machine learning model. We'll try to find correlations between log events across applications in order to understand, diagnose and predict future outages.
