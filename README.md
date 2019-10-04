@@ -1,5 +1,7 @@
 # ProjectGroup-18
 
+New Ideas:
+
 
 ### Project Title 1: MyBuddy
 
