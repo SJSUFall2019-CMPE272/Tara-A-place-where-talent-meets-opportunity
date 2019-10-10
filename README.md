@@ -1,6 +1,6 @@
 # Tara
 
- A place where talent meets opportunit.
+ A place where talent meets opportunity.
 
 
 # Abstract 
