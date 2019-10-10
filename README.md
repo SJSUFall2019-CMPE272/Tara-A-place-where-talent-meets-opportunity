@@ -16,6 +16,21 @@ Tara is a real-time entertainment-industry brand aimed at connecting local perfo
 
 
 
+#Technology
 
+
+
+
+
+
+
+
+
+#Team
+
+1. Shivani Jain 
+2. Akshay 
+3. Purvi Misal
+4. Sai Chaitanya Dasari
 
 
