@@ -1,11 +1,21 @@
-# Tara-connect talent
+# Tara
 
-Tara is a real time platform connecting local performing talent (film, theatre, music, voice-over, radio) with makers. Tara (App) is a cloud native. First rollout will be for non-US. preferably India,  Android App is preferred.
+ A place where talent meets opportunit.
 
-Pricing: When a job is confirmed by both maker and talent, Tara is paid a percentage (pricing TBD). 
 
-Competition in USA: Backstage.com (not real time).
+# Abstract 
 
-Reference: https://en.wikipedia.org/wiki/Film_industry
-As of 2018, the global box office is worth $41.7 billion.[1] When including box office and home entertainment revenue, the global film industry is worth $136 billion as of 2018.[2] Hollywood is the world's oldest national film industry, and remains the largest in terms of box office gross revenue. Indian cinema is the largest national film industry in terms of the number of films produced and the number of tickets sold, with 3.5 billion tickets sold worldwide annually (compared to Hollywood's 2.6 billion tickets sold annually)[3] and 1,813 feature films produced annually.[4]
+Indian cinema is the largest national film industry in terms of the number of films produced and the number of tickets sold, with 3.5 billion tickets sold worldwide annually.Having said that, If you are the person who has this passion for pursuing your career in Cinema. Either it may be on-screen like a Lead actor, actress, junior artist or off-screen Direction of Photography, Director, Playback Singer, Dance Choreographer, etc.. You might be located in many rural parts of India but we heard you. On the other hand, dear passionate Indian Movie Makers are you looking for some passionate, young, new talent and dedicated artists to showcase in your upcoming dream project? Yes, we heard you too.
+
+TARA is here .. Come build your dream future with us. This is the place where real talent meets the right opportunity.
+
+Who are we?
+
+Tara is a real-time entertainment-industry brand aimed at connecting local performing talent, with a special focus on casting, job opportunities, and much more.
+
+
+
+
+
+
 
