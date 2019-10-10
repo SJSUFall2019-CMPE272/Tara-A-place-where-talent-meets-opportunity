@@ -16,7 +16,7 @@ Tara is a real-time entertainment-industry brand aimed at connecting local perfo
 
 
 
-#Technology
+# Technology
 
 
 
@@ -26,7 +26,7 @@ Tara is a real-time entertainment-industry brand aimed at connecting local perfo
 
 
 
-#Team
+# Team
 
 1. Shivani Jain 
 2. Akshay 
