@@ -21,9 +21,13 @@ Artists looking for work in film, television, theater, commercials, voiceover, r
 
 # Technology
 
+### Database
 
+### back-end Services
+We will be using NodeJs APIs to fetch the values from the database. Since, our application will render information on run-time, the non-blocking asynchromous nature of NodeJs will help us get a good application performance.
 
-
+### Client Side
+On the client side, we will make a ReactJS application. We are using ReactJs for our front-end, as reactJs is a light-weight front-end library built over JavaScript, which doesnot re-render the entire DOM on change of components on the browser, rather it just re-renders the changed components. Hence, using ReactJS on our front-end would improve our application performance.
 
 
 
