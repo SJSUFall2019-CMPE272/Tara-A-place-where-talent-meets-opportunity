@@ -13,6 +13,9 @@ Who are we?
 
 Tara is a real-time entertainment-industry brand aimed at connecting local performing talent, with a special focus on casting, job opportunities, and much more.
 
+# Target Users
+
+Artists looking for work in film, television, theater, commercials, voiceover, radio and more mediums and needing help to tailor and manage their careers, as well as casting directors and talent recruiters looking to hire the perfect cast and crew for their projects are our target audience.
 
 
 
