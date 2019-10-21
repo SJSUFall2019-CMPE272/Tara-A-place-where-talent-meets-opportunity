@@ -46,5 +46,3 @@ On the client side, we will make a ReactJS application. We are using ReactJS for
 2. Purvi Misal
 3. Shivani Jain
 4. Sai Chaitanya Dasari
-
-
