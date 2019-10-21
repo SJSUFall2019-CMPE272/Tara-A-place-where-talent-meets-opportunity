@@ -24,6 +24,9 @@ Artists looking for work in film, television, theater, commercials, voiceover, r
 ### Architecture
 ![Architecture](tara-system-architecture.png)
 
+### Optional Serverless Architecture
+![Serverless Architecture](tara-serverless-system-architecture.png)
+
 ### Cloud Native Architecture
 The application is designed using cloud native technologies, specifically AWS. The frontend will be served as a static website from an S3 bucket. The authentication and authorization will be via third party social identity providers using AWS Cognito. The stateless NodeJS servers will be running as Docker containers in an AWS ECS cluster.
 
