@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "s3-bucket" {
     expose_headers  = ["ETag"]
   }
 
-    policy = <<EOF
+  policy = <<EOF
 {
   "Version":"2012-10-17",
   "Statement":[{

@@ -1,6 +1,6 @@
 
 variable "vpc_name" {
-  type    = "string"
+  type = "string"
 }
 
 variable "key_name" {

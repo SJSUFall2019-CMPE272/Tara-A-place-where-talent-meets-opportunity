@@ -4,8 +4,13 @@ provider "aws" {
 }
 
 module "tara_s3_frontend__bucket" {
-  source   = "./frontend-bucket"
+  source      = "./frontend-bucket"
   bucket_name = "tara-frontend"
+}
+
+module "tara_user_pool" {
+  source         = "./cognito-user-pool"
+  user_pool_name = "tara-user-pool"
 }
 
 /* module "tara_vpc" {
