@@ -1,17 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route} from "react-router-dom";
+
+import Navbar from "./components/Navbar.component";
+import SignIn from "./components/SignIn.component";
+import Landing from "./components/Landing.component";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Tara - Where Talent Meets Opportunity
-        </p>
-      </header>
+    <Router>
+    <Navbar />
+    <br/>
+    <div className="container">
+      <Route path="/" exact component={Landing} />
+      <Route path="/signin" exact component={SignIn} />
     </div>
+    </Router>
   );
 }
 
