@@ -1,3 +1,9 @@
+# dependencies
+/frontend/node_modules
+/backend/node_modules
+/.pnp
+.pnp.js
+
 terraform/.terraform/
 
 terraform/*.tfstate
