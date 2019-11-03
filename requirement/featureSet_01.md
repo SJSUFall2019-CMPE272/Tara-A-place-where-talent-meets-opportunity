@@ -1,5 +1,5 @@
-There are two user profile: Talent and Jobs 
-Talent & Jobs:
+There are two user profile: Talent and Opportunities 
+Talent & Opportunities:
 
 1. Login: social media login
 2. Create Profile
@@ -9,13 +9,13 @@ Talent & Jobs:
 Talent:
 
 1. Check all the jobs: filter: filter according to job tag; sorting: sort according to distance
-2. match a job
-3. View matched job status
+2. match a Opportunity
+3. View matched Opportunity status
 
-Jobs:
+Opportunities:
 
 1. Check all talents: filter: filter according to talent tag; sorting: sort according to distance
 2. Match a talent
 3. View matched talent status
-4. Post job
-5. Update Posted Job
+4. Post talent Opportunity
+5. Update Posted Opportunity
