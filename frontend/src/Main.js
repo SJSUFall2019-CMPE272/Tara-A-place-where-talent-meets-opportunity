@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn.component";
-import Landing from "./components/Landing.component";
+import SignUp from "./components/signUp";
+import SignIn from "./components/SignIn";
+import Landing from "./components/Landing";
 
 class Main extends Component {
   state = {};
