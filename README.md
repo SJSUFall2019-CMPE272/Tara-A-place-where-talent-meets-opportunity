@@ -40,7 +40,7 @@ The data will be stored and accessed from a serverless NoSQL database DynamoDB. 
 On the client side, we will make a ReactJS application. We are using ReactJS for the frontend as ReactJS is a light-weight library built over JavaScript, which doesn't re-render the entire DOM on change of components on the browser, rather it just re-renders the changed components. Hence ReactJS would improve application performance.
 
 The frontend website is available at the following URL:
-http://tara-frontend.s3-website.us-east-1.amazonaws.com/
+https://dgnchyrkhqge4.cloudfront.net/
 
 # Team
 
