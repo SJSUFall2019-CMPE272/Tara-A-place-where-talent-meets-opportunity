@@ -8,12 +8,21 @@ module "tara_s3_frontend__bucket" {
   bucket_name = "tara-frontend"
 }
 
+
+module "tara_cloudfront_distribution" {
+  source = "./cloudfront_distribution"
+  bucket_name = "tara-frontend"
+  bucket_domain_name = "${module.tara_s3_frontend__bucket.bucket_domain_name}"
+  cloudfront_access_identity_path = "${module.tara_s3_frontend__bucket.cloudfront_access_identity_path}"
+}
+
+/*
 module "tara_user_pool" {
   source         = "./cognito-user-pool"
   user_pool_name = "tara-user-pool"
 }
 
-/* module "tara_vpc" {
+ module "tara_vpc" {
   source   = "./vpc"
   key_name = "${module.key_pair_tara.key_name}"
   vpc_name = "tara-vpc"
