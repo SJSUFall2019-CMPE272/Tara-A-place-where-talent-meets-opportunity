@@ -45,7 +45,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Album() {
   const classes = useStyles();
-render()
   return (
     <React.Fragment>
       <CssBaseline />
