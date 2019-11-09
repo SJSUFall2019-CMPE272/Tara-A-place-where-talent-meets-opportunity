@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import SignUp from "./components/signUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
+import Album from  "./components/Album";
 
 class Main extends Component {
   state = {};
@@ -12,6 +13,7 @@ class Main extends Component {
         <Route path="/" exact component={Landing} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/album" component={Album} />
       </div>
     );
   }
