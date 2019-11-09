@@ -15,7 +15,8 @@ Tara is a real-time entertainment-industry brand aimed at connecting local perfo
 
 # Persona/Target Users:
 
-1)Artists looking for work in film, television, theater, commercials, voiceover, radio and more mediums and needing help to tailor and manage their careers, 
+1)Artists looking for work in film, television, theater, commercials, voiceover, radio and more mediums and needing help to tailor and manage their careers.
+
 2)Casting directors and talent recruiters looking to hire the perfect cast and crew for their projects are our target audience.
 
 # Hill Statement
