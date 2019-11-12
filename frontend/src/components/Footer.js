@@ -12,6 +12,17 @@ class Footer extends Component {
             <li><a href="#"><i className="fab fa-twitter"></i></a></li>
             <li><a href="#"><i className="fab fa-instagram"></i></a></li>
           </ul>
+
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-4 col-xxs-6">
+                <ul>
+                  <li class="title">PERFORMERS</li>
+                  </ul>
+                  </div>
+                  </div>
+                  </div>
       </footer>
       
     );

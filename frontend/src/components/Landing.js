@@ -4,7 +4,10 @@ import Form from "./Form";
 import Header from "./Header";
 import Footer from "./Footer";
 
+
 class Landing extends Component {
+
+  
   render() {
     return (
 
@@ -44,15 +47,6 @@ class Landing extends Component {
 
 
         
-        <div className="gallery">
-         <div className="gallery-item-one"></div>
-         <div className="gallery-item-two"></div>
-         <div className="gallery-item-three"></div>
-         <div className="gallery-item-four"></div>
-         <div className="gallery-item-five"></div>
-         <div className="gallery-item-six"></div>
-         
-        </div>
 
         <section>
             <h2>Our Mission</h2>
@@ -62,22 +56,50 @@ class Landing extends Component {
               </div>
         </section>
 
-        <div>
-             <div className="services">
-                <div className="service-one">
-                <p className="service-icon"></p>
-                <p className="service-title">For Creators</p>
-                <p>Add your headshots, reels and résumés to showcase your talent and get scouted by casting directors.</p>
+        <div class="row justify-content-between">
+              <div class="col-lg-6 col-xs-12">
+                <div  className="creators">
+                  <h2>For Creators</h2>
+                  <p class="main-desc">Backstage makes it simple to cast the perfect talent for your project.</p>
+                  <ul>
+                    <li>
+                      <h6>Post a Job</h6>
+                      <p>Post a job and begin receiving submissions from performers instantly. Qualify by age, appearance, skills, and location.</p>
+                    </li>
+                    <li>
+                      <h6>Manage Applications</h6>
+                      <p>We've made the application process a breeze. Advanced tools to manage talent approval at lightning quick speeds.</p>
+                    </li>
+                    <li>
+                      <h6>Find Talent for Your Project</h6>
+                      <p>Search our Talent Database of over 100,000 talented performers. Reach out and invite them to apply to your project.</p>
+                    </li>
+                  </ul>
+                  <a href="/member-benefits/creators/" data-cta="product_home_cd_features_learn_more" data-subtype="learn_more" class="more-link cd-cta" id="learnMoreHome6" aria-label="Learn more about how Backstage works for creators">Learn more about creator tools</a>
                 </div>
-                <div className="service-two">
-                <p className="service-icon"></p>
-                <p className="service-title">For Talent</p>
-                <p>Explore thousands of casting notices every day and find the perfect roles to advance your career, in real time.</p>
-            
+              </div>
+              <div class="col-lg-6 col-xs-12">
+                <div class="creators agents">
+                  <h2>For Agents</h2>
+                  <p class="main-desc">Backstage's simple yet sophisticated platform makes managing your talent easier than ever.</p>
+                  <ul>
+                    <li>
+                      <h6>Advanced Scheduling</h6>
+                      <p>Easily manage your talent's audition schedule, communicate with CDs and get your actors booked.</p>
+                    </li>
+                    <li>
+                      <h6>Submission Management</h6>
+                      <p>Build a dashboard for your entire roster, submit them to projects, and track their progress.</p>
+                    </li>
+                    <li>
+                      <h6>Build Your Roster</h6>
+                      <p>Search our Talent Database of over 100,000 active performers to find the perfect addition to your roster.</p>
+                    </li>
+                  </ul>
+                  <a href="" data-toggle="modal" data-target="#agentsModal" data-cta="product_home_agent_features_learn_more" data-subtype="learn_more" class="more-link cd-cta" id="learnMoreHome7" aria-label="Learn more about how Backstage works for agents">Learn more about agent tools</a>
                 </div>
-              
-          </div>
-        </div>
+              </div>
+            </div>
         <section>
             <h2>Contact Us</h2>
             <Form />

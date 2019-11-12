@@ -20,6 +20,8 @@ body * {
 box-shadow: 0px 10px 54px -11px rgba(0,0,0,0.75);
 }
 
+
+
 /*------------- NAVIGATION BAR -------------------*/
 
 nav {
@@ -178,6 +180,10 @@ main section div p {
   padding-left: 10px;
 }
 
+.creators {
+
+}
+
 
 /*------------- GALLERY -------------------*/
 
@@ -200,7 +206,7 @@ main section div p {
    filter: grayscale(83%);
 }
 
-.gallery div.gallery-item-one {
+/* .gallery div.gallery-item-one {
   background: url("./images/1.jpg");
   background-size: 160%;
  grid-column-end: span 2;
@@ -231,7 +237,7 @@ main section div p {
 .gallery div.gallery-item-one:hover, .gallery div.gallery-item-two:hover, .gallery div.gallery-item-three:hover, .gallery div.gallery-item-four:hover, .gallery div.gallery-item-five:hover, .gallery div.gallery-item-six:hover{
   background-size: 100%;
   filter: grayscale(0%);
-}
+} */
 
  /*------------- SERVICES -------------------*/
 
