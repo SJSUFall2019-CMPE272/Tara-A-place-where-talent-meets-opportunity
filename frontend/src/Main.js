@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import SignUp from "./components/signUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
-import Album from  "./components/Album";
+import Album from "./components/Album";
 import CreateForm from "./components/CreateForm";
 import ChayForm from "./components/ChayForm";
 import PhotoLinks from "./components/PhotoLinks";
@@ -16,9 +16,9 @@ class Main extends Component {
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/album" component={Album} />
-        <Route path="/createform" component={CreateForm}/>
-        <Route path="/photo" component={PhotoLinks}/>
-        <Route path="/chayForm" component={ChayForm} />
+        <Route path="/createform" component={CreateForm} />
+        <Route path="/photo" component={PhotoLinks} />
+        {/* <Route path="/chayForm" component={ChayForm} /> */}
       </div>
     );
   }
