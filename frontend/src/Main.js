@@ -5,7 +5,7 @@ import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import Album from  "./components/Album";
 import CreateForm from "./components/CreateForm";
-
+import ChayForm from "./components/ChayForm";
 import PhotoLinks from "./components/PhotoLinks";
 class Main extends Component {
   state = {};
