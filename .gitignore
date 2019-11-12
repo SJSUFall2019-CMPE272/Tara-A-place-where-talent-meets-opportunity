@@ -1,8 +1,14 @@
 # dependencies
 /frontend/node_modules
 /backend/node_modules
+/node_modules
 /.pnp
 .pnp.js
+
+/package-lock.json
+/frontend/package-lock.json
+/backend/package-lock.json
+
 
 terraform/.terraform/
 
