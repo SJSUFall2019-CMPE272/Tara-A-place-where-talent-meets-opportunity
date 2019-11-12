@@ -206,7 +206,7 @@ main section div p {
    filter: grayscale(83%);
 }
 
-/* .gallery div.gallery-item-one {
+ .gallery div.gallery-item-one {
   background: url("./images/1.jpg");
   background-size: 160%;
  grid-column-end: span 2;
@@ -237,7 +237,7 @@ main section div p {
 .gallery div.gallery-item-one:hover, .gallery div.gallery-item-two:hover, .gallery div.gallery-item-three:hover, .gallery div.gallery-item-four:hover, .gallery div.gallery-item-five:hover, .gallery div.gallery-item-six:hover{
   background-size: 100%;
   filter: grayscale(0%);
-} */
+} 
 
  /*------------- SERVICES -------------------*/
 
