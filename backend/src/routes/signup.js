@@ -2,6 +2,7 @@ import express from "express";
 import AWS from "../utilities/utils";
 import constants from "../utilities/constants";
 const router = express.Router();
+var bcrypt = require('bcrypt');
 
 router.get("/", function(req, res) {
   return res
@@ -14,18 +15,19 @@ router.post("/", function(req, res) {
   var talentId = "t" + (Math.floor(Math.random() * 10000)).toString();
   var name = req.body.name;
   var email = req.body.email;
-
-  console.log(req.body);
-  console.log(name);
-  console.log(email);
+  var password = req.body.password;
 
   var docClient = new AWS.DynamoDB.DocumentClient();
+
+  var hashedPassword = bcrypt.hashSync(password, 10);
+
   var params = {
     TableName: "tara-talent-demo",
     Item: {
       "id": talentId,
       "email": email,
-      "name": name
+      "name": name,
+      "password": hashedPassword
     }
   };
 
@@ -40,9 +42,7 @@ router.post("/", function(req, res) {
       res.send({
         success: true,
         message: 'Added talent',
-        id: talentId,
-        email: email,
-        name: name
+        id: talentId
       });
     }
   });
