@@ -4,6 +4,6 @@ AWS.config.update({region: "us-east-1", endpoint: "https://dynamodb.us-east-1.am
 
 var dynamodb = new AWS.DynamoDB();
 
-module.exports=dynamodb;
+module.exports=AWS;
 
-//import 
+//import dynamodb from "../utilities/utils";
