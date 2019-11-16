@@ -36,4 +36,11 @@ router.get("/:id", function(req, res) {
 
   });
 
+
+router.post("/", function(req, res) {
+    return res
+      .status(constants.STATUS_CODE.SUCCESS_STATUS)
+      .send(req.body.email);
+});
+
 module.exports = router;
