@@ -6,4 +6,4 @@ var dynamodb = new AWS.DynamoDB();
 
 module.exports=AWS;
 
-//import dynamodb from "../utilities/utils";
+//import AWS from "../utilities/utils";
