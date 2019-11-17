@@ -2,12 +2,12 @@ import React, { Component, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import "bootstrap/dist/css/bootstrap.min.css";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import ChipInput from "material-ui-chip-input";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import Navbar from "./Navbar";
 
@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200
+  },
+  fab: {
+    margin: theme.spacing(1),
   }
 }));
 
@@ -53,32 +56,11 @@ class CreateForm extends Component {
     formError: false
   };
 
-  // blankExp = { name: '', age: '' };
-
-  // [ExpState, setExpState] : useState([
-  //         { ...blankExp },
-  //     ]);
-
-  //  Experiences = () => {
-  //     const [ExpState, setExpState] = useState([
-  //         { name: '', age: '' },
-  //     ]);
-  // }
-
-  // addExperience = () => {
-  //     setExpState([...ExpState, { ...blankExp }]);
-  // };
-
-  // handleExpChange = (e) => {
-  //     const updatedExperiences = [...ExpState];
-  //     updatedExperiences[e.target.dataset.idx][e.target.className] = e.target.value;
-  //     setExpState(updatedExperiences);
-  // };
 
   getName = e => {
     let username = e.target.value;
     this.setState({
-      name: this.name + username
+      name: username
     });
     console.log(this.state.name);
   };
@@ -98,6 +80,7 @@ class CreateForm extends Component {
     });
     console.log(this.state.primarynumber);
   };
+
 
   getEmail = e => {
     let userEmail = e.target.value;
@@ -187,6 +170,31 @@ class CreateForm extends Component {
 
   //send the form
   submitForm = e => {
+    const UserData = {
+      name: this.state.name,
+                gender: this.state.gender,
+                contact_info: {
+                    contact_info1: this.state.primarynumber,
+                    contact_info2: this.state.secondarynumber,
+                },
+                email: this.state.email,
+                skills:  this.state.skillset,
+                state : this.state.state,
+                zipcode: this.state.zipcode,
+                experience:[{
+                    role:"",
+                    project_name : "",
+                    project_type: "",
+                    description : ""
+            }],
+            media : {
+                hyperlinks : [],
+                    files : [],
+                    resume: "",
+                }
+                
+
+            }
     e.preventDefault();
 
     if (this.state.name === "" || this.state.email === "") {
@@ -233,7 +241,7 @@ class CreateForm extends Component {
       <>
         <Navbar />
         <FormControl>
-          <div>
+          <div className="col-sm-6">
             <TextField
               required
               id="standard-required"
@@ -245,24 +253,18 @@ class CreateForm extends Component {
             />
           </div>
 
-          <div>
-            <br></br>
-            <InputLabel id="demo-controlled-open-select-label">
-              Gender
-            </InputLabel>
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              onChange={this.getGender}
-            >
-              <MenuItem value="Gender"></MenuItem>
-              <MenuItem value={"Female"}>Female</MenuItem>
-              <MenuItem value={"Male"}>Male</MenuItem>
-              <MenuItem value={"Other"}>Other</MenuItem>
-            </Select>
+          <div className="col-sm-6">
+            <FormControl component="fieldset" className={useStyles.formControl}>
+              <FormLabel component="legend">Gender</FormLabel>
+              <RadioGroup aria-label="gender" name="gender" value={this.state.gender} onChange={this.getGender}>
+                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <FormControlLabel value="other" control={<Radio />} label="Other" />
+              </RadioGroup>
+            </FormControl>
           </div>
 
-          <div>
+          <div className="col-sm-6">
             <TextField
               required
               id="standard-required"
@@ -273,7 +275,7 @@ class CreateForm extends Component {
               onChange={this.getEmail}
             />
           </div>
-          <div>
+          <div className="col-sm-6">
             <TextField
               required
               id="standard-required"
@@ -294,7 +296,7 @@ class CreateForm extends Component {
             />
           </div>
 
-          <div>
+          <div className="col-sm-6">
             <TextField
               required
               id="standard-required"
@@ -314,41 +316,27 @@ class CreateForm extends Component {
             />
           </div>
 
-          {/* <div>
-                    <TextField
-                        id="standard"
-                        label="Skills"
-                        defaultValue=""
-                        className={useStyles.textField}
-                        value={this.state.value}
-                        placeholder="Type and press enter to add"
-                        onKeyDown={this.handleKeyDown}
-                        onChange={this.handleChange}
-                    />
+          <div>
+            <TextField
+              id="standard"
+              label="Skills"
+              defaultValue=""
+              className={useStyles.textField}
+              value={this.state.value}
+              placeholder="Type and press enter to add"
+              onKeyDown={this.handleKeyDown}
+              onChange={this.handleChange}
+            />
 
-                    {this.state.skillset.map(item => (
-                        <div className="tag-item" key={item}>
-                            {item}
-                            <button
-                                type="button"
-                                className="button"
-                                onClick={() => this.handleDelete(item)}
-                            >
-                                &times;
-                            </button>
-                        </div>
-                    ))}
-                </div> */}
-          <Skillset
-            onKeyDown={this.handleKeyDown}
-            onChange={this.handleChange}
-            onClick={this.handleDelete}
-            skillset={this.state.skillset}
-            value={this.state.value}
-          />
-
-          {/* 
-                <h2>Experience stuff</h2> */}
+            {this.state.skillset.map(item => (
+              <div key={item}>
+                {item}
+                <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
+                  x
+                </Button>
+              </div>
+            ))}
+          </div>
 
           {/* <form>
                     <input
@@ -371,7 +359,7 @@ class CreateForm extends Component {
 
           <br></br>
 
-          <div>
+          <div className="col-sm-6">
             <Button
               variant="contained"
               color="primary"
@@ -392,3 +380,4 @@ class CreateForm extends Component {
 }
 
 export default CreateForm;
+
