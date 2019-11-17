@@ -8,15 +8,14 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import Box from '@material-ui/core/Box';
+import AddIcon from '@material-ui/icons/Add';
 import Navbar from "./Navbar";
+import Divider from '@material-ui/core/Divider';
 
+import ExperienceForm from "./ExperienceForm"
 import "./CreateForm.css";
 
-import ExperienceForm from "./ExperienceForm";
-import Skillset from "./Skillset";
-
-//Experience form
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -31,6 +30,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
+  
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -53,8 +53,42 @@ class CreateForm extends Component {
     state: "",
     skillset: [],
     value: "",
+    ExpState: [],
+    experience: [{
+      role: "",
+      project_name: "",
+      project_type:"",
+      description:"",
+    }],
+    media:{
+      hyperlinks:[""],
+      files:[""],
+      resume:""
+    },
     formError: false
   };
+
+
+  //START--Experience Form methods
+
+  addExperience = (e) => {
+    e.preventDefault();
+    this.setState((prevState) => ({
+      experience: [...prevState.experience, {role:"", project_name:"",project_type:"",description:""}],
+    }));
+  }
+
+  experienceHandleChange = (e) => {
+    if (["role", "project_name","project_type","description"].includes(e.target.className) ) {
+      let experience = [...this.state.experience]
+      experience[e.target.dataset.id][e.target.className] = e.target.value
+      this.setState({ experience }, () => console.log(this.state.experience))
+    } else {
+      this.setState({ [e.target.name]: e.target.value })
+    }
+  }
+
+   //END--Experience Form methods
 
 
   getName = e => {
@@ -172,29 +206,29 @@ class CreateForm extends Component {
   submitForm = e => {
     const UserData = {
       name: this.state.name,
-                gender: this.state.gender,
-                contact_info: {
-                    contact_info1: this.state.primarynumber,
-                    contact_info2: this.state.secondarynumber,
-                },
-                email: this.state.email,
-                skills:  this.state.skillset,
-                state : this.state.state,
-                zipcode: this.state.zipcode,
-                experience:[{
-                    role:"",
-                    project_name : "",
-                    project_type: "",
-                    description : ""
-            }],
-            media : {
-                hyperlinks : [],
-                    files : [],
-                    resume: "",
-                }
-                
+      gender: this.state.gender,
+      contact_info: {
+        contact_info1: this.state.primarynumber,
+        contact_info2: this.state.secondarynumber,
+      },
+      email: this.state.email,
+      skills: this.state.skillset,
+      state: this.state.state,
+      zipcode: this.state.zipcode,
+      experience: [{
+        role: "",
+        project_name: "",
+        project_type: "",
+        description: ""
+      }],
+      media: {
+        hyperlinks: [],
+        files: [],
+        resume: "",
+      }
 
-            }
+
+    }
     e.preventDefault();
 
     if (this.state.name === "" || this.state.email === "") {
@@ -217,12 +251,7 @@ class CreateForm extends Component {
                 skills:  ${this.state.skillset}
                 state : ${this.state.state},
                 zipcode: ${this.state.zipcode},
-                experience:[{
-                    role:”String”,
-                    project_name : "",
-                    project_type: "",
-                    description : ""
-            }],
+                experience:[${this.state.experience}],
             media : {
                 hyperlinks : [],
                     files : [],
@@ -254,7 +283,7 @@ class CreateForm extends Component {
           </div>
 
           <div className="col-sm-6">
-            <FormControl component="fieldset" className={useStyles.formControl}>
+            <FormControl margin="normal" component="fieldset" className={useStyles.formControl}>
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup aria-label="gender" name="gender" value={this.state.gender} onChange={this.getGender}>
                 <FormControlLabel value="female" control={<Radio />} label="Female" />
@@ -316,13 +345,14 @@ class CreateForm extends Component {
             />
           </div>
 
-          <div>
+          <div className="col-sm-6">
             <TextField
               id="standard"
               label="Skills"
               defaultValue=""
               className={useStyles.textField}
               value={this.state.value}
+              margin="normal"
               placeholder="Type and press enter to add"
               onKeyDown={this.handleKeyDown}
               onChange={this.handleChange}
@@ -338,26 +368,91 @@ class CreateForm extends Component {
             ))}
           </div>
 
-          {/* <form>
-                    <input
-                        type="button"
-                        value="Add New Experience"
-                        onClick={this.addExperience}
-                    />
-                    {
-                        ExpState.map((val, idx) => (
-                            <ExperienceForm
-                                key={`cat-${idx}`}
-                                idx={idx}
-                                ExpState={ExpState}
-                                handleExpChange={this.handleExpChange}
-                            />
-                        ))
-                    }
-                    <input type="submit" value="Submit" />
-                </form> */}
+          <div className="col-sm-12">
+          <Box color="text.primary">
+            <form onChange={this.experienceHandleChange} >
+              <Button
+              variant="contained"
+              color="primary"
+              className={useStyles.button}
+              type="submit"
+              name="submit"
+              value="Send"
+              onClick={this.addExperience}
+            >
+            Add Experience
+              <AddIcon /> 
+            </Button>
+              
+              {
+                this.state.experience.map((val, idx) => {
+                  let RoleId = `Role-${idx}`
+                  let ProjectId = `Project-${idx}`
+                  let ProjectTypeId = `ProjectType-${idx}`
+                  let DescriptionId = `DescriptionId-${idx}`
+                  return (
+                    <div className="col-sm-12 row my-auto" key={idx}>
+                      <label className="col-sm-12">{`Experience #${idx + 1}`}</label>
 
-          <br></br>
+                        <div className="col-sm-12">
+                        <label margin="normal" htmlFor={RoleId}>Role</label>
+                        <input
+                          type="text"
+                          name={RoleId}
+                          data-id={idx}
+                          id={RoleId}
+                          value={this.state.experience[idx].role}
+                          className="role"
+                          
+                          />
+                          </div>
+
+                        <div className="col-sm-12">
+                        <label htmlFor={ProjectId}>Project name</label>
+                        <input
+                          type="text"
+                          name={ProjectId}
+                          data-id={idx}
+                          id={ProjectId}
+                          value={this.state.experience[idx].project_name}
+                          className="project_name"
+                        />
+                        </div>
+
+                        <div className="col-sm-12">
+                        <label htmlFor={ProjectTypeId}>Project Type</label>
+                        <input
+                          type="text"
+                          name={ProjectTypeId}
+                          data-id={idx}
+                          id={ProjectTypeId}
+                          value={this.state.experience[idx].project_type}
+                          className="project_type"
+                        /> 
+                        </div>
+
+                        <div className="col-sm-12">
+                        <label htmlFor={DescriptionId}>Description</label>
+                        <input
+                          type="text"
+                          name={DescriptionId}
+                          data-id={idx}
+                          id={DescriptionId}
+                          value={this.state.experience[idx].description}
+                          className="description"
+                        />
+                        </div>
+
+                        
+
+                        <Divider />
+                  </div>
+                  )
+                })
+              }
+            </form>
+            </Box>
+          </div>
 
           <div className="col-sm-6">
             <Button
