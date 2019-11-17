@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Navbar from "./Navbar";
 import Divider from '@material-ui/core/Divider';
 
+
 import ExperienceForm from "./ExperienceForm"
 import "./CreateForm.css";
 
@@ -369,7 +370,6 @@ class CreateForm extends Component {
           </div>
 
           <div className="col-sm-12">
-          <Box color="text.primary">
             <form onChange={this.experienceHandleChange} >
               <Button
               variant="contained"
@@ -391,11 +391,14 @@ class CreateForm extends Component {
                   let ProjectTypeId = `ProjectType-${idx}`
                   let DescriptionId = `DescriptionId-${idx}`
                   return (
+                    <>
                     <div className="col-sm-12 row my-auto" key={idx}>
-                      <label className="col-sm-12">{`Experience #${idx + 1}`}</label>
+                      {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
 
+
+                      <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
                         <div className="col-sm-12">
-                        <label margin="normal" htmlFor={RoleId}>Role</label>
+                        <TextField fullWidth className="col-sm-6" label="Role"> 
                         <input
                           type="text"
                           name={RoleId}
@@ -405,10 +408,11 @@ class CreateForm extends Component {
                           className="role"
                           
                           />
+                          </TextField>
                           </div>
 
                         <div className="col-sm-12">
-                        <label htmlFor={ProjectId}>Project name</label>
+                        <TextField fullWidth className="col-sm-6" label="Project name"> 
                         <input
                           type="text"
                           name={ProjectId}
@@ -417,10 +421,11 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].project_name}
                           className="project_name"
                         />
+                        </TextField>
                         </div>
 
                         <div className="col-sm-12">
-                        <label htmlFor={ProjectTypeId}>Project Type</label>
+                        <TextField fullWidth className="col-sm-6" label="Project Type"> 
                         <input
                           type="text"
                           name={ProjectTypeId}
@@ -429,10 +434,11 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].project_type}
                           className="project_type"
                         /> 
+                        </TextField>
                         </div>
 
                         <div className="col-sm-12">
-                        <label htmlFor={DescriptionId}>Description</label>
+                        <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3"> 
                         <input
                           type="text"
                           name={DescriptionId}
@@ -441,17 +447,18 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].description}
                           className="description"
                         />
-                        </div>
-
+                        </TextField>
                         
-
-                        <Divider />
+                        </div>
+                    
+                        
                   </div>
+                  <Divider/>
+                  </>
                   )
                 })
               }
             </form>
-            </Box>
           </div>
 
           <div className="col-sm-6">
