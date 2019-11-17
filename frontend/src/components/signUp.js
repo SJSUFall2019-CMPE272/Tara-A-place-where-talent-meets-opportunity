@@ -1,16 +1,48 @@
 import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import { makeStyles } from "@material-ui/core/styles";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import axios from "axios";
 import util from "../utils";
 import './styleSignUp.css';
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    display: "block",
+    marginTop: theme.spacing(2)
+  },
+  formControl: {
+    margin: theme.spacing(0),
+    minWidth: 120
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
+  },
+  fab: {
+    margin: theme.spacing(1),
+  }
+}));
 
 class SignUp extends Component {
     state = {
         name : "",
         email : "",
         Password : "",
+        type: "",
         Confirmpassword: false,
         formError: false
     };
+
 
 getName = (e) =>{
   let username = e.target.value; 
@@ -19,7 +51,6 @@ getName = (e) =>{
   });
   console.log(this.state.name);
 }
-
 
 getEmail = (e) =>{
   let userEmail = e.target.value; 
@@ -36,6 +67,14 @@ getEmail = (e) =>{
 
   console.log(this.state.email);
 }
+
+gettype = e => {
+  let type = e.target.value;
+  this.setState({
+    type: type
+  });
+  console.log(this.state.type);
+};
 
 getPassword= (e) =>{
   let password = e.target.value; 
@@ -69,15 +108,16 @@ handleSubmit = e => {
   let data = {
     name: this.state.name,
     email: this.state.email,
-    password: this.state.password
+    type: this.state.type,
+    password: this.state.Password
   };
     e.preventDefault();
-
-    axios
-      .post(`${util.BASE_URL}/signup`,data)
-      .then(res => this.setState({ formError: res.data.messaage }))
-      .catch(err => this.setState({formError: err.response.data.message}));
-};
+    console.log(data);
+//     axios
+//       .post(`${util.BASE_URL}/signup`,data)
+//       .then(res => this.setState({ formError: res.data.messaage }))
+//       .catch(err => this.setState({formError: err.response.data.message}));
+ };
   render()  {
     
     return (
@@ -97,6 +137,15 @@ handleSubmit = e => {
           <div className='email'>
             <label htmlFor="email">Email</label>
             <input type='email' name='email' onChange={this.getEmail} required />
+          </div>
+          <div className="col-sm-6">
+            <FormControl component="fieldset" className={useStyles.formControl}>
+              <FormLabel component="legend">You Are</FormLabel>
+              <RadioGroup aria-label="Type" name="type" value={this.state.type} onChange={this.gettype}>
+                <FormControlLabel value="talent" control={<Radio />} label="Talent" />
+                <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />              
+              </RadioGroup>
+            </FormControl>
           </div>
           <div className='password'>
             <label htmlFor="password">Password</label>
