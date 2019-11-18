@@ -5,6 +5,7 @@ import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import Album from "./components/Album";
 import UpdateProfile from "./components/Talent/UpdateProfile";
+import CreateJob from "./components/Recruiter/CreateJob";
 class Main extends Component {
   state = {};
   render() {
@@ -15,6 +16,7 @@ class Main extends Component {
         <Route path="/signup" component={SignUp} />
         <Route path="/album" component={Album} /> 
         <Route path="/createform" component={UpdateProfile} />
+        <Route path="/createjob" component={CreateJob} />
       </div>
     );
   }
