@@ -28,6 +28,7 @@ router.post("/", function(req, res) {
     id = "r" + (Math.floor(Math.random() * 10000)).toString();
   }
 
+  console.log(tableName);
   var params = {
     TableName: tableName,
     Item: {
@@ -41,6 +42,7 @@ router.post("/", function(req, res) {
 
   docClient.put(params, function(err, data) {
     if (err) {
+      console.log(err);
       res.send({
         success: false,
         message: "Error: Couldn't write to DynamoDB"
