@@ -10,11 +10,10 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Box from '@material-ui/core/Box';
 import AddIcon from '@material-ui/icons/Add';
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import Divider from '@material-ui/core/Divider';
 
 
-import ExperienceForm from "./ExperienceForm"
 import "./CreateForm.css";
 
 
@@ -42,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-class CreateForm extends Component {
+class UpdateProfile extends Component {
   state = {
     name: "",
     email: "",
@@ -495,5 +494,5 @@ class CreateForm extends Component {
   }
 }
 
-export default CreateForm;
+export default UpdateProfile;
 
