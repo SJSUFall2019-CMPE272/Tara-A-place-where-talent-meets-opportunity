@@ -87,6 +87,7 @@ class CreateForm extends Component {
     } else {
       this.setState({ [e.target.name]: e.target.value })
     }
+    console.log(this.state.experience)
   }
 
    //END--Experience Form methods
@@ -294,7 +295,7 @@ class CreateForm extends Component {
             </FormControl>
           </div>
 
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -305,7 +306,7 @@ class CreateForm extends Component {
               onChange={this.getEmail}
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -315,6 +316,9 @@ class CreateForm extends Component {
               margin="normal"
               onChange={this.getState}
             />
+          </div>
+
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -336,6 +340,9 @@ class CreateForm extends Component {
               margin="normal"
               onChange={this.getPrimaryPhone}
             />
+            </div>
+
+            <div className="col-sm-6">
             <TextField
               id="standard"
               label="Secondary Contact"
@@ -348,6 +355,8 @@ class CreateForm extends Component {
 
           <div className="col-sm-6">
             <TextField
+              fullWidth
+              className="col-sm-6"
               id="standard"
               label="Skills"
               defaultValue=""
@@ -360,7 +369,7 @@ class CreateForm extends Component {
             />
 
             {this.state.skillset.map(item => (
-              <div key={item}>
+              <div className="col-sm-6" key={item}>
                 {item}
                 <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
                   x
@@ -398,7 +407,8 @@ class CreateForm extends Component {
 
                       <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
                         <div className="col-sm-12">
-                        <TextField fullWidth className="col-sm-6" label="Role"> 
+                        <label>Role:</label>
+                        {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
                         <input
                           type="text"
                           name={RoleId}
@@ -408,11 +418,12 @@ class CreateForm extends Component {
                           className="role"
                           
                           />
-                          </TextField>
+                          {/* </TextField> */}
                           </div>
 
                         <div className="col-sm-12">
-                        <TextField fullWidth className="col-sm-6" label="Project name"> 
+                        <label>Project Name:</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
                         <input
                           type="text"
                           name={ProjectId}
@@ -421,11 +432,12 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].project_name}
                           className="project_name"
                         />
-                        </TextField>
+                        {/* </TextField> */}
                         </div>
 
                         <div className="col-sm-12">
-                        <TextField fullWidth className="col-sm-6" label="Project Type"> 
+                        <label>Project Type:</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
                         <input
                           type="text"
                           name={ProjectTypeId}
@@ -434,12 +446,14 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].project_type}
                           className="project_type"
                         /> 
-                        </TextField>
+                        {/* </TextField> */}
                         </div>
 
                         <div className="col-sm-12">
-                        <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3"> 
+                        <label>Description</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
                         <input
+                          multiline rows="3"
                           type="text"
                           name={DescriptionId}
                           data-id={idx}
@@ -447,7 +461,7 @@ class CreateForm extends Component {
                           value={this.state.experience[idx].description}
                           className="description"
                         />
-                        </TextField>
+                        {/* </TextField> */}
                         
                         </div>
                     
