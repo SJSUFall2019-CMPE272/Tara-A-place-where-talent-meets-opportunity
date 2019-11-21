@@ -44,17 +44,18 @@ class CreateJob extends Component {
 
   state = {
     title: "",
+    type: "",
     gender: "",
-    requiredZipcode: "",
+    age: "",
     description: "",
     required_skillset: [],
     value: "",
     expiryDate: "",
-    // location: [{
-    //   address: "",
-    //   city: "",
-    //   state:"",
-    // }],
+    address: "",
+    city: "",
+    state: "",
+    requiredZipcode: "",
+    
     
     formError: false
   };
@@ -103,6 +104,40 @@ class CreateJob extends Component {
     console.log(this.state.expiryDate);
   };
 
+  getState = e => {
+    let State = e.target.value;
+    this.setState({
+      state: State
+    });
+    console.log(this.state.state);
+  };
+
+  getCity = e => {
+    let City = e.target.value;
+    this.setState({
+      city: City
+    });
+    console.log(this.state.city);
+  };
+
+  getAddress = e => {
+    let Address = e.target.value;
+    this.setState({
+      address: Address
+    });
+    console.log(this.state.address);
+  };
+
+  getType = e => {
+    let Type = e.target.value;
+    this.setState({
+    type: Type
+    });
+    console.log(this.state.type);
+  };
+
+
+
   handleKeyDown = evt => {
     if (["Enter", ","].includes(evt.key)) {
       evt.preventDefault();
@@ -146,8 +181,12 @@ class CreateJob extends Component {
       required_skillset: this.state.required_skillset,
       description: this.state.description,
       requiredZipcode: this.state.requiredZipcode,
-      expiryDate: this.state.expiryDate
-
+      expiryDate: this.state.expiryDate,
+      address: this.state.address,
+      city: this.state.city,
+      state: this.state.state,
+      age: this.state.age,
+      type: this.state.type
     }
     
     e.preventDefault();
@@ -167,7 +206,11 @@ class CreateJob extends Component {
                 description: ${this.state.description},
                 requiredZipcode: ${this.state.requiredZipcode},
                 expiryDate: ${this.state.expiryDate}
-
+                address: ${this.state.address},
+                city: ${this.state.city},
+              state: ${this.state.state},
+                age: ${this.state.age},
+                type: ${this.state.type}
             }`);
 
       console.log("form sent");
@@ -224,29 +267,32 @@ class CreateJob extends Component {
             </FormControl>
           </div>
 
+
           <div>
             <TextField
               required
               id="standard-required"
-              label="Zip Location"
+              label="Category"
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getZipcode}
+              onChange={this.getType}
             />
           </div>
 
+          <div> 
           <TextField
             id="date"
             label="ExpiryDate"
             type="date"
-            defaultValue="2019-12-31"
+           
             onChange={this.getDate}
             className={useStyles.textField}
             InputLabelProps={{
               shrink: true
             }}
           />
+          </div>
 
           <div className="col-sm-6">
             <TextField
@@ -286,6 +332,56 @@ class CreateJob extends Component {
               onChange={this.getDescription}
             />
           </div>
+
+          <div>
+            <TextField
+              required
+              id="standard-required"
+              label="Location"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getAddress}
+            />
+
+
+            <TextField
+              required
+              id="standard-required"
+              label="State"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getState}
+            />
+          </div>
+         
+
+          <div>
+            <TextField
+              required
+              id="standard-required"
+              label="City"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getCity}
+            />
+
+            <TextField
+              required
+              id="standard-required"
+              label="Zip Location"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getZipcode}
+            />
+          </div>
+
+
+          
+     
 
           <div className="col-sm-6">
             <Button
