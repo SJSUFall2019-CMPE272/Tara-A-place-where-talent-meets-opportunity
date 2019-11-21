@@ -4,9 +4,7 @@ import constants from "../utilities/constants";
 const router = express.Router();
 var bcrypt = require('bcrypt');
 
-router.post("/", function(req, res) {
-  
-  
+router.post("/", function (req, res) {
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
@@ -19,11 +17,11 @@ router.post("/", function(req, res) {
   var tableName;
   var id;
 
-  if(type === "talent") {
+  if (type === "talent") {
     tableName = "tara-talent-demo";
     id = "t" + (Math.floor(Math.random() * 10000)).toString();
   }
-  else if(type === "recruiter") {
+  else if (type === "recruiter") {
     tableName = "tara-recruiter-demo";
     id = "r" + (Math.floor(Math.random() * 10000)).toString();
   }
@@ -39,16 +37,18 @@ router.post("/", function(req, res) {
   };
 
 
-  docClient.put(params, function(err, data) {
+  docClient.put(params, function (err, data) {
     if (err) {
-      res.send({
+      console.log(err);
+      res.status(400).send({
         success: false,
         message: "Error: Couldn't write to DynamoDB"
       });
-    } else {      
-      res.send({
+    } else {
+
+      res.status(200).send({
         success: true,
-        message: 'Added talent',
+        message: '200',
         id: id
       });
     }

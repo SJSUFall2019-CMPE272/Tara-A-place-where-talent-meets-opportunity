@@ -3,20 +3,23 @@ import constants from "../utilities/constants";
 import AWS from "../utilities/utils";
 const router = express.Router();
 
-router.get("/", function(req, res) {
-    return res
-      .status(constants.STATUS_CODE.SUCCESS_STATUS)
-      .send("talent API entry point");
-  });
 
-router.get("/:id", function(req, res) {
-    
+// router.get("/", function(req, res) {
+//     return res
+//       .status(constants.STATUS_CODE.SUCCESS_STATUS)
+//       .send("talent API entry point");
+//   });
+
+
+// to get particular profile
+router.get("/:id", function (req, res) {
+
     var talentId = req.params.id;
 
     var params = {
-        TableName : "tara-talent-demo",
+        TableName: "tara-talent-demo",
         KeyConditionExpression: "#id = :id",
-        ExpressionAttributeNames:{
+        ExpressionAttributeNames: {
             "#id": "id"
         },
         ExpressionAttributeValues: {
@@ -25,7 +28,7 @@ router.get("/:id", function(req, res) {
     };
 
     var docClient = new AWS.DynamoDB.DocumentClient();
-    docClient.query(params, function(err, data) {
+    docClient.query(params, function (err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
@@ -34,13 +37,13 @@ router.get("/:id", function(req, res) {
         }
     });
 
-  });
+});
 
-
-router.post("/", function(req, res) {
+// to update the talent profile
+router.post("/", function (req, res) {
     return res
-      .status(constants.STATUS_CODE.SUCCESS_STATUS)
-      .send(req.body.email);
+        .status(constants.STATUS_CODE.SUCCESS_STATUS)
+        .send(req.body.email);
 });
 
 module.exports = router;
