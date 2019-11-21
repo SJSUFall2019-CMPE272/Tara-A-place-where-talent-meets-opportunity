@@ -26,6 +26,7 @@ router.post("/", function (req, res) {
     id = "r" + (Math.floor(Math.random() * 10000)).toString();
   }
 
+  console.log(tableName);
   var params = {
     TableName: tableName,
     Item: {

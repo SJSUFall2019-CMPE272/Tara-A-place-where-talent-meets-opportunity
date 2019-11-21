@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import signup from "./routes/signup";
 import talent from "./routes/talent";
+import login from "./routes/login";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 
 app.use("/signup", signup);
 app.use("/talent", talent);
+app.use("/login", login);
 
 app.listen(9000, () => {
   console.log(`Server listening on port 9000`);

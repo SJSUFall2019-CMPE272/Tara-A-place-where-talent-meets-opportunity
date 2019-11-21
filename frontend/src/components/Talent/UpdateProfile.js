@@ -8,10 +8,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Box from '@material-ui/core/Box';
+import AddIcon from '@material-ui/icons/Add';
+import Navbar from "../Navbar";
+import Divider from '@material-ui/core/Divider';
 
-import Navbar from "./Navbar";
 
-import ExperienceForm from "./ExperienceForm"
 import "./CreateForm.css";
 
 
@@ -28,6 +30,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
+  
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -38,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-class CreateForm extends Component {
+class UpdateProfile extends Component {
   state = {
     name: "",
     email: "",
@@ -51,34 +54,39 @@ class CreateForm extends Component {
     skillset: [],
     value: "",
     ExpState: [],
-    cats: [{
-      name: "",
-      age: ""
+    experience: [{
+      role: "",
+      project_name: "",
+      project_type:"",
+      description:"",
     }],
+    media:{
+      hyperlinks:[""],
+      files:[""],
+      resume:""
+    },
     formError: false
   };
 
 
   //START--Experience Form methods
-  catshandleSubmit = (e) => { 
-    e.preventDefault();
-    console.log(this.state.cats)
-  }
 
-  addCat = (e) => {
+  addExperience = (e) => {
+    e.preventDefault();
     this.setState((prevState) => ({
-      cats: [...prevState.cats, {name:"", age:""}],
+      experience: [...prevState.experience, {role:"", project_name:"",project_type:"",description:""}],
     }));
   }
 
-  catshandleChange = (e) => {
-    if (["name", "age"].includes(e.target.className) ) {
-      let cats = [...this.state.cats]
-      cats[e.target.dataset.id][e.target.className] = e.target.value
-      this.setState({ cats }, () => console.log(this.state.cats))
+  experienceHandleChange = (e) => {
+    if (["role", "project_name","project_type","description"].includes(e.target.className) ) {
+      let experience = [...this.state.experience]
+      experience[e.target.dataset.id][e.target.className] = e.target.value
+      this.setState({ experience }, () => console.log(this.state.experience))
     } else {
-      this.setState({ [e.target.name]: e.target.value.toUpperCase() })
+      this.setState({ [e.target.name]: e.target.value })
     }
+    console.log(this.state.experience)
   }
 
    //END--Experience Form methods
@@ -244,12 +252,7 @@ class CreateForm extends Component {
                 skills:  ${this.state.skillset}
                 state : ${this.state.state},
                 zipcode: ${this.state.zipcode},
-                experience:[{
-                    role:”String”,
-                    project_name : "",
-                    project_type: "",
-                    description : ""
-            }],
+                experience:[${this.state.experience}],
             media : {
                 hyperlinks : [],
                     files : [],
@@ -291,7 +294,7 @@ class CreateForm extends Component {
             </FormControl>
           </div>
 
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -302,7 +305,7 @@ class CreateForm extends Component {
               onChange={this.getEmail}
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -312,6 +315,9 @@ class CreateForm extends Component {
               margin="normal"
               onChange={this.getState}
             />
+          </div>
+
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -333,6 +339,9 @@ class CreateForm extends Component {
               margin="normal"
               onChange={this.getPrimaryPhone}
             />
+            </div>
+
+            <div className="col-sm-6">
             <TextField
               id="standard"
               label="Secondary Contact"
@@ -345,6 +354,8 @@ class CreateForm extends Component {
 
           <div className="col-sm-6">
             <TextField
+              fullWidth
+              className="col-sm-6"
               id="standard"
               label="Skills"
               defaultValue=""
@@ -357,7 +368,7 @@ class CreateForm extends Component {
             />
 
             {this.state.skillset.map(item => (
-              <div key={item}>
+              <div className="col-sm-6" key={item}>
                 {item}
                 <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
                   x
@@ -366,37 +377,100 @@ class CreateForm extends Component {
             ))}
           </div>
 
-          <div className="col-sm-6">
-            <form onSubmit={this.catshandleSubmit} onChange={this.catshandleChange} >
-              <button onClick={this.addCat}>Add New cat</button>
+          <div className="col-sm-12">
+            <form onChange={this.experienceHandleChange} >
+              <Button
+              variant="contained"
+              color="primary"
+              className={useStyles.button}
+              type="submit"
+              name="submit"
+              value="Send"
+              onClick={this.addExperience}
+            >
+            Add Experience
+              <AddIcon /> 
+            </Button>
+              
               {
-                this.state.cats.map((val, idx) => {
-                  let catId = `cat-${idx}`, ageId = `age-${idx}`
+                this.state.experience.map((val, idx) => {
+                  let RoleId = `Role-${idx}`
+                  let ProjectId = `Project-${idx}`
+                  let ProjectTypeId = `ProjectType-${idx}`
+                  let DescriptionId = `DescriptionId-${idx}`
                   return (
-                    <div key={idx}>
-                      <label htmlFor={catId}>{`Cat #${idx + 1}`}</label>
-                      <input
-                        type="text"
-                        name={catId}
-                        data-id={idx}
-                        id={catId}
-                        value={this.state.cats[idx].name}
-                        className="name"
-                      />
-                      <label htmlFor={ageId}>Age</label>
-                      <input
-                        type="text"
-                        name={ageId}
-                        data-id={idx}
-                        id={ageId}
-                        value={this.state.cats[idx].age}
-                        className="age"
-                      />
-                    </div>
+                    <>
+                    <div className="col-sm-12 row my-auto" key={idx}>
+                      {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
+
+
+                      <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
+                        <div className="col-sm-12">
+                        <label>Role:</label>
+                        {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
+                        <input
+                          type="text"
+                          name={RoleId}
+                          data-id={idx}
+                          id={RoleId}
+                          value={this.state.experience[idx].role}
+                          className="role"
+                          
+                          />
+                          {/* </TextField> */}
+                          </div>
+
+                        <div className="col-sm-12">
+                        <label>Project Name:</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
+                        <input
+                          type="text"
+                          name={ProjectId}
+                          data-id={idx}
+                          id={ProjectId}
+                          value={this.state.experience[idx].project_name}
+                          className="project_name"
+                        />
+                        {/* </TextField> */}
+                        </div>
+
+                        <div className="col-sm-12">
+                        <label>Project Type:</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
+                        <input
+                          type="text"
+                          name={ProjectTypeId}
+                          data-id={idx}
+                          id={ProjectTypeId}
+                          value={this.state.experience[idx].project_type}
+                          className="project_type"
+                        /> 
+                        {/* </TextField> */}
+                        </div>
+
+                        <div className="col-sm-12">
+                        <label>Description</label>
+                        {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
+                        <input
+                          multiline rows="3"
+                          type="text"
+                          name={DescriptionId}
+                          data-id={idx}
+                          id={DescriptionId}
+                          value={this.state.experience[idx].description}
+                          className="description"
+                        />
+                        {/* </TextField> */}
+                        
+                        </div>
+                    
+                        
+                  </div>
+                  <Divider/>
+                  </>
                   )
                 })
               }
-              <input type="submit" value="Submit"></input>
             </form>
           </div>
 
@@ -420,5 +494,5 @@ class CreateForm extends Component {
   }
 }
 
-export default CreateForm;
+export default UpdateProfile;
 
