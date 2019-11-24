@@ -104,16 +104,23 @@ class SignIn extends Component {
       password: this.state.Password,
       type: this.state.type
     };
-    console.log(data);
     axios
       .post(`${util.BASE_URL}/login`, data)
-      .then(res => this.setState({ auth: "" }))
+      .then(res => {
+        console.log(res);
+        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("type", res.data.type);
+        this.setState({ auth: "" })
+      })
       .catch(err => this.setState({ auth: err.response.data.message }));
   };
   render() {
     let redirectvar = null;
-    if (cookies.load("talent")) {
+    if (localStorage.getItem("type") == "talent" && localStorage.getItem("id")) {
       redirectvar = <Redirect to="/home" />
+    }
+    else if (localStorage.getItem("type") == "recruiter" && localStorage.getItem("id")) {
+      redirectvar = <Redirect to="/recruiterhome" />
     }
     return (
       <Container component="main" maxWidth="xs">

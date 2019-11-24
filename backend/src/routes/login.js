@@ -42,41 +42,20 @@ router.post("/", function (req, res) {
       console.log("Scan succeeded.");
       var storedHash = data.Items[0].password;
       var id = data.Items[0].id;
-
       if (bcrypt.compareSync(password, storedHash)) {
         console.log("matched");
-        if (type === "talent") {
-          console.log(id);
-          res.cookie("talent", id, {
-            maxAge: 900000,
-            httpOnly: false,
-            path: "/"
-          });
-        }
-        else {
-          res.cookie("recruiter", id, {
-            maxAge: 900000,
-            httpOnly: false,
-            path: "/"
-          });
-        }
-        res.writeHead(200, {
-          "Content-Type": "application/JSON"
-        });
-        res.end(JSON.stringify({
+        res.status(200).send({
           success: true,
           message: '200',
-          id: id
-        }));
+          id: id,
+          type: type
+        });
       } else {
         console.log("unmatched");
-        res.writeHead(400, {
-          "Content-Type": "application/JSON"
-        });
-        res.end(JSON.stringify({
+        res.status(400).send({
           success: false,
           message: 'Login failed'
-        }));
+        });
       }
     }
   }
