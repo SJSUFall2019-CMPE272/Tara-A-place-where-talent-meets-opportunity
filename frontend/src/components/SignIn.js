@@ -18,6 +18,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 import util from "../utils";
+import cookies from "react-cookies";
+import { Link as RLink, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -52,145 +54,151 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-class SignIn extends Component{
-  
-  state = {
-    email : "",
-    Password : "",
-    type: "",
-    formError: false
-};
+class SignIn extends Component {
 
-getEmail = (e) =>{
-  let userEmail = e.target.value; 
-  if(userEmail.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/)){
-    this.setState({
-      email: userEmail
-  });
-    }else{
+  state = {
+    email: "",
+    Password: "",
+    type: "",
+    formError: false,
+    auth: ""
+  };
+
+  getEmail = (e) => {
+    let userEmail = e.target.value;
+    if (userEmail.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/)) {
+      this.setState({
+        email: userEmail
+      });
+    } else {
       this.setState({
         email: ""
-    });
-    console.log("Incorrect Email, must match Expression");
+      });
+      console.log("Incorrect Email, must match Expression");
+    }
+
+    console.log(this.state.email);
   }
 
-  console.log(this.state.email);
-}
-
-gettype = e => {
-  let type = e.target.value;
-  this.setState({
-    type: type
-  });
-  console.log(this.state.type);
-};
-
-getPassword= (e) =>{
-  let password = e.target.value; 
-  if(password ){
-  this.setState({
-    Password: password
-  });
-  console.log(this.state.Password);
-}
-};
-handleSubmit = e => {
-  let data = {
-    email: this.state.email,
-    password: this.state.Password,
-    type: this.state.type
+  gettype = e => {
+    let type = e.target.value;
+    this.setState({
+      type: type
+    });
+    console.log(this.state.type);
   };
+
+  getPassword = (e) => {
+    let password = e.target.value;
+    if (password) {
+      this.setState({
+        Password: password
+      });
+      console.log(this.state.Password);
+    }
+  };
+  handleSubmit = e => {
     e.preventDefault();
+    let data = {
+      email: this.state.email,
+      password: this.state.Password,
+      type: this.state.type
+    };
     console.log(data);
-//     axios
-//       .post(`${util.BASE_URL}/signup`,data)
-//       .then(res => this.setState({ formError: res.data.messaage }))
-//       .catch(err => this.setState({formError: err.response.data.message}));
- };
-  render(){
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={useStyles.paper}>
-        <Avatar className={useStyles.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+    axios
+      .post(`${util.BASE_URL}/login`, data)
+      .then(res => this.setState({ auth: "" }))
+      .catch(err => this.setState({ auth: err.response.data.message }));
+  };
+  render() {
+    let redirectvar = null;
+    if (cookies.load("talent")) {
+      redirectvar = <Redirect to="/home" />
+    }
+    return (
+      <Container component="main" maxWidth="xs">
+        {this.state.auth && <p className="error">
+          Invalid Login
+                </p>}
+        {redirectvar}
+        <CssBaseline />
+        <div className={useStyles.paper}>
+          <Avatar className={useStyles.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
         </Typography>
-        {this.state.formError &&
-                <p className="error">
-                    Fill all the input fields please.
+          {this.state.formError &&
+            <p className="error">
+              Fill all the input fields please.
                 </p>
-              }
-        <form className={useStyles.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            onChange={this.getEmail}
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={this.getPassword}
-          />
-      <div>
-          <FormControl component="fieldset" className={useStyles.formControl}>
-              <FormLabel component="legend">You Are</FormLabel>
-              <RadioGroup aria-label="Type" name="type" value={this.state.type} onChange={this.gettype}>
-                <FormControlLabel value="talent" control={<Radio />} label="Talent" />
-                <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />              
-              </RadioGroup>
-            </FormControl>
-             </div>
-        
-         
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={useStyles.submit}
-            onClick= {this.handleSubmit}
-          >
-            Sign In
+          }
+          <form className={useStyles.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={this.getEmail}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={this.getPassword}
+            />
+            <div>
+              <FormControl component="fieldset" className={useStyles.formControl}>
+                <FormLabel component="legend">You Are</FormLabel>
+                <RadioGroup aria-label="Type" name="type" value={this.state.type} onChange={this.gettype}>
+                  <FormControlLabel value="talent" control={<Radio />} label="Talent" />
+                  <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />
+                </RadioGroup>
+              </FormControl>
+            </div>
+
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={useStyles.submit}
+              onClick={this.handleSubmit}
+            >
+              Sign In
           </Button>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Grid container>
+              <Grid item>
+                <RLink to="/signup">
+                  <Link href="">
+                    <p>Don't have an account? Sign Up</p>
+                  </Link>
+                </RLink>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-      </Box>
-    </Container>
-  );
-}
+          </form>
+        </div>
+        <Box mt={8}>
+        </Box>
+      </Container>
+    );
+  }
 }
 export default SignIn;

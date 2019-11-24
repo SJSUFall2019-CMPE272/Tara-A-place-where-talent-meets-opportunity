@@ -124,7 +124,7 @@ class SignUp extends Component {
     let RedirectVar = null;
     if (this.state.auth == 200) {
       console.log("in Redirect");
-      RedirectVar = <Redirect to="/createform" />
+      RedirectVar = <Redirect to="/signin" />
     }
     else if (this.state.auth != "") {
       RedirectVar = <div className="alert alert-danger">{this.state.auth}</div>
