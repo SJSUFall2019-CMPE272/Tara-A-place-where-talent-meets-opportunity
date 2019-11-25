@@ -27,8 +27,8 @@ router.get("/", function (req, res) {
         } else {
             // print all the opportunities
             console.log("Scan succeeded.");
-            data.Items.forEach(function (opportunity) {
-                console.log(opportunity);
+            data.Items.forEach(function (talent) {
+                console.log(talent);
             });
             res.send(data.Items);
         }

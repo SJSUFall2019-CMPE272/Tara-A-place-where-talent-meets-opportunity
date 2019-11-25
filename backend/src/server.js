@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import signup from "./routes/signup";
 import talent from "./routes/talent";
 import login from "./routes/login";
+import recruiter from "./routes/recruiter";
 import opportunities from "./routes/opportunities";
 
 const app = express();
