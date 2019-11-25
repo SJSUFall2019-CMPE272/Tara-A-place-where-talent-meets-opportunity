@@ -20,6 +20,7 @@ import axios from "axios";
 import util from "../utils";
 import cookies from "react-cookies";
 import { Link as RLink, Redirect } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -123,6 +124,8 @@ class SignIn extends Component {
       redirectvar = <Redirect to="/recruiterhome" />
     }
     return (
+      <>
+      <Navbar/>
       <Container component="main" maxWidth="xs">
         {this.state.auth && <p className="error">
           Invalid Login
@@ -205,6 +208,7 @@ class SignIn extends Component {
         <Box mt={8}>
         </Box>
       </Container>
+      </>
     );
   }
 }

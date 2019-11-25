@@ -10,6 +10,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import axios from "axios";
 import util from "../utils";
 import './styleSignUp.css';
+import Navbar from "./Navbar";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -131,6 +132,8 @@ class SignUp extends Component {
     }
 
     return (
+      <>
+      <Navbar/>
       <div className='wrapper'>
         {RedirectVar}
         <div className='form-wrapper'>
@@ -175,6 +178,7 @@ class SignUp extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }

@@ -35,7 +35,7 @@ export default class Navbar extends Component {
               </li>}
             {!localStorage.getItem("id") && <li className="navbar-item">
               <Link to="/signup" className="nav-link">
-                Create an Account
+                Register
               </Link>
             </li>}
 
