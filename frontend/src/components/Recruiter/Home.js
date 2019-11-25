@@ -17,7 +17,8 @@ import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Navbar from "../Navbar";
 import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
-
+import { Modal, Button as RButton } from "react-bootstrap";
+import util from "../../utils";
 
 
 
@@ -28,7 +29,7 @@ import { red } from "@material-ui/core/colors";
 const useStyles = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
-      },
+    },
     hearticon: {
         color: 'red',
     },
@@ -61,17 +62,46 @@ const useStyles = makeStyles(theme => ({
 const cards = [1, 2, 3, 4, 5, 6, 7];
 
 class Home extends Component {
+    state = {
+        talents: [],
+        error: "",
+        showDetailsModal: false,
+        talent: {}
+    }
+    componentDidMount = () => {
+        axios
+            .get(`${util.BASE_URL}/talent`)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ talents: res.data, error: "" })
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ error: err.response.data.message }
+                )
+            });
+    }
+    handleViewDetails = (talent) => {
+        this.setState({ showDetailsModal: true, talent: talent })
+    }
+    handleClose = () => {
+        this.setState({ showDetailsModal: false, talent: {} })
+    }
     render() {
+        const labelstyles = {
+            fontSize: '20px',
+            fontWeight: 400
+        }
         return (
             <React.Fragment>
                 <Navbar />
                 <CssBaseline />
-                <AppBar position="relative">
+                {/* <AppBar position="relative">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" noWrap>
                         </Typography>
                     </Toolbar>
-                </AppBar>
+                </AppBar> */}
                 <main>
                     {/* Hero unit */}
                     <div className={useStyles.heroContent}>
@@ -101,8 +131,8 @@ class Home extends Component {
                     <Container className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
-                            {cards.map(card => (
-                                <Grid item key={card} xs={12} sm={6} md={4}>
+                            {this.state.talents.map(talent => (
+                                <Grid item key={talent.id} xs={12} sm={6} md={4}>
                                     <Card className={useStyles.card}>
                                         <CardMedia
                                             className={useStyles.cardMedia}
@@ -111,11 +141,7 @@ class Home extends Component {
                                         />
                                         <CardContent className={useStyles.cardContent}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                Full Name <Button><FavoriteRoundedIcon className={useStyles.hearticon} /></Button>
-                                            </Typography>
-
-                                            <Typography>
-                                                About
+                                                {talent.name.firstName + " " + talent.name.lastName}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
@@ -125,8 +151,8 @@ class Home extends Component {
                                             {/* <Button color="primary"> */}
 
                                             {/* </Button> */}
-                                            <Button size="small" color="primary">
-                                                View Profile
+                                            <Button size="small" color="primary" onClick={() => this.handleViewDetails(talent)}>
+                                                View Details
                                             </Button>
                                         </CardActions>
                                     </Card>
@@ -135,7 +161,68 @@ class Home extends Component {
                         </Grid>
                     </Container>
                 </main>
-
+                <Modal show={this.state.showDetailsModal} onHide={this.handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>{this.state.talent.name && <p>
+                            {this.state.talent.name.firstName} {this.state.talent.name.LastName}
+                        </p>}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="col-sm-12">
+                            <label style={labelstyles}>Email</label>
+                            <p>{this.state.talent.email}</p>
+                        </div>
+                        <div className="col-sm-12">
+                            <label style={labelstyles}>Gender</label>
+                            <p>{this.state.talent.gender}</p>
+                        </div>
+                        {this.state.talent.experience &&
+                            <div className="col-sm-12">
+                                <label style={labelstyles}>Experience</label>
+                                {this.state.talent.experience.map(exp =>
+                                    <div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>project Name</label>
+                                            <p>{exp.projectName}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>project Type</label>
+                                            <p>{exp.projectType}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>description</label>
+                                            <p>{exp.description}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>role</label>
+                                            <p>{exp.role}</p>
+                                        </div>
+                                    </div>)}
+                            </div>
+                        }
+                        {this.state.talent.gender && <div className="col-sm-12">
+                            <label style={labelstyles}>Gender</label>
+                            {this.state.talent.gender}
+                        </div>}
+                        {this.state.talent.location && <div className="col-sm-12">
+                            <label style={labelstyles}>Address</label>
+                            <p>
+                                {this.state.talent.location.street}
+                            </p>
+                            <p>
+                                {this.state.talent.location.city}
+                            </p>
+                            <p>
+                                {this.state.talent.location.state}
+                            </p>
+                        </div>}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <RButton variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </RButton>
+                    </Modal.Footer>
+                </Modal>
             </React.Fragment>
         );
     }
