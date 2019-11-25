@@ -17,7 +17,8 @@ import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Navbar from "../Navbar";
 import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
-
+import util from "../../utils";
+import { Modal, Button as RButton } from "react-bootstrap";
 
 
 
@@ -28,7 +29,7 @@ import { red } from "@material-ui/core/colors";
 const useStyles = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
-      },
+    },
     hearticon: {
         color: 'red',
     },
@@ -58,20 +59,48 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
     },
 }));
-const cards = [1, 2, 3, 4, 5, 6, 7];
 
 class Home extends Component {
+    state = {
+        opportunities: [],
+        error: "",
+        showDetailsModal: false,
+        opportunity: {}
+    }
+    componentDidMount = () => {
+        axios
+            .get(`${util.BASE_URL}/opportunities`)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ opportunities: res.data, error: "" })
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ error: err.response.data.message }
+                )
+            });
+    }
+    handleViewDetails = (card) => {
+        this.setState({ showDetailsModal: true, opportunity: card })
+    }
+    handleClose = () => {
+        this.setState({ showDetailsModal: false, opportunity: {} })
+    }
     render() {
+        const labelstyles = {
+            fontSize: '20px',
+            fontWeight: 400
+        }
         return (
             <React.Fragment>
                 <Navbar />
                 <CssBaseline />
-                <AppBar position="relative">
+                {/* <AppBar position="relative">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" noWrap>
                         </Typography>
                     </Toolbar>
-                </AppBar>
+                </AppBar> */}
                 <main>
                     {/* Hero unit */}
                     <div className={useStyles.heroContent}>
@@ -101,8 +130,8 @@ class Home extends Component {
                     <Container className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
-                            {cards.map(card => (
-                                <Grid item key={card} xs={12} sm={6} md={4}>
+                            {this.state.opportunities.map(card => (
+                                <Grid item key={card.id} xs={12} sm={6} md={4}>
                                     <Card className={useStyles.card}>
                                         <CardMedia
                                             className={useStyles.cardMedia}
@@ -111,11 +140,10 @@ class Home extends Component {
                                         />
                                         <CardContent className={useStyles.cardContent}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                Heading <Button><FavoriteRoundedIcon className={useStyles.hearticon} /></Button>
+                                                {card.title}
                                             </Typography>
-
                                             <Typography>
-                                                Job Description
+                                                {card.description}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
@@ -125,7 +153,7 @@ class Home extends Component {
                                             {/* <Button color="primary"> */}
 
                                             {/* </Button> */}
-                                            <Button size="small" color="primary">
+                                            <Button size="small" color="primary" onClick={() => this.handleViewDetails(card)}>
                                                 View Details
                                             </Button>
                                         </CardActions>
@@ -135,7 +163,50 @@ class Home extends Component {
                         </Grid>
                     </Container>
                 </main>
-
+                <Modal show={this.state.showDetailsModal} onHide={this.handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>{this.state.opportunity.title}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="col-sm-12">
+                            <label style={labelstyles}>Description</label>
+                            <p>{this.state.opportunity.description}</p>
+                        </div>
+                        <div className="col-sm-12">
+                            <label style={labelstyles}>Project Name</label>
+                            <p>{this.state.opportunity.project_name}</p>
+                        </div>
+                        <div className="col-sm-12">
+                            <label style={labelstyles}>Project Type</label>
+                            <p>{this.state.opportunity.project_type}</p>
+                        </div>
+                        {this.state.opportunity.required_skills && <div className="col-sm-12">
+                            <label style={labelstyles}>Required Skills</label>
+                            {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
+                        </div>}
+                        {this.state.opportunity.gender && <div className="col-sm-12">
+                            <label style={labelstyles}>Gender</label>
+                            {this.state.opportunity.gender}
+                        </div>}
+                        {this.state.opportunity.location && <div className="col-sm-12">
+                            <label style={labelstyles}>Address</label>
+                            <p>
+                                {this.state.opportunity.location.street}
+                            </p>
+                            <p>
+                                {this.state.opportunity.location.city}
+                            </p>
+                            <p>
+                                {this.state.opportunity.location.state}
+                            </p>
+                        </div>}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <RButton variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </RButton>
+                    </Modal.Footer>
+                </Modal>
             </React.Fragment>
         );
     }
