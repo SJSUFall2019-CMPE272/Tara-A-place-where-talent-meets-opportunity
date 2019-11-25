@@ -69,9 +69,6 @@ router.get("/:id", function (req, res) {
 router.post("/:id", function(req, res) {
     
     var talentId = req.params.id;
-    console.log(talentId);
-    //console.log(req.body.itemValues);
-    console.log(req.body.itemValues.address);
 
     var params = {
         TableName: "tara-talent-demo",
@@ -87,8 +84,7 @@ router.post("/:id", function(req, res) {
             ":gps": req.body.itemValues.gps,
             ":m": req.body.itemValues.media,
             ":s": req.body.itemValues.skills
-        },
-        ReturnValues:"UPDATED_NEW"
+        }
     };
 
     var docClient = new AWS.DynamoDB.DocumentClient();
@@ -96,14 +92,14 @@ router.post("/:id", function(req, res) {
         if (err) {
             
             res.send(err)
-            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            console.error("Unable to update talent item. Error JSON:", JSON.stringify(err, null, 2));
 
         } else {
             res.status(200).send({
                 success: true,
                 message: 'Item updated successfully'
               });
-            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+            console.log("Talent UpdateItem succeeded");
         }
     });
     

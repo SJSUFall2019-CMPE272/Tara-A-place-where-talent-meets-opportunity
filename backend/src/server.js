@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 
 app.use("/signup", signup);
 app.use("/talent", talent);
+app.use("/recruiter", recruiter);
 app.use("/login", login);
 app.use("/opportunities", opportunities);
 
