@@ -52,7 +52,7 @@ const Opportunity = props => (
                 {/* </Button> */}
                 <Button size="small" color="primary" onClick={() => this.handleViewDetails(props.opportunity)}>
                     View Details
-                                            </Button>
+                </Button>
             </CardActions>
         </Card>
     </Grid>
@@ -135,6 +135,17 @@ class Home extends Component {
         return this.state.opportunities.map(currentOpportunity => {
             return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id}/>;
         })
+    }
+
+
+    unmatch() {
+        // axios.delete('${util.BASE_URL}/deletematch`')
+        //     .then(response => {console.log(response.data)});
+    }
+
+    match() {
+        // axios.add('${util.BASE_URL}/addmatch`')
+        //     .then(response => {console.log(response.data)});
     }
 
 
