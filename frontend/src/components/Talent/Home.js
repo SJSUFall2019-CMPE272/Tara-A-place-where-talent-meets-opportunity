@@ -28,15 +28,47 @@ import axios from "axios";
 import { red } from "@material-ui/core/colors";
 
 
+
+const Opportunity = props => (
+    <Grid item xs={12} sm={6} md={4}>
+        <Card className={useStyles.card}>
+            <CardMedia
+                className={useStyles.cardMedia}
+                image="https://source.unsplash.com/random"
+                title="Image title"
+            />
+            <CardContent className={useStyles.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {props.opportunity.title}
+                </Typography>
+                <Typography>
+                    {props.opportunity.description}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Toggle />
+                {/* <Button color="primary"> */}
+
+                {/* </Button> */}
+                <Button size="small" color="primary" onClick={() => this.handleViewDetails(props.opportunity)}>
+                    View Details
+                                            </Button>
+            </CardActions>
+        </Card>
+    </Grid>
+)
+
+
+
 const Toggle = () => {
     const [isToggledOn, setToggle] = React.useState(false)
     const toggle = () => setToggle(!isToggledOn)
     return (
         <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
-        {isToggledOn ? 'UNMATCH' : 'MATCH'} 
+            {isToggledOn ? 'UNMATCH' : 'MATCH'}
         </Fab>
     )
-  }
+}
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -98,6 +130,14 @@ class Home extends Component {
     handleClose = () => {
         this.setState({ showDetailsModal: false, opportunity: {} })
     }
+
+    opportunityList() {
+        return this.state.opportunities.map(currentOpportunity => {
+            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id}/>;
+        })
+    }
+
+
     render() {
         const labelstyles = {
             fontSize: '20px',
@@ -125,10 +165,10 @@ class Home extends Component {
                             </Typography>
                             <div className={useStyles.heroButtons}>
                                 <Grid container spacing={2} justify="center">
-                                    
+
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
-                                        <Link to="/matchedjobs">Show matched jobs</Link>
+                                            <Link to="/matchedjobs">Show matched jobs</Link>
                                         </Button>
                                     </Grid>
                                     <Grid item>
@@ -140,38 +180,11 @@ class Home extends Component {
                             </div>
                         </Container>
                     </div>
-                    <Divider/>
+                    <Divider />
                     <Container className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
-                            {this.state.opportunities.map(card => (
-                                <Grid item key={card.id} xs={12} sm={6} md={4}>
-                                    <Card className={useStyles.card}>
-                                        <CardMedia
-                                            className={useStyles.cardMedia}
-                                            image="https://source.unsplash.com/random"
-                                            title="Image title"
-                                        />
-                                        <CardContent className={useStyles.cardContent}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                {card.title}
-                                            </Typography>
-                                            <Typography>
-                                                {card.description}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                        <Toggle />
-                                            {/* <Button color="primary"> */}
-
-                                            {/* </Button> */}
-                                            <Button size="small" color="primary" onClick={() => this.handleViewDetails(card)}>
-                                                View Details
-                                            </Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
+                            {this.opportunityList()}
                         </Grid>
                     </Container>
                 </main>
