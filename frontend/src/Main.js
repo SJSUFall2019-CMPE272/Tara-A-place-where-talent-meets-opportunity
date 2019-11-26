@@ -19,6 +19,8 @@ class Main extends Component {
         <Route path="/recruiterhome" component={RecruiterHome} />
         <Route path="/createform" component={UpdateProfile} />
         <Route path="/createjob" component={CreateJob} />
+        <Route path="/matchedjobs" />
+        
       </div>
     );
   }

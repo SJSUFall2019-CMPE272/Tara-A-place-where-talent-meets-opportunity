@@ -19,12 +19,24 @@ import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
 import util from "../../utils";
 import { Modal, Button as RButton } from "react-bootstrap";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import Divider from '@material-ui/core/Divider';
+import { Link } from "react-router-dom";
 
 
-
-import Link from "react-router-dom";
 import axios from "axios";
 import { red } from "@material-ui/core/colors";
+
+
+const Toggle = () => {
+    const [isToggledOn, setToggle] = React.useState(false)
+    const toggle = () => setToggle(!isToggledOn)
+    return (
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
+        {isToggledOn ? 'UNMATCH' : 'MATCH'} 
+        </Fab>
+    )
+  }
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -113,20 +125,22 @@ class Home extends Component {
                             </Typography>
                             <div className={useStyles.heroButtons}>
                                 <Grid container spacing={2} justify="center">
+                                    
                                     <Grid item>
-                                        <Button variant="contained" color="primary">
-                                            Main call to action
+                                        <Button variant="outlined" color="primary">
+                                        <Link to="/matchedjobs">Show matched jobs</Link>
                                         </Button>
                                     </Grid>
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
-                                            Show your matches
+                                            <Link to="/createform">Update Profile</Link>
                                         </Button>
                                     </Grid>
                                 </Grid>
                             </div>
                         </Container>
                     </div>
+                    <Divider/>
                     <Container className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
@@ -147,9 +161,7 @@ class Home extends Component {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Fab variant="extended" size="medium" color="primary" aria-label="add" className={useStyles.margin}>
-                                                MATCH <CheckIcon />
-                                            </Fab>
+                                        <Toggle />
                                             {/* <Button color="primary"> */}
 
                                             {/* </Button> */}
