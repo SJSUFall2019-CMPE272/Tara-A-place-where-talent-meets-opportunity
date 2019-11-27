@@ -9,7 +9,7 @@
   "author": "Tara",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.569.0",
+    "aws-sdk": "^2.580.0",
     "babel": "^6.23.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",

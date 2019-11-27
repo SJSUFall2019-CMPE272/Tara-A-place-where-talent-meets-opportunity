@@ -1,6 +1,58 @@
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import util from "../../utils";
+import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+
+const useStyles = makeStyles(theme => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+    hearticon: {
+        color: 'red',
+    },
+    icon: {
+        marginRight: theme.spacing(2),
+    },
+    heroContent: {
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(8, 0, 6),
+    },
+    heroButtons: {
+        marginTop: theme.spacing(4),
+    },
+    cardGrid: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(8),
+    },
+    card: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    cardMedia: {
+        paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+        flexGrow: 1,
+    },
+}));
+
+
+
+const Toggle = () => {
+    const [isToggledOn, setToggle] = React.useState(false)
+    const toggle = () => setToggle(!isToggledOn)
+    return (
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
+            {isToggledOn ? 'UNMATCH' : 'MATCH'}
+        </Fab>
+    )
+}
+
 
 
 export default class JobDetail extends Component {
@@ -41,6 +93,11 @@ export default class JobDetail extends Component {
         }
         return (
             <main>
+                 {/* <div className="col-sm-12">
+                <label style={labelstyles}>Something</label>
+                <p>{this.state.opportunity.label}</p>
+            </div> */}
+           
             <div className="col-sm-12">
                 <label style={labelstyles}>Description</label>
                 <p>{this.state.opportunity.description}</p>
@@ -78,7 +135,23 @@ export default class JobDetail extends Component {
                     {this.state.opportunity.location.state}
                 </p>
             </div>
+            
         }
+         <div className={useStyles.heroButtons}>
+                                <Grid container spacing={2} justify="center">
+
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary">
+                                            <Link to="/matchedjobs">Show matched jobs</Link>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary">
+                                            <Link to="/home">Home</Link>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
         </main>
         
     );
