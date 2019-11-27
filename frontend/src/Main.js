@@ -8,6 +8,8 @@ import RecruiterHome from "./components/Recruiter/Home";
 import UpdateProfile from "./components/Talent/UpdateProfile";
 import CreateJob from "./components/Recruiter/CreateJob";
 import JobDetail from "./components/Talent/JobDetail";
+import TalentDetail from "./components/Recruiter/TalentDetail";
+
 class Main extends Component {
   state = {};
   render() {
@@ -22,6 +24,7 @@ class Main extends Component {
         <Route path="/createjob" component={CreateJob} />
         <Route path="/matchedjobs" />
         <Route path="/jobdetail/:id" component={JobDetail} />
+        <Route path="/talentdetail/:id" component={TalentDetail} />
 
         
       </div>
