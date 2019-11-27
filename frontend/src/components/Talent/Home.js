@@ -50,8 +50,8 @@ const Opportunity = props => (
                 {/* <Button color="primary"> */}
 
                 {/* </Button> */}
-                <Button size="small" color="primary" onClick={() => this.handleViewDetails(props.opportunity)}>
-                    View Details
+                <Button size="small" color="primary">
+                    <Link to={"/jobdetail/"+props.opportunity.id}>View Details</Link>
                 </Button>
             </CardActions>
         </Card>
@@ -199,50 +199,7 @@ class Home extends Component {
                         </Grid>
                     </Container>
                 </main>
-                <Modal show={this.state.showDetailsModal} onHide={this.handleClose}>
-                    <Modal.Header>
-                        <Modal.Title>{this.state.opportunity.title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="col-sm-12">
-                            <label style={labelstyles}>Description</label>
-                            <p>{this.state.opportunity.description}</p>
-                        </div>
-                        <div className="col-sm-12">
-                            <label style={labelstyles}>Project Name</label>
-                            <p>{this.state.opportunity.project_name}</p>
-                        </div>
-                        <div className="col-sm-12">
-                            <label style={labelstyles}>Project Type</label>
-                            <p>{this.state.opportunity.project_type}</p>
-                        </div>
-                        {this.state.opportunity.required_skills && <div className="col-sm-12">
-                            <label style={labelstyles}>Required Skills</label>
-                            {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
-                        </div>}
-                        {this.state.opportunity.gender && <div className="col-sm-12">
-                            <label style={labelstyles}>Gender</label>
-                            {this.state.opportunity.gender}
-                        </div>}
-                        {this.state.opportunity.location && <div className="col-sm-12">
-                            <label style={labelstyles}>Address</label>
-                            <p>
-                                {this.state.opportunity.location.street}
-                            </p>
-                            <p>
-                                {this.state.opportunity.location.city}
-                            </p>
-                            <p>
-                                {this.state.opportunity.location.state}
-                            </p>
-                        </div>}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <RButton variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </RButton>
-                    </Modal.Footer>
-                </Modal>
+                
             </React.Fragment>
         );
     }
