@@ -57,9 +57,18 @@ router.get("/:id", function (req, res) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            console.log("Query succeeded.");
+            if(data.Count > 0) {
+                console.log("Query succeeded.");
+            console.log(data)
             delete data.Items[0].password;
             res.send(data.Items);
+            }
+            else {
+                
+            res.send('{"Message": "No results"}');
+            }
+
+            
         }
 
     });
