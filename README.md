@@ -1,6 +1,15 @@
+
 # Tara
 
  A place where talent meets opportunity.
+
+
+# Team
+
+1. Akshay Elavia
+2. Purvi Misal
+3. Shivani Jain
+4. Sai Chaitanya Dasari
 
 
 # Abstract 
@@ -14,13 +23,14 @@ Who are we?
 Tara is a real-time entertainment-industry brand aimed at connecting local performing talent, with a special focus on casting, job opportunities, and much more.
 
 # Persona/Target Users:
+Where Talent meets Opportunity. 
 
-1)Artists looking for work in film, television, theater, commercials, voiceover, radio and more mediums and needing help to tailor and manage their careers.
+1) Talent: Performing artists and backstage professionals looking for work in film, television, theater, commercials, voiceover, radio, gaming and other mediums who seek opportunity to find their next role and manage their careers.
 
-2)Casting directors and talent recruiters looking to hire the perfect cast and crew for their projects are our target audience.
+2) Opportunity: Casting directors and  recruiters looking to hire the perfect artistic talent and professional backstage crew for their projects. 
 
 # Hill Statement
-Bringing together Talent and Opportunity in the arts and music industry through a commonn platform TARA and connect each other on real-time.
+Tara: Bringing together Talent and Opportunity in the Performing Arts industries through a common platform.
 
 # Technology
 
@@ -45,9 +55,12 @@ On the client side, we will make a ReactJS application. We are using ReactJS for
 The frontend website is available at the following URL:
 https://dgnchyrkhqge4.cloudfront.net/
 
-# Team
 
-1. Akshay Elavia
-2. Purvi Misal
-3. Shivani Jain
-4. Sai Chaitanya Dasari
+
+### Design Thinking
+![DesignThinking](DesignThinking_As_Is.png)
+
+
+
+![DesignThinking](DesignThinking_To_Be.png)
+
