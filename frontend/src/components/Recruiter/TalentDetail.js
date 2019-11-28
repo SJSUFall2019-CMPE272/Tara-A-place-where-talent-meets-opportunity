@@ -1,9 +1,65 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import util from "../../utils";
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
 
 
-export default class TalentDetail extends Component {
+const useStyles = makeStyles(theme => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+    hearticon: {
+        color: 'red',
+    },
+    icon: {
+        marginRight: theme.spacing(2),
+    },
+    heroContent: {
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(8, 0, 6),
+    },
+    heroButtons: {
+        marginTop: theme.spacing(4),
+    },
+    cardGrid: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(8),
+    },
+    card: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    cardMedia: {
+        paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+        flexGrow: 1,
+    },
+}));
+
+
+const Toggle = () => {
+    const [isToggledOn, setToggle] = React.useState(false)
+    const toggle = () => setToggle(!isToggledOn)
+    return (
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add"  position="center-bottom" className={useStyles.margin}>
+            {isToggledOn ? 'UNMATCH' : 'MATCH'}
+        </Fab>
+    )
+}
+
+
+
+
+
+
+
+class TalentDetail extends Component {
     constructor(props) {
         super(props);
 
@@ -88,10 +144,20 @@ export default class TalentDetail extends Component {
                         {this.state.talent.location.state}
                     </p>
                 </div>}
+                <div className={useStyles.heroButtons}>
+                                <Grid container spacing={2} justify="center">
+                                    <Grid item>
+                                        <Toggle />
+                                        <Button variant="outlined" color="primary">
+                                            <Link to="/recruiterhome">Home</Link>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
             </main>
 
         );
     }
 }
-
+export default TalentDetail;
 

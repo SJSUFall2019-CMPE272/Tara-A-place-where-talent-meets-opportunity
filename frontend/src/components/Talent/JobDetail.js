@@ -3,9 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import util from "../../utils";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -47,7 +49,7 @@ const Toggle = () => {
     const [isToggledOn, setToggle] = React.useState(false)
     const toggle = () => setToggle(!isToggledOn)
     return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add"  position="center-bottom" className={useStyles.margin}>
             {isToggledOn ? 'UNMATCH' : 'MATCH'}
         </Fab>
     )
@@ -55,7 +57,8 @@ const Toggle = () => {
 
 
 
-export default class JobDetail extends Component {
+
+ class JobDetail extends Component {
     constructor(props) {
         super(props);
 
@@ -87,44 +90,53 @@ export default class JobDetail extends Component {
 
 
     render() {
+       
         const labelstyles = {
             fontSize: '20px',
             fontWeight: 400
         }
         return (
-            <main>
-                 {/* <div className="col-sm-12">
-                <label style={labelstyles}>Something</label>
-                <p>{this.state.opportunity.label}</p>
-            </div> */}
            
-            <div className="col-sm-12">
+            <main>
+
+            <div className="col-sm-12"  className={useStyles.margin}>
+                <h1><label style={labelstyles}>Job Title</label></h1>
+                <p>{this.state.opportunity.title}</p>
+            </div>
+           
+            <div className="col-sm-12"  className={useStyles.heroContent}>
                 <label style={labelstyles}>Description</label>
                 <p>{this.state.opportunity.description}</p>
             </div>
-            <div className="col-sm-12">
+
+            <div className="col-sm-12"  className={useStyles.cardContent}>
                 <label style={labelstyles}>Project Name</label>
                 <p>{this.state.opportunity.project_name}</p>
             </div>
-            <div className="col-sm-12">
+
+            <div className="col-sm-12" className={useStyles.margin}>
                 <label style={labelstyles}>Project Type</label>
                 <p>{this.state.opportunity.project_type}</p>
             </div>
-        {
-            this.state.opportunity.required_skills && <div className="col-sm-12">
+
+            <div>  {
+            this.state.opportunity.required_skills && <div className="col-sm-12" className={useStyles.margin}>
                 <label style={labelstyles}>Required Skills</label>
                 {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
             </div>
-        }
-        {
-            this.state.opportunity.gender && <div className="col-sm-12">
+        }</div>
+
+      <div> {
+            this.state.opportunity.gender && <div className="col-sm-12" className={useStyles.heroContent}>
                 <label style={labelstyles}>Gender</label>
-                {this.state.opportunity.gender}
+                <p>{this.state.opportunity.gender}</p>
             </div>
         }
-        {
-            this.state.opportunity.location && <div className="col-sm-12">
-                <label style={labelstyles}>Address</label>
+        </div> 
+       <div>{
+            this.state.opportunity.location && <div className="col-sm-12" className={useStyles.heroContent}>
+                <h1>  <label style={labelstyles}>Address</label>    </h1>
+               
                 <p>
                     {this.state.opportunity.location.street}
                 </p>
@@ -134,18 +146,14 @@ export default class JobDetail extends Component {
                 <p>
                     {this.state.opportunity.location.state}
                 </p>
+                
             </div>
-            
-        }
+    }   
+       </div>
          <div className={useStyles.heroButtons}>
                                 <Grid container spacing={2} justify="center">
-
                                     <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/matchedjobs">Show matched jobs</Link>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
+                                        <Toggle />
                                         <Button variant="outlined" color="primary">
                                             <Link to="/home">Home</Link>
                                         </Button>
@@ -156,6 +164,10 @@ export default class JobDetail extends Component {
         
     );
     }
+
 }
+
+export default JobDetail;
+
 
 
