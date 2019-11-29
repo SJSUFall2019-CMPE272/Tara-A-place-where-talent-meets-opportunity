@@ -12,9 +12,9 @@ import Box from '@material-ui/core/Box';
 import AddIcon from '@material-ui/icons/Add';
 import Navbar from "../Navbar";
 import Divider from '@material-ui/core/Divider';
-
-
+import util from "../../utils";
 import "./CreateForm.css";
+import axios from "axios";
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  
+
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -43,43 +43,63 @@ const useStyles = makeStyles(theme => ({
 
 class UpdateProfile extends Component {
   state = {
-    name: "",
+    name: {
+      firstName: "",
+      lastName: ""
+    },
     email: "",
     message: "",
     gender: "",
-    secondarynumber: "",
-    primarynumber: "",
-    zipcode: "",
-    state: "",
-    skillset: [],
+    contact: {
+      phone: ["", ""]
+    },
+    address: {
+      zip: "",
+      add_state: "",
+      street: []
+    },
+    skills: [],
     value: "",
     ExpState: [],
     experience: [{
       role: "",
-      project_name: "",
-      project_type:"",
-      description:"",
+      projectName: "",
+      projectType: "",
+      description: "",
     }],
-    media:{
-      hyperlinks:[""],
-      files:[""],
-      resume:""
+    media: {
+      hyperlinks: [""],
+      files: [""],
+      resume: ""
     },
     formError: false
   };
 
-
+  componentDidMount() {
+    axios
+      .get(`${util.BASE_URL}/talent/${localStorage.getItem("id")}`)
+      .then(res => {
+        let prevState = this.state;
+        console.log(res.data);
+        Object.assign(prevState, res.data[0]);
+        this.setState({ state: prevState });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({ error: err.response.data.message })
+      });
+  }
   //START--Experience Form methods
 
   addExperience = (e) => {
     e.preventDefault();
     this.setState((prevState) => ({
-      experience: [...prevState.experience, {role:"", project_name:"",project_type:"",description:""}],
+      experience: [...prevState.experience, { role: "", projectName: "", projectType: "", description: "" }],
     }));
   }
 
   experienceHandleChange = (e) => {
-    if (["role", "project_name","project_type","description"].includes(e.target.className) ) {
+    if (["role", "projectName", "projectType", "description"].includes(e.target.className)) {
       let experience = [...this.state.experience]
       experience[e.target.dataset.id][e.target.className] = e.target.value
       this.setState({ experience }, () => console.log(this.state.experience))
@@ -89,11 +109,12 @@ class UpdateProfile extends Component {
     console.log(this.state.experience)
   }
 
-   //END--Experience Form methods
+  //END--Experience Form methods
 
 
   getName = e => {
-    let username = e.target.value;
+    let username = { ...this.state.name };
+    username[e.target.name] = e.target.value;
     this.setState({
       name: username
     });
@@ -101,39 +122,21 @@ class UpdateProfile extends Component {
   };
 
   getPrimaryPhone = e => {
-    let phone = e.target.value;
+    let contact = { ...this.state.contact }
+    contact.phone[0] = e.target.value;
     this.setState({
-      primarynumber: phone
+      contact: contact
     });
-    console.log(this.state.primarynumber);
+    console.log(this.state.contact);
   };
 
   getSecondaryPhone = e => {
-    let phone = e.target.value;
+    let contact = { ...this.state.contact }
+    contact.phone[1] = e.target.value;
     this.setState({
-      secondarynumber: phone
+      contact: contact
     });
-    console.log(this.state.primarynumber);
-  };
-
-
-  getEmail = e => {
-    let userEmail = e.target.value;
-    if (
-      userEmail.match(
-        /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-      )
-    ) {
-      this.setState({
-        email: userEmail
-      });
-    } else {
-      this.setState({
-        email: ""
-      });
-      console.log("Incorrect Email, must match Expression");
-    }
-    console.log(this.state.userEmail);
+    console.log(this.state.contact);
   };
 
   getGender = e => {
@@ -144,28 +147,13 @@ class UpdateProfile extends Component {
     console.log(this.state.gender);
   };
 
-  getDescription = e => {
-    let userMessage = e.target.value;
+  getAddress = e => {
+    let address = this.state.state.address;
+    address[e.target.name] = e.target.value;
     this.setState({
-      message: userMessage
+      address: address
     });
-    console.log(this.state.message);
-  };
-
-  getState = e => {
-    let state = e.target.value;
-    this.setState({
-      state: state
-    });
-    console.log(this.state.state);
-  };
-
-  getZipcode = e => {
-    let zip = e.target.value;
-    this.setState({
-      zipcode: zip
-    });
-    console.log(this.state.zipcode);
+    console.log(this.state.address);
   };
 
   handleKeyDown = evt => {
@@ -176,12 +164,12 @@ class UpdateProfile extends Component {
 
       if (value) {
         this.setState({
-          skillset: [...this.state.skillset, this.state.value],
+          skills: [...this.state.skills, this.state.value],
           value: ""
         });
       }
     }
-    console.log(this.state.skillset);
+    console.log(this.state.skills);
   };
 
   handleChange = evt => {
@@ -191,48 +179,33 @@ class UpdateProfile extends Component {
       value: evt.target.value,
       error: null
     });
-    console.log(this.state.skillset);
+    console.log(this.state.skills);
   };
 
   handleDelete = item => {
-    let arr = this.state.skillset;
+    let arr = this.state.skills;
     arr = arr.filter(i => i !== item);
     this.setState({
-      skillset: arr
+      skills: arr
     });
-    console.log(this.state.skillset);
+    console.log(this.state.skills);
   };
 
   //send the form
   submitForm = e => {
-    const UserData = {
-      name: this.state.name,
+    const data = {
+      name: { ...this.state.name },
       gender: this.state.gender,
-      contact_info: {
-        contact_info1: this.state.primarynumber,
-        contact_info2: this.state.secondarynumber,
-      },
+      contact: { ...this.state.contact },
       email: this.state.email,
-      skills: this.state.skillset,
-      state: this.state.state,
-      zipcode: this.state.zipcode,
-      experience: [{
-        role: "",
-        project_name: "",
-        project_type: "",
-        description: ""
-      }],
-      media: {
-        hyperlinks: [],
-        files: [],
-        resume: "",
-      }
-
-
+      skills: this.state.skills,
+      address: { ...this.state.address },
+      experience: [...this.state.experience],
+      media: { ...this.state.media }
     }
     e.preventDefault();
 
-    if (this.state.name === "" || this.state.email === "") {
+    if (this.state.name.firstName && this.state.name.LastName && this.state.name.firstName === "") {
       this.setState({
         formError: true
       });
@@ -244,25 +217,19 @@ class UpdateProfile extends Component {
       console.log(`UserData: {
                 name: ${this.state.name},
                 gender: ${this.state.gender},
-                contact_info: {
-                    contact_info1: ${this.state.primarynumber},
-                    contact_info2: ${this.state.secondarynumber},
-                },
+                contact_info: ${this.state.contact},
                 email: ${this.state.email},
-                skills:  ${this.state.skillset}
-                state : ${this.state.state},
-                zipcode: ${this.state.zipcode},
+                skills:  ${this.state.skills}
+                state : ${this.state.address},
                 experience:[${this.state.experience}],
             media : {
-                hyperlinks : [],
-                    files : [],
-                    resume: "",
                 }
                 
 
             }`);
 
       console.log("form sent");
+      axios.post(`${util.BASE_URL}/talent/${localStorage.getItem("id")}`, data).then(res => alert("profile updated"));
     }
   };
 
@@ -275,10 +242,21 @@ class UpdateProfile extends Component {
             <TextField
               required
               id="standard-required"
-              label="Full Name"
-              defaultValue=""
+              label="First Name"
+              name="firstName"
+              value={this.state.name.firstName}
               className={useStyles.textField}
               margin="normal"
+              onChange={this.getName}
+            />
+            <TextField
+              required
+              id="standard-required"
+              label="Last Name"
+              value={this.state.name.lastName}
+              className={useStyles.textField}
+              margin="normal"
+              name="lastName"
               onChange={this.getName}
             />
           </div>
@@ -299,10 +277,10 @@ class UpdateProfile extends Component {
               required
               id="standard-required"
               label="Email ID"
-              defaultValue=""
+              value={this.state.email}
               className={useStyles.email}
               margin="normal"
-              onChange={this.getEmail}
+              disabled
             />
           </div>
           <div className="col-sm-8">
@@ -310,10 +288,11 @@ class UpdateProfile extends Component {
               required
               id="standard-required"
               label="State"
-              defaultValue=""
+              value={this.state.address.add_state}
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getState}
+              name="add_state"
+              onChange={this.getAddress}
             />
           </div>
 
@@ -321,11 +300,12 @@ class UpdateProfile extends Component {
             <TextField
               required
               id="standard-required"
-              label="Zipcode"
-              defaultValue=""
+              label="zip"
+              value={this.state.address.zip}
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getZipcode}
+              name="zip"
+              onChange={this.getAddress}
             />
           </div>
 
@@ -334,18 +314,18 @@ class UpdateProfile extends Component {
               required
               id="standard-required"
               label="Primary Contact"
-              defaultValue=""
+              value={this.state.contact.phone[0]}
               className={useStyles.textField}
               margin="normal"
               onChange={this.getPrimaryPhone}
             />
-            </div>
+          </div>
 
-            <div className="col-sm-6">
+          <div className="col-sm-6">
             <TextField
               id="standard"
               label="Secondary Contact"
-              defaultValue=""
+              value={this.state.contact.phone[1]}
               className={useStyles.textField}
               margin="normal"
               onChange={this.getSecondaryPhone}
@@ -358,7 +338,6 @@ class UpdateProfile extends Component {
               className="col-sm-6"
               id="standard"
               label="Skills"
-              defaultValue=""
               className={useStyles.textField}
               value={this.state.value}
               margin="normal"
@@ -367,7 +346,7 @@ class UpdateProfile extends Component {
               onChange={this.handleChange}
             />
 
-            {this.state.skillset.map(item => (
+            {this.state.skills.map(item => (
               <div className="col-sm-6" key={item}>
                 {item}
                 <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
@@ -380,18 +359,18 @@ class UpdateProfile extends Component {
           <div className="col-sm-12">
             <form onChange={this.experienceHandleChange} >
               <Button
-              variant="contained"
-              color="primary"
-              className={useStyles.button}
-              type="submit"
-              name="submit"
-              value="Send"
-              onClick={this.addExperience}
-            >
-            Add Experience
-              <AddIcon /> 
-            </Button>
-              
+                variant="contained"
+                color="primary"
+                className={useStyles.button}
+                type="submit"
+                name="submit"
+                value="Send"
+                onClick={this.addExperience}
+              >
+                Add Experience
+              <AddIcon />
+              </Button>
+
               {
                 this.state.experience.map((val, idx) => {
                   let RoleId = `Role-${idx}`
@@ -400,74 +379,74 @@ class UpdateProfile extends Component {
                   let DescriptionId = `DescriptionId-${idx}`
                   return (
                     <>
-                    <div className="col-sm-12 row my-auto" key={idx}>
-                      {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
+                      <div className="col-sm-12 row my-auto" key={idx}>
+                        {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
 
 
-                      <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
+                        <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
                         <div className="col-sm-12">
-                        <label>Role:</label>
-                        {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
-                        <input
-                          type="text"
-                          name={RoleId}
-                          data-id={idx}
-                          id={RoleId}
-                          value={this.state.experience[idx].role}
-                          className="role"
-                          
+                          <label>Role:</label>
+                          {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
+                          <input
+                            type="text"
+                            name={RoleId}
+                            data-id={idx}
+                            id={RoleId}
+                            value={this.state.experience[idx].role}
+                            className="role"
+
                           />
                           {/* </TextField> */}
-                          </div>
-
-                        <div className="col-sm-12">
-                        <label>Project Name:</label>
-                        {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
-                        <input
-                          type="text"
-                          name={ProjectId}
-                          data-id={idx}
-                          id={ProjectId}
-                          value={this.state.experience[idx].project_name}
-                          className="project_name"
-                        />
-                        {/* </TextField> */}
                         </div>
 
                         <div className="col-sm-12">
-                        <label>Project Type:</label>
-                        {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
-                        <input
-                          type="text"
-                          name={ProjectTypeId}
-                          data-id={idx}
-                          id={ProjectTypeId}
-                          value={this.state.experience[idx].project_type}
-                          className="project_type"
-                        /> 
-                        {/* </TextField> */}
+                          <label>Project Name:</label>
+                          {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
+                          <input
+                            type="text"
+                            name={ProjectId}
+                            data-id={idx}
+                            id={ProjectId}
+                            value={this.state.experience[idx].projectName}
+                            className="projectName"
+                          />
+                          {/* </TextField> */}
                         </div>
 
                         <div className="col-sm-12">
-                        <label>Description</label>
-                        {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
-                        <input
-                          multiline rows="3"
-                          type="text"
-                          name={DescriptionId}
-                          data-id={idx}
-                          id={DescriptionId}
-                          value={this.state.experience[idx].description}
-                          className="description"
-                        />
-                        {/* </TextField> */}
-                        
+                          <label>Project Type:</label>
+                          {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
+                          <input
+                            type="text"
+                            name={ProjectTypeId}
+                            data-id={idx}
+                            id={ProjectTypeId}
+                            value={this.state.experience[idx].projectType}
+                            className="projectType"
+                          />
+                          {/* </TextField> */}
                         </div>
-                    
-                        
-                  </div>
-                  <Divider/>
-                  </>
+
+                        <div className="col-sm-12">
+                          <label>Description</label>
+                          {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
+                          <input
+                            multiline rows="3"
+                            type="text"
+                            name={DescriptionId}
+                            data-id={idx}
+                            id={DescriptionId}
+                            value={this.state.experience[idx].description}
+                            className="description"
+                          />
+                          {/* </TextField> */}
+
+                        </div>
+
+
+                      </div>
+                      <Divider />
+                    </>
                   )
                 })
               }

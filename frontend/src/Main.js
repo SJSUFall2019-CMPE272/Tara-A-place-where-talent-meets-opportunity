@@ -18,15 +18,15 @@ class Main extends Component {
         <Route path="/" exact component={Landing} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/home" component={TalentHome} /> 
+        <Route path="/home" component={TalentHome} />
         <Route path="/recruiterhome" component={RecruiterHome} />
-        <Route path="/createform" component={UpdateProfile} />
+        <Route path="/updateprofile" component={UpdateProfile} />
         <Route path="/createjob" component={CreateJob} />
         <Route path="/matchedjobs" />
         <Route path="/jobdetail/:id" component={JobDetail} />
         <Route path="/talentdetail/:id" component={TalentDetail} />
 
-        
+
       </div>
     );
   }

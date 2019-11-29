@@ -37,7 +37,10 @@ const useStyles = makeStyles(theme => ({
 
 class SignUp extends Component {
   state = {
-    name: "",
+    name: {
+      firstName: "",
+      lastName: ""
+    },
     email: "",
     Password: "",
     type: "",
@@ -48,7 +51,8 @@ class SignUp extends Component {
 
 
   getName = (e) => {
-    let username = e.target.value;
+    let username = { ...this.state.name }
+    username[e.target.name] = e.target.value;
     this.setState({
       name: username
     });
@@ -133,51 +137,55 @@ class SignUp extends Component {
 
     return (
       <>
-      <Navbar/>
-      <div className='wrapper'>
-        {RedirectVar}
-        <div className='form-wrapper'>
-          <h2>Register</h2>
-          {this.state.formError &&
-            <p className="error">
-              Fill all the input fields please.
+        <Navbar />
+        <div className='wrapper'>
+          {RedirectVar}
+          <div className='form-wrapper'>
+            <h2>Register</h2>
+            {this.state.formError &&
+              <p className="error">
+                Fill all the input fields please.
                 </p>
-          }
-          <form>
-            <div className='Name'>
-              <label htmlFor="Name">Username</label>
-              <input type='text' name='name' onChange={this.getName} required />
-            </div>
-            <div className='email'>
-              <label htmlFor="email">Email</label>
-              <input type='email' name='email' onChange={this.getEmail} required />
-            </div>
-            <div className="col-sm-6">
-              <FormControl component="fieldset" className={useStyles.formControl}>
-                <FormLabel component="legend">You Are</FormLabel>
-                <RadioGroup aria-label="Type" name="type" value={this.state.type} onChange={this.gettype}>
-                  <FormControlLabel value="talent" control={<Radio />} label="Talent" />
-                  <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />
-                </RadioGroup>
-              </FormControl>
-            </div>
-            <div className='password'>
-              <label htmlFor="password">Password</label>
-              <input type='password' name='Password' onChange={this.getPassword} required />
-            </div>
-            <div className='Confirmpassword'>
-              <label htmlFor="password">Confirm Password</label>
-              <input type='password' name='Confirmpassword' onChange={this.getConfirmPassword} noValidate />
-            </div>
-            <div className='info'>
-              <small>Password must be eight characters in length.</small>
-            </div>
-            <div className='submit'>
-              <button onClick={this.handleSubmit}> Create </button>
-            </div>
-          </form>
+            }
+            <form>
+              <div className='First Name'>
+                <label htmlFor="Name">First name</label>
+                <input type='text' name='firstName' onChange={this.getName} required />
+              </div>
+              <div className='Last Name'>
+                <label htmlFor="Name">Last Name</label>
+                <input type='text' name='lastName' onChange={this.getName} required />
+              </div>
+              <div className='email'>
+                <label htmlFor="email">Email</label>
+                <input type='email' name='email' onChange={this.getEmail} required />
+              </div>
+              <div className="col-sm-6">
+                <FormControl component="fieldset" className={useStyles.formControl}>
+                  <FormLabel component="legend">You Are</FormLabel>
+                  <RadioGroup aria-label="Type" name="type" value={this.state.type} onChange={this.gettype}>
+                    <FormControlLabel value="talent" control={<Radio />} label="Talent" />
+                    <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+              <div className='password'>
+                <label htmlFor="password">Password</label>
+                <input type='password' name='Password' onChange={this.getPassword} required />
+              </div>
+              <div className='Confirmpassword'>
+                <label htmlFor="password">Confirm Password</label>
+                <input type='password' name='Confirmpassword' onChange={this.getConfirmPassword} noValidate />
+              </div>
+              <div className='info'>
+                <small>Password must be eight characters in length.</small>
+              </div>
+              <div className='submit'>
+                <button onClick={this.handleSubmit}> Create </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
       </>
     );
   }

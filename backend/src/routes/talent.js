@@ -73,18 +73,19 @@ router.get("/:id", function (req, res) {
 
     });
 
-  });
+});
 
-router.post("/:id", function(req, res) {
-    
+router.post("/:id", function (req, res) {
+    console.log(req.body);
     var talentId = req.params.id;
 
     var params = {
         TableName: "tara-talent-demo",
-        Key:{
+        Key: {
             "id": talentId
         },
         UpdateExpression: "set address = :a, contact = :c, experience = :e, gender = :g, media = :m, skills = :s",
+<<<<<<< HEAD
         ExpressionAttributeValues:{
             ":a": req.body.itemValues.address,
             ":c": req.body.itemValues.contact,
@@ -92,13 +93,22 @@ router.post("/:id", function(req, res) {
             ":g": req.body.itemValues.gender,
             ":m": req.body.itemValues.media,
             ":s": req.body.itemValues.skills
+=======
+        ExpressionAttributeValues: {
+            ":a": req.body.address,
+            ":c": req.body.contact,
+            ":e": req.body.experience,
+            ":g": req.body.gender,
+            ":m": req.body.media,
+            ":s": req.body.skills
+>>>>>>> 16e086d5cd6e57d10ff0cba22024c285b50d0307
         }
     };
 
     var docClient = new AWS.DynamoDB.DocumentClient();
-    docClient.update(params, function(err, data) {
+    docClient.update(params, function (err, data) {
         if (err) {
-            
+
             res.send(err)
             console.error("Unable to update talent item. Error JSON:", JSON.stringify(err, null, 2));
 
@@ -106,12 +116,12 @@ router.post("/:id", function(req, res) {
             res.status(200).send({
                 success: true,
                 message: 'Item updated successfully'
-              });
+            });
             console.log("Talent UpdateItem succeeded");
         }
     });
-    
-  });
+
+});
 
 
   router.post("/:id/match", function(req, res) {
