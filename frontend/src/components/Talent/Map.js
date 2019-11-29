@@ -10,9 +10,10 @@ import util from "../../utils";
 import axios from "axios";
 
 import userLocationURL from './user_location.svg';
+import { Link } from "react-router-dom";
 
 
-import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/leaflet.css';
 
 import './Map.css';
 
@@ -29,7 +30,7 @@ class MapLocation extends Component {
     },
     opportunities: [],
     haveUsersLocation: false,
-    zoom: 2
+    zoom: 1
   }
 
   componentDidMount() {
@@ -83,7 +84,7 @@ class MapLocation extends Component {
       const pos = [opportunity.location.lat, opportunity.location.lng]
       return <Marker icon={myIcon} position={pos}>
         <Popup>
-          {opportunity.description}
+          <Button variant="outlined" color="primary"><Link style={{ color: '#FFF' }} to={"/jobdetail/"+opportunity.id} >{opportunity.project_name}</Link></Button>
         </Popup> </Marker>;
       }
     })
