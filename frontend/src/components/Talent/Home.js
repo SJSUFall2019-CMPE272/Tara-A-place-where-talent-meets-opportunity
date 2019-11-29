@@ -179,7 +179,7 @@ class Home extends Component {
 
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
-                                            <Link to="/matchedjobs">Show matched jobs</Link>
+                                            <Link to="/matches">Show matched jobs</Link>
                                         </Button>
                                     </Grid>
                                     <Grid item>
