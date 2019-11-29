@@ -23,9 +23,12 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
 
-
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import axios from "axios";
 import { red } from "@material-ui/core/colors";
+
+import Map from "./Map";
 
 
 
@@ -164,7 +167,9 @@ class Home extends Component {
                         </Typography>
                     </Toolbar>
                 </AppBar> */}
-                <main>
+                <Tabs defaultActiveKey="profile">
+                    <Tab eventKey="home" title="Home">
+                    <main>
                     {/* Hero unit */}
                     <div className={useStyles.heroContent}>
                         <Container maxWidth="sm">
@@ -199,6 +204,13 @@ class Home extends Component {
                         </Grid>
                     </Container>
                 </main>
+                    </Tab>
+                    <Tab eventKey="profile" title="Map">
+                    <Map/>
+
+                    </Tab>
+                </Tabs>
+                
 
             </React.Fragment>
         );
