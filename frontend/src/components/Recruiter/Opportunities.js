@@ -128,20 +128,21 @@ class Opportunities extends Component {
         return (
             <main>
                 <Navbar />
-                <div className={useStyles.heroContent}>
+                <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
                 <Container maxWidth="sm">
                     <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                         Jobs Posted by You
                             </Typography>
                 </Container>
                 </div>
-
+                <div style={{marginTop: "30px", paddingBottom:"30px"}}>
                 <Container className={useStyles.cardGrid} maxWidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
                         {this.opportunityList()}
                     </Grid>
                 </Container>
+                </div>
             </main>
         );
     }
