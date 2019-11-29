@@ -9,9 +9,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import axios from "axios";
+import util from "../../utils";
+
 import Navbar from "../Navbar";
 
 import "./CreateJob.css";
+
+import { number } from "prop-types";
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,19 +49,24 @@ class CreateJob extends Component {
 
   state = {
     title: "",
-    type: "",
     gender: "",
-    age: "",
+    age_range: "",
     description: "",
-    required_skillset: [],
+    required_skills: [],
     value: "",
-    expiryDate: "",
-    address: "",
-    city: "",
-    state: "",
-    requiredZipcode: "",
-    
-    
+    expiry_date: "",
+    location:{
+      lat: number,
+      lng: number,
+      address: "",
+      zip: number,
+      city: "",
+      add_state:"",
+    },
+    ethnicity:[],    
+    project_name: "",
+    project_type: "",
+    required_documents: "",
     formError: false
   };
 
@@ -64,9 +74,9 @@ class CreateJob extends Component {
   getName = e => {
     let jobtitle = e.target.value;
     this.setState({
-      jobTitle: jobtitle
+      title: jobtitle
     });
-    console.log(this.state.jobTitle);
+    console.log(this.state.title);
   };
 
 
@@ -86,56 +96,58 @@ class CreateJob extends Component {
     console.log(this.state.getDescription);
   };
 
-
-
-  getZipcode = e => {
-    let zip = e.target.value;
+  getrequired_documents = e =>{
+    let docs = e.target.value;
     this.setState({
-        requiredZipcode: zip
+      required_documents : docs
     });
-    console.log(this.state.requiredZipcode);
-  };
+    console.log(this.state.required_documents);
+  }
+
 
   getDate = e => {
     let date = e.target.value;
     this.setState({
-        expiryDate: date
+      expiry_date: date
     });
-    console.log(this.state.expiryDate);
+    console.log(this.state.expiry_date);
   };
 
-  getState = e => {
-    let State = e.target.value;
+  getLocation = e => {
+    let Location = this.state.location;
+    Location[e.target.name] = e.target.value;
     this.setState({
-      state: State
+      location: Location
     });
-    console.log(this.state.state);
+    console.log(this.state.location);
   };
 
-  getCity = e => {
-    let City = e.target.value;
-    this.setState({
-      city: City
-    });
-    console.log(this.state.city);
-  };
 
-  getAddress = e => {
-    let Address = e.target.value;
-    this.setState({
-      address: Address
-    });
-    console.log(this.state.address);
-  };
 
   getType = e => {
     let Type = e.target.value;
     this.setState({
-    type: Type
+      project_type: Type
     });
-    console.log(this.state.type);
+    console.log(this.state.project_type);
   };
 
+
+  getProjectName = e => {
+    let Name = e.target.value;
+    this.setState({
+      project_name: Name
+    });
+    console.log(this.state.project_name);
+  }
+
+  getAgeRange = e => {
+    let Age = e.target.value;
+    this.setState({
+      age_range: Age
+    });
+    console.log(this.state.age_range);
+  }
 
 
   handleKeyDown = evt => {
@@ -146,12 +158,12 @@ class CreateJob extends Component {
 
       if (value) {
         this.setState({
-            required_skillset: [...this.state.required_skillset, this.state.value],
+            required_skills: [...this.state.required_skills, this.state.value],
           value: ""
         });
       }
     }
-    console.log(this.state.required_skillset);
+    console.log(this.state.required_skills);
   };
 
   handleChange = evt => {
@@ -160,33 +172,60 @@ class CreateJob extends Component {
       value: evt.target.value,
       error: null
     });
-    console.log(this.state.required_skillset);
+    console.log(this.state.required_skills);
   };
 
   handleDelete = item => {
-    let arr = this.state.required_skillset;
+    let arr = this.state.required_skills;
     arr = arr.filter(i => i !== item);
     this.setState({
-        required_skillset: arr
+        required_skills: arr
     });
-    console.log(this.state.required_skillset);
+    console.log(this.state.required_skills);
   };
+
+  getCoordinates= e => {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address="${this.state.location.address}${this.state.location.city}+"&key=AIzaSyCwHAPMx05VRNJAcKwuhYafHFIaiexgxzw`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          let location = {...this.state.location};
+          location.lat= result.results[0].geometry.location.lat;
+          location.lng= result.results[0].geometry.location.lng;
+          this.setState({
+            location: location
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+      // .then((result) => {console.log(result)})
+  }
+
+
+
+
 
   //send the form
   submitForm = e => {
    
     const UserData = {
-      jobTitle: this.state.jobTitle,
+      title: this.state.title,
       gender: this.state.gender,
-      required_skillset: this.state.required_skillset,
+      age_range: this.state.age_range,
       description: this.state.description,
-      requiredZipcode: this.state.requiredZipcode,
-      expiryDate: this.state.expiryDate,
-      address: this.state.address,
-      city: this.state.city,
-      state: this.state.state,
-      age: this.state.age,
-      type: this.state.type
+      required_skills: this.state.required_skills,
+      expiry_date: this.state.expiry_date,
+      ethnicity:[],    
+      project_name: this.state.project_name,
+      project_type: this.state.project_type,
+      required_documents: this.state.required_documents,
+      location: this.state.location,
+      created_by: localStorage.getItem("id")
     }
     
     e.preventDefault();
@@ -199,19 +238,11 @@ class CreateJob extends Component {
       this.setState({
         formError: false
       });
-      console.log(`UserData: {
-                jobTitle: ${this.state.jobTitle},
-                gender: ${this.state.gender},
-                required_skillset: ${this.state.required_skillset},
-                description: ${this.state.description},
-                requiredZipcode: ${this.state.requiredZipcode},
-                expiryDate: ${this.state.expiryDate}
-                address: ${this.state.address},
-                city: ${this.state.city},
-              state: ${this.state.state},
-                age: ${this.state.age},
-                type: ${this.state.type}
-            }`);
+      this.getCoordinates();
+      axios
+      .post(`${util.BASE_URL}/opportunities`, UserData)
+      .then(res => this.setState({ auth: res.data.message }))
+      .catch(err => this.setState({ auth: err.response.data.message }));
 
       console.log("form sent");
     }
@@ -222,8 +253,8 @@ class CreateJob extends Component {
     return (
       <>
         <Navbar />
-        <FormControl>
-          <div className="col-sm-6">
+        <FormControl className="col-sm-12">
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -267,12 +298,23 @@ class CreateJob extends Component {
             </FormControl>
           </div>
 
-
-          <div>
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
-              label="Category"
+              label="Project Name"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getProjectName}
+            />
+          </div>
+
+          <div className="col-sm-8">
+            <TextField
+              required
+              id="standard-required"
+              label="Project Type"
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
@@ -280,10 +322,10 @@ class CreateJob extends Component {
             />
           </div>
 
-          <div> 
+          <div className="col-sm-8"> 
           <TextField
             id="date"
-            label="ExpiryDate"
+            label="Expiry Date"
             type="date"
            
             onChange={this.getDate}
@@ -296,6 +338,7 @@ class CreateJob extends Component {
 
           <div className="col-sm-6">
             <TextField
+              fullWidth
               id="standard"
               label="Skills"
               defaultValue=""
@@ -307,7 +350,7 @@ class CreateJob extends Component {
               onChange={this.handleChange}
             />
 
-            {this.state.required_skillset.map(item => (
+            {this.state.required_skills.map(item => (
               <div key={item}>
                 {item}
                 <Button
@@ -321,7 +364,20 @@ class CreateJob extends Component {
             ))}
           </div>
 
-          <div>
+          <div className="col-sm-8">
+            <TextField
+              required
+              id="standard-required"
+              label="Age Range"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getAgeRange}
+            />
+          </div>
+
+
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -332,16 +388,31 @@ class CreateJob extends Component {
               onChange={this.getDescription}
             />
           </div>
+            
 
-          <div>
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
-              label="Location"
+              label="Required Documents"
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getAddress}
+              onChange={this.getrequired_documents}
+            />
+          </div>
+
+          
+          <div className="col-sm-8">
+            <TextField
+              required
+              id="standard-required"
+              label="Address"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              name="address"
+              onChange={this.getLocation}
             />
 
 
@@ -352,12 +423,13 @@ class CreateJob extends Component {
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getState}
+              name="add_state"
+              onChange={this.getLocation}
             />
           </div>
          
 
-          <div>
+          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -365,25 +437,26 @@ class CreateJob extends Component {
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getCity}
+              name="city"
+              onChange={this.getLocation}
             />
 
             <TextField
               required
               id="standard-required"
-              label="Zip Location"
+              label="Zip Code"
               defaultValue=""
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getZipcode}
+              name="zip"
+              onChange={this.getLocation}
             />
           </div>
 
 
-          
-     
+          <Button onClick={this.getCoordinates}>click</Button>
 
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <Button
               variant="contained"
               color="primary"
