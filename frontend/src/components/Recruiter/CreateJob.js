@@ -454,7 +454,7 @@ class CreateJob extends Component {
           </div>
 
 
-          <Button onClick={this.getCoordinates}>click</Button>
+          {/* <Button onClick={this.getCoordinates}>click</Button> */}
 
           <div className="col-sm-8">
             <Button
