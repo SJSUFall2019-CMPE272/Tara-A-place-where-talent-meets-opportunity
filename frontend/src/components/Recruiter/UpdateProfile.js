@@ -3,16 +3,11 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "@material-ui/core/Button";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import Box from '@material-ui/core/Box';
-import AddIcon from '@material-ui/icons/Add';
 import Navbar from "../Navbar";
-import Divider from '@material-ui/core/Divider';
-
+import { Link } from "react-router-dom";
+import util from "../../utils";
+import axios from "axios";
 
 import "./CreateForm.css";
 
@@ -43,14 +38,29 @@ const useStyles = makeStyles(theme => ({
 
 class UpdateProfile extends Component {
   state = {
-    name: "",
-    email: "",
-    secondarynumber: "",
-    primarynumber: "",
+     name: "",
+     email: "",
+     contact: {
+      phone: ["", ""]
+
+    },
     formError: false
   };
 
-
+  componentDidMount() {
+    axios
+      .get(`${util.BASE_URL}/recruiterhome/${localStorage.getItem("id")}`)
+      .then(res => {
+        let prevState = this.state;
+        console.log(res.data);
+        Object.assign(prevState, res.data[0]);
+        this.setState({ state: prevState });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({ error: err.response.data.message })
+      });
+  }
   //START--Experience Form methods
 
   addExperience = (e) => {
@@ -83,21 +93,22 @@ class UpdateProfile extends Component {
   };
 
   getPrimaryPhone = e => {
-    let phone = e.target.value;
+    let contact = { ...this.state.contact }
+    contact.phone[0] = e.target.value;
     this.setState({
-      primarynumber: phone
+      contact: contact
     });
-    console.log(this.state.primarynumber);
+    console.log(this.state.contact);
   };
 
   getSecondaryPhone = e => {
-    let phone = e.target.value;
+    let contact = { ...this.state.contact }
+    contact.phone[1] = e.target.value;
     this.setState({
-      secondarynumber: phone
+      contact: contact
     });
-    console.log(this.state.primarynumber);
+    console.log(this.state.contact);
   };
-
 
   getEmail = e => {
     let userEmail = e.target.value;
@@ -118,37 +129,6 @@ class UpdateProfile extends Component {
     console.log(this.state.userEmail);
   };
 
-  getGender = e => {
-    let gender = e.target.value;
-    this.setState({
-      gender: gender
-    });
-    console.log(this.state.gender);
-  };
-
-  getDescription = e => {
-    let userMessage = e.target.value;
-    this.setState({
-      message: userMessage
-    });
-    console.log(this.state.message);
-  };
-
-  getState = e => {
-    let state = e.target.value;
-    this.setState({
-      state: state
-    });
-    console.log(this.state.state);
-  };
-
-  getZipcode = e => {
-    let zip = e.target.value;
-    this.setState({
-      zipcode: zip
-    });
-    console.log(this.state.zipcode);
-  };
 
   handleKeyDown = evt => {
     if (["Enter", ","].includes(evt.key)) {
@@ -189,26 +169,10 @@ class UpdateProfile extends Component {
   submitForm = e => {
     const UserData = {
       name: this.state.name,
-      gender: this.state.gender,
-      contact_info: {
-        contact_info1: this.state.primarynumber,
-        contact_info2: this.state.secondarynumber,
-      },
+     
+      contact: { ...this.state.contact },
       email: this.state.email,
-      skills: this.state.skillset,
-      state: this.state.state,
       zipcode: this.state.zipcode,
-      experience: [{
-        role: "",
-        project_name: "",
-        project_type: "",
-        description: ""
-      }],
-      media: {
-        hyperlinks: [],
-        files: [],
-        resume: "",
-      }
 
 
     }
@@ -226,25 +190,15 @@ class UpdateProfile extends Component {
       console.log(`UserData: {
                 name: ${this.state.name},
                 gender: ${this.state.gender},
-                contact_info: {
-                    contact_info1: ${this.state.primarynumber},
-                    contact_info2: ${this.state.secondarynumber},
-                },
-                email: ${this.state.email},
-                skills:  ${this.state.skillset}
-                state : ${this.state.state},
-                zipcode: ${this.state.zipcode},
-                experience:[${this.state.experience}],
-            media : {
-                hyperlinks : [],
-                    files : [],
-                    resume: "",
-                }
+                contact: ${this.state.contact},
+                email: ${this.state.email}
                 
 
             }`);
 
       console.log("form sent");
+      axios.post(`${util.BASE_URL}/recruiter/${localStorage.getItem("id")}`, UserData).then(res => alert("profile updated"));
+
     }
   };
 
@@ -283,7 +237,7 @@ class UpdateProfile extends Component {
               required
               id="standard-required"
               label="Primary Contact"
-              defaultValue=""
+              value={this.state.contact.phone[0]}
               className={useStyles.textField}
               margin="normal"
               onChange={this.getPrimaryPhone}
@@ -294,7 +248,7 @@ class UpdateProfile extends Component {
             <TextField
               id="standard"
               label="Secondary Contact"
-              defaultValue=""
+              value={this.state.contact.phone[1]}
               className={useStyles.textField}
               margin="normal"
               onChange={this.getSecondaryPhone}
@@ -313,6 +267,9 @@ class UpdateProfile extends Component {
             >
               Submit
             </Button>
+            <Button variant="outlined" color="primary">
+                                            <Link to="/recruiterhome">Home</Link>
+                                        </Button>
           </div>
           <br></br>
         </FormControl>
