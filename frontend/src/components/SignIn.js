@@ -190,10 +190,6 @@ class SignIn extends Component {
             >
               Sign In
           </Button>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Grid container>
               <Grid item>
                 <RLink to="/signup">
