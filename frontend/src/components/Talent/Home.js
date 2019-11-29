@@ -51,7 +51,7 @@ const Opportunity = props => (
 
                 {/* </Button> */}
                 <Button size="small" color="primary">
-                    <Link to={"/jobdetail/"+props.opportunity.id}>View Details</Link>
+                    <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
                 </Button>
             </CardActions>
         </Card>
@@ -133,7 +133,7 @@ class Home extends Component {
 
     opportunityList() {
         return this.state.opportunities.map(currentOpportunity => {
-            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id}/>;
+            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
         })
     }
 
@@ -184,7 +184,7 @@ class Home extends Component {
                                     </Grid>
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
-                                            <Link to="/createform">Update Profile</Link>
+                                            <Link to="/updateprofile">Update Profile</Link>
                                         </Button>
                                     </Grid>
                                 </Grid>
@@ -199,7 +199,7 @@ class Home extends Component {
                         </Grid>
                     </Container>
                 </main>
-                
+
             </React.Fragment>
         );
     }

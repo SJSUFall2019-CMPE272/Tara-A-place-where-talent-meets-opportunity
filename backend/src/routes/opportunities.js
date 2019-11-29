@@ -19,10 +19,6 @@ router.get("/", function (req, res) {
             console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
         } else {
             // print all the opportunities
-            console.log("Scan succeeded.");
-            data.Items.forEach(function (opportunity) {
-                console.log(opportunity);
-            });
             res.send(data.Items);
         }
     }
@@ -79,41 +75,41 @@ router.post("/", function (req, res) {
     var params = {
         TableName: "tara-opportunity-demo",
         Item: {
-          "id": id,
-          "age_range": age_range,
-          "created_by": created_by,
-          "description": description,
-          "ethnicity": ethnicity,
-          "expiry_date": expiry_date,
-          "gender": gender,
-          "location": location,
-          "project_name": project_name,
-          "project_type": project_type,
-          "required_documents": required_documents,
-          "required_skills": required_skills,
-          "title": title
+            "id": id,
+            "age_range": age_range,
+            "created_by": created_by,
+            "description": description,
+            "ethnicity": ethnicity,
+            "expiry_date": expiry_date,
+            "gender": gender,
+            "location": location,
+            "project_name": project_name,
+            "project_type": project_type,
+            "required_documents": required_documents,
+            "required_skills": required_skills,
+            "title": title
 
         }
-      };
+    };
 
-      var docClient = new AWS.DynamoDB.DocumentClient();
-      
-      docClient.put(params, function (err, data) {
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    docClient.put(params, function (err, data) {
         if (err) {
-          console.log(err);
-          res.status(400).send({
-            success: false,
-            message: "Error: Couldn't write to DynamoDB"
-          });
+            console.log(err);
+            res.status(400).send({
+                success: false,
+                message: "Error: Couldn't write to DynamoDB"
+            });
         } else {
-    
-          res.status(201).send({
-            success: true,
-            message: 'Created opportunity successfully',
-            id: id
-          });
+
+            res.status(201).send({
+                success: true,
+                message: 'Created opportunity successfully',
+                id: id
+            });
         }
-      });
+    });
 
 });
 
