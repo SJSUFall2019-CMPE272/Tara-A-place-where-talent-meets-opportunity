@@ -167,12 +167,10 @@ class UpdateProfile extends Component {
 
   //send the form
   submitForm = e => {
-    const UserData = {
+    const data = {
       name: this.state.name,
-     
       contact: { ...this.state.contact },
       email: this.state.email,
-      zipcode: this.state.zipcode,
 
 
     }
@@ -187,9 +185,8 @@ class UpdateProfile extends Component {
       this.setState({
         formError: false
       });
-      console.log(`UserData: {
+      console.log(`data: {
                 name: ${this.state.name},
-                gender: ${this.state.gender},
                 contact: ${this.state.contact},
                 email: ${this.state.email}
                 
@@ -197,7 +194,7 @@ class UpdateProfile extends Component {
             }`);
 
       console.log("form sent");
-      axios.post(`${util.BASE_URL}/recruiter/${localStorage.getItem("id")}`, UserData).then(res => alert("profile updated"));
+      axios.post(`${util.BASE_URL}/recruiter/${localStorage.getItem("id")}`, data).then(res => alert("profile updated"));
 
     }
   };
