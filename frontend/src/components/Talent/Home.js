@@ -167,7 +167,7 @@ class Home extends Component {
                         </Typography>
                     </Toolbar>
                 </AppBar> */}
-                <Tabs defaultActiveKey="profile">
+                <Tabs style={{ position: 'relative' }} defaultActiveKey="home">
                     <Tab eventKey="home" title="Home">
                     <main>
                     {/* Hero unit */}
