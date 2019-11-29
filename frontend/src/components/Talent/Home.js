@@ -171,7 +171,7 @@ class Home extends Component {
                     <Tab eventKey="home" title="Home">
                     <main>
                     {/* Hero unit */}
-                    <div className={useStyles.heroContent}>
+                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
                         <Container maxWidth="sm">
                             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                                 Available Jobs
