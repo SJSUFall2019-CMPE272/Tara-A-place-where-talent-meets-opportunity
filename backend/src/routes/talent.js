@@ -84,13 +84,12 @@ router.post("/:id", function(req, res) {
         Key:{
             "id": talentId
         },
-        UpdateExpression: "set address = :a, contact = :c, experience = :e, gender = :g, gps = :gps, media = :m, skills = :s",
+        UpdateExpression: "set address = :a, contact = :c, experience = :e, gender = :g, media = :m, skills = :s",
         ExpressionAttributeValues:{
             ":a": req.body.itemValues.address,
             ":c": req.body.itemValues.contact,
             ":e": req.body.itemValues.experience,
             ":g": req.body.itemValues.gender,
-            ":gps": req.body.itemValues.gps,
             ":m": req.body.itemValues.media,
             ":s": req.body.itemValues.skills
         }
@@ -111,6 +110,42 @@ router.post("/:id", function(req, res) {
             console.log("Talent UpdateItem succeeded");
         }
     });
+    
+  });
+
+
+  router.post("/:id/match", function(req, res) {
+    
+    var talentId = req.params.id;
+    var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
+    console.log(req.body)
+    var params = {
+        TableName: "tara-match-demo",
+        Item: {
+          "id": matchId,
+          "opportunity_id": req.body.opportunity_id,
+          "talent_id": talentId,
+          "talentMatch": true
+        }
+      };
+
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    docClient.put(params, function (err, data) {
+        if (err) {
+          console.log(err);
+          res.status(400).send({
+            success: false,
+            message: "Error: Couldn't write to DynamoDB"
+          });
+        } else {
+    
+          res.status(201).send({
+            success: true,
+            message: 'Created a match object',
+            id: matchId
+          });
+        }
+      });
     
   });
 
