@@ -31,7 +31,7 @@ class Main extends Component {
         <Route path="/talentdetail/:id" component={TalentDetail} />
         <Route path="/map" component={Map} />
         <Route path="/matches" component={Matches} />
-        <Route path="/updateRecruiterprofile" component={UpdateRecruiterProfile} />
+        <Route path="/recruiterupdateprofile" component={UpdateRecruiterProfile} />
 
 
 

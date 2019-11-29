@@ -176,11 +176,6 @@ class Home extends Component {
                                             <Link to="/recruiterupdateprofile">Update Profile</Link>
                                         </Button>
                                     </Grid>
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/updateRecruiterprofile">Update Profile</Link>
-                                        </Button>
-                                    </Grid>
                                 </Grid>
                             </div>
                         </Container>
