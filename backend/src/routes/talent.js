@@ -67,8 +67,6 @@ router.get("/:id", function (req, res) {
                 
             res.send('{"Message": "No results"}');
             }
-
-            
         }
 
     });
@@ -84,24 +82,15 @@ router.post("/:id", function (req, res) {
         Key: {
             "id": talentId
         },
-        UpdateExpression: "set address = :a, contact = :c, experience = :e, gender = :g, media = :m, skills = :s",
-<<<<<<< HEAD
-        ExpressionAttributeValues:{
-            ":a": req.body.itemValues.address,
-            ":c": req.body.itemValues.contact,
-            ":e": req.body.itemValues.experience,
-            ":g": req.body.itemValues.gender,
-            ":m": req.body.itemValues.media,
-            ":s": req.body.itemValues.skills
-=======
+        UpdateExpression: "set address = :a, contact = :c, experience = :e, gender = :g, media = :m, skills = :s, matches = :matches",
         ExpressionAttributeValues: {
             ":a": req.body.address,
             ":c": req.body.contact,
             ":e": req.body.experience,
             ":g": req.body.gender,
             ":m": req.body.media,
-            ":s": req.body.skills
->>>>>>> 16e086d5cd6e57d10ff0cba22024c285b50d0307
+            ":s": req.body.skills,
+            ":matches": []
         }
     };
 
@@ -143,11 +132,60 @@ router.post("/:id", function (req, res) {
     docClient.put(params, function (err, data) {
         if (err) {
           console.log(err);
-          res.status(400).send({
-            success: false,
-            message: "Error: Couldn't write to DynamoDB"
-          });
+          
         } else {
+
+
+            var paramsTalent = {
+                TableName: "tara-talent-demo",
+                Key:{
+                    "id": talentId
+                },
+                UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues:{
+                    ":vals": [matchId]
+                }
+            };
+        
+            docClient.update(paramsTalent, function (err, data) {
+                if (err) {
+                  console.log(err);
+                  
+                } else {
+                    console.log('Updated match object of talent');
+                }
+              });
+
+
+
+              var paramsOppor = {
+                TableName: "tara-opportunity-demo",
+                Key:{
+                    "id": req.body.opportunity_id
+                },
+                UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues:{
+                    ":vals": [matchId]
+                }
+            };
+        
+            docClient.update(paramsOppor, function (err, data) {
+                if (err) {
+                  console.log(err);
+                  
+                } else {
+            
+                    console.log("Updated match object of opporunity")
+                  
+                }
+              });
+
     
           res.status(201).send({
             success: true,
@@ -156,6 +194,8 @@ router.post("/:id", function (req, res) {
           });
         }
       });
+
+      
     
   });
 
