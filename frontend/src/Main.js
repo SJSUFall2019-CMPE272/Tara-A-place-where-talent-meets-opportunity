@@ -11,6 +11,8 @@ import JobDetail from "./components/Talent/JobDetail";
 import TalentDetail from "./components/Recruiter/TalentDetail";
 import Map from "./components/Talent/Map";
 
+import Matches from  "./components/Talent/Matches";
+
 class Main extends Component {
   state = {};
   render() {
@@ -27,6 +29,7 @@ class Main extends Component {
         <Route path="/jobdetail/:id" component={JobDetail} />
         <Route path="/talentdetail/:id" component={TalentDetail} />
         <Route path="/map" component={Map} />
+        <Route path="/matches" component={Matches} />
 
 
 
