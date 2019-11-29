@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "@material-ui/core/Button";
+import Button from 'react-bootstrap/Button'
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  
+
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -55,15 +55,15 @@ class CreateJob extends Component {
     required_skills: [],
     value: "",
     expiry_date: "",
-    location:{
+    location: {
       lat: number,
       lng: number,
       address: "",
       zip: number,
       city: "",
-      add_state:"",
+      add_state: "",
     },
-    ethnicity:[],    
+    ethnicity: [],
     project_name: "",
     project_type: "",
     required_documents: "",
@@ -96,10 +96,10 @@ class CreateJob extends Component {
     console.log(this.state.getDescription);
   };
 
-  getrequired_documents = e =>{
+  getrequired_documents = e => {
     let docs = e.target.value;
     this.setState({
-      required_documents : docs
+      required_documents: docs
     });
     console.log(this.state.required_documents);
   }
@@ -158,7 +158,7 @@ class CreateJob extends Component {
 
       if (value) {
         this.setState({
-            required_skills: [...this.state.required_skills, this.state.value],
+          required_skills: [...this.state.required_skills, this.state.value],
           value: ""
         });
       }
@@ -179,19 +179,19 @@ class CreateJob extends Component {
     let arr = this.state.required_skills;
     arr = arr.filter(i => i !== item);
     this.setState({
-        required_skills: arr
+      required_skills: arr
     });
     console.log(this.state.required_skills);
   };
 
-  getCoordinates= e => {
+  getCoordinates = e => {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address="${this.state.location.address}${this.state.location.city}+"&key=AIzaSyCwHAPMx05VRNJAcKwuhYafHFIaiexgxzw`)
       .then(res => res.json())
       .then(
         (result) => {
-          let location = {...this.state.location};
-          location.lat= result.results[0].geometry.location.lat;
-          location.lng= result.results[0].geometry.location.lng;
+          let location = { ...this.state.location };
+          location.lat = result.results[0].geometry.location.lat;
+          location.lng = result.results[0].geometry.location.lng;
           this.setState({
             location: location
           });
@@ -203,7 +203,7 @@ class CreateJob extends Component {
           });
         }
       )
-      // .then((result) => {console.log(result)})
+    // .then((result) => {console.log(result)})
   }
 
 
@@ -212,7 +212,7 @@ class CreateJob extends Component {
 
   //send the form
   submitForm = e => {
-   
+
     const UserData = {
       title: this.state.title,
       gender: this.state.gender,
@@ -220,14 +220,14 @@ class CreateJob extends Component {
       description: this.state.description,
       required_skills: this.state.required_skills,
       expiry_date: this.state.expiry_date,
-      ethnicity:[],    
+      ethnicity: [],
       project_name: this.state.project_name,
       project_type: this.state.project_type,
       required_documents: this.state.required_documents,
       location: this.state.location,
       created_by: localStorage.getItem("id")
     }
-    
+
     e.preventDefault();
     if (this.state.jobTitle === "" || this.state.description === "") {
       this.setState({
@@ -240,9 +240,9 @@ class CreateJob extends Component {
       });
       this.getCoordinates();
       axios
-      .post(`${util.BASE_URL}/opportunities`, UserData)
-      .then(res => this.setState({ auth: res.data.message }))
-      .catch(err => this.setState({ auth: err.response.data.message }));
+        .post(`${util.BASE_URL}/opportunities`, UserData)
+        .then(res => this.setState({ auth: res.data.message }))
+        .catch(err => this.setState({ auth: err.response.data.message }));
 
       console.log("form sent");
     }
@@ -322,25 +322,25 @@ class CreateJob extends Component {
             />
           </div>
 
-          <div className="col-sm-8"> 
-          <TextField
-            id="date"
-            label="Expiry Date"
-            type="date"
-           
-            onChange={this.getDate}
-            className={useStyles.textField}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
+          <div className="col-sm-8">
+            <TextField
+              id="date"
+              label="Expiry Date"
+              type="date"
+
+              onChange={this.getDate}
+              className={useStyles.textField}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
           </div>
 
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <TextField
               fullWidth
               id="standard"
-              label="Skills"
+              label="Required Skills"
               defaultValue=""
               className={useStyles.textField}
               value={this.state.value}
@@ -377,8 +377,9 @@ class CreateJob extends Component {
           </div>
 
 
-          <div className="col-sm-8">
+          <div className="col-sm-4">
             <TextField
+              fullWidth
               required
               id="standard-required"
               label="Job Description"
@@ -388,10 +389,11 @@ class CreateJob extends Component {
               onChange={this.getDescription}
             />
           </div>
-            
 
-          <div className="col-sm-8">
+
+          <div className="col-sm-4">
             <TextField
+              fullWidth
               required
               id="standard-required"
               label="Required Documents"
@@ -402,9 +404,10 @@ class CreateJob extends Component {
             />
           </div>
 
-          
-          <div className="col-sm-8">
+
+          <div className="col-sm-4">
             <TextField
+            fullWidth
               required
               id="standard-required"
               label="Address"
@@ -414,22 +417,10 @@ class CreateJob extends Component {
               name="address"
               onChange={this.getLocation}
             />
+            </div>
+            
+            <div className="col-sm-4">
 
-
-            <TextField
-              required
-              id="standard-required"
-              label="State"
-              defaultValue=""
-              className={useStyles.textField}
-              margin="normal"
-              name="add_state"
-              onChange={this.getLocation}
-            />
-          </div>
-         
-
-          <div className="col-sm-8">
             <TextField
               required
               id="standard-required"
@@ -438,6 +429,21 @@ class CreateJob extends Component {
               className={useStyles.textField}
               margin="normal"
               name="city"
+              onChange={this.getLocation}
+            />
+
+          </div>
+
+
+          <div className="col-sm-8">
+            <TextField
+              required
+              id="standard-required"
+              label="State"
+              defaultValue=""
+              className={useStyles.textField}
+              margin="normal"
+              name="add_state"
               onChange={this.getLocation}
             />
 
@@ -456,11 +462,9 @@ class CreateJob extends Component {
 
           {/* <Button onClick={this.getCoordinates}>click</Button> */}
 
-          <div className="col-sm-8">
-            <Button
-              variant="contained"
-              color="primary"
-              className={useStyles.button}
+          <div className="col-sm-2">
+          <Button size="lg" variant="info"
+          size="lg"
               type="submit"
               name="submit"
               value="Send"
