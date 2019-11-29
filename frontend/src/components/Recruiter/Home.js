@@ -46,7 +46,7 @@ const Talent = props => (
 
                 {/* </Button> */}
                 <Button size="small" color="primary">
-                    <Link to={"/talentdetail/"+props.talent.id}>View Profile</Link>
+                    <Link to={"/talentdetail/" + props.talent.id}>View Profile</Link>
                 </Button>
             </CardActions>
         </Card>
@@ -128,7 +128,7 @@ class Home extends Component {
 
     talentList() {
         return this.state.talents.map(currentTalent => {
-            return <Talent talent={currentTalent} key={currentTalent.id}/>;
+            return <Talent talent={currentTalent} key={currentTalent.id} />;
         })
     }
 
@@ -150,7 +150,7 @@ class Home extends Component {
                 </AppBar> */}
                 <main>
                     {/* Hero unit */}
-                    <div className={useStyles.heroContent}>
+                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
                         <Container maxWidth="sm">
                             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                                 Talent Pool
@@ -167,7 +167,13 @@ class Home extends Component {
                                     </Grid>
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
-                                            <Link to="#">Posted Jobs</Link>
+                                            <Link to="/opportunities">Posted Jobs</Link>
+                                        </Button>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary">
+                                            <Link to="/recruiterupdateprofile">Update Profile</Link>
                                         </Button>
                                     </Grid>
                                     <Grid item>
@@ -182,7 +188,7 @@ class Home extends Component {
                     <Container className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
-                                {this.talentList()}   
+                            {this.talentList()}
                         </Grid>
                     </Container>
                 </main>
