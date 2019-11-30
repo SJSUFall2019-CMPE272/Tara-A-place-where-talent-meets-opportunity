@@ -15,6 +15,7 @@ phases:
       - echo "Starting the build"
       - echo `pwd`
       - cd backend
+      - service docker start
       - TAG=$(git log -1 --pretty=%h)
       - docker build -t itselavia/tara:$TAG .
       - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
