@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -38,7 +37,10 @@ const useStyles = makeStyles(theme => ({
 
 class UpdateProfile extends Component {
   state = {
-     name: "",
+    name:{
+     firstName: "",
+     lastName:"",
+    },
      email: "",
      contact: {
       phone: ["", ""]
@@ -49,12 +51,17 @@ class UpdateProfile extends Component {
 
   componentDidMount() {
     axios
-      .get(`${util.BASE_URL}/recruiterhome/${localStorage.getItem("id")}`)
+      .get(`${util.BASE_URL}/recruiter/${localStorage.getItem("id")}`)
       .then(res => {
         let prevState = this.state;
         console.log(res.data);
+        console.log(prevState)
         Object.assign(prevState, res.data[0]);
-        this.setState({ state: prevState });
+        this.setState({ 
+          name:prevState.name,
+          email:prevState.email,
+
+        });
       })
       .catch(err => {
         console.log(err);
@@ -84,10 +91,22 @@ class UpdateProfile extends Component {
    //END--Experience Form methods
 
 
-  getName = e => {
+  getfirstName = e => {
     let username = e.target.value;
+    let name = this.state.name;
+    name.firstName = username;
     this.setState({
-      name: username
+      name: name
+    });
+    console.log(this.state.name);
+  };
+
+  getlastName = e => {
+    let username = e.target.value;
+    let name = this.state.name;
+    name.lastName = username;
+    this.setState({
+      name: name
     });
     console.log(this.state.name);
   };
@@ -130,45 +149,12 @@ class UpdateProfile extends Component {
   };
 
 
-  handleKeyDown = evt => {
-    if (["Enter", ","].includes(evt.key)) {
-      evt.preventDefault();
 
-      var value = this.state.value.trim();
-
-      if (value) {
-        this.setState({
-          skillset: [...this.state.skillset, this.state.value],
-          value: ""
-        });
-      }
-    }
-    console.log(this.state.skillset);
-  };
-
-  handleChange = evt => {
-    console.log("I am here");
-    console.log(evt);
-    this.setState({
-      value: evt.target.value,
-      error: null
-    });
-    console.log(this.state.skillset);
-  };
-
-  handleDelete = item => {
-    let arr = this.state.skillset;
-    arr = arr.filter(i => i !== item);
-    this.setState({
-      skillset: arr
-    });
-    console.log(this.state.skillset);
-  };
 
   //send the form
   submitForm = e => {
     const data = {
-      name: this.state.name,
+      name: {...this.state.name},
       contact: { ...this.state.contact },
       email: this.state.email,
 
@@ -208,20 +194,30 @@ class UpdateProfile extends Component {
             <TextField
               required
               id="standard-required"
-              label="Full Name"
-              defaultValue=""
+              label="First Name"
+              value={this.state.name.firstName}
               className={useStyles.textField}
               margin="normal"
-              onChange={this.getName}
+              onChange={this.getfirstName}
+            />
+            <TextField
+              required
+              id="standard-required"
+              label="Last Name"
+              value={this.state.name.lastName}
+              className={useStyles.textField}
+              margin="normal"
+              onChange={this.getlastName}
             />
           </div>
+
 
           <div className="col-sm-12">
             <TextField
               required
               id="standard-required"
               label="Email ID"
-              defaultValue=""
+              value={this.state.email}
               className={useStyles.email}
               margin="normal"
               onChange={this.getEmail}
