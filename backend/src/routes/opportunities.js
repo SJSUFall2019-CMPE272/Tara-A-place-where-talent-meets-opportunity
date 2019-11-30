@@ -26,6 +26,14 @@ router.get("/", function (req, res) {
 });
 
 
+router.get("/:id/applicants", function (req, res) {
+
+    var opportunityId = req.params.id;
+    var applicants = [];
+
+});
+
+
 router.get("/:id", function (req, res) {
 
     var opportunityId = req.params.id;

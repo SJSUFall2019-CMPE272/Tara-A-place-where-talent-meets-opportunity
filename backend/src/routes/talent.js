@@ -211,47 +211,30 @@ router.post("/:id/match", function (req, res) {
     var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
     console.log(req.body)
     var params = {
-        TableName: "tara-match-demo",
-        Item: {
-            "id": matchId,
-            "opportunity_id": req.body.opportunity_id,
-            "talent_id": talentId,
-            "talentMatch": true
-        }
-    };
-
-    var docClient = new AWS.DynamoDB.DocumentClient();
-    docClient.put(params, function (err, data) {
-        if (err) {
-            console.log(err);
-
-        } else {
-
-
-            var paramsTalent = {
-                TableName: "tara-talent-demo",
-                Key: {
-                    "id": talentId
-                },
-                UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+        TableName: "tara-talent-demo",
+        Key: {
+            "id": talentId
+        },
+        UpdateExpression: "SET #matches = list_append(#matches, :vals)",
                 ExpressionAttributeNames: {
                     "#matches": "matches"
                 },
                 ExpressionAttributeValues: {
-                    ":vals": [matchId]
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": req.body.opportunity_id,
+                        "talent_id": talentId,
+                        "talentMatch": true
+                    }]
                 }
-            };
+    };
 
-            docClient.update(paramsTalent, function (err, data) {
-                if (err) {
-                    console.log(err);
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    docClient.update(params, function (err, data) {
+        if (err) {
+            console.log(err);
 
-                } else {
-                    console.log('Updated match object of talent');
-                }
-            });
-
-
+        } else {
 
             var paramsOppor = {
                 TableName: "tara-opportunity-demo",
@@ -263,7 +246,12 @@ router.post("/:id/match", function (req, res) {
                     "#matches": "matches"
                 },
                 ExpressionAttributeValues: {
-                    ":vals": [matchId]
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": req.body.opportunity_id,
+                        "talent_id": talentId,
+                        "talentMatch": true
+                    }]
                 }
             };
 
