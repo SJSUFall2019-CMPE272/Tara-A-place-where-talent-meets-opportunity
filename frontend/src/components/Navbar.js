@@ -24,16 +24,29 @@ export default class Navbar extends Component {
         <Link to="/" className="navbar-brand">
           Tara
         </Link>
-        <Link to="/home" className="navbar-brand">
-          Home
-        </Link>
         <div className="collpase navbar-collapse">
-          <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav mr-auto">
+
+          {localStorage.getItem("type") == "talent" ?
+              <li className="navbar-item">
+                <Link to="/home" className="navbar-brand">
+                  Home
+              </Link>
+              </li> : <li className="navbar-item">
+                <Link to="/recruiterhome" className="nav-link">
+                  Home
+              </Link>
+              </li>}
+            {/* </ul> */}
+          {/* </div> */}
+
+        {/* <div className="collpase navbar-collapse"> */}
+          {/* <ul className="navbar-nav mr-auto"> */}
             {localStorage.getItem("id") ? <li className="navbar-item">
               <Link onClick={this.handleLogout} className="nav-link">
                 Log Out
               </Link>
-              
+
             </li> : <li className="navbar-item">
                 <Link to="/signin" className="nav-link">
                   Sign In
