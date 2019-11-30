@@ -11,7 +11,7 @@
 3. Shivani Jain
 4. Sai Chaitanya Dasari
 
-# Mentored By 
+# Concept and Advisory
   Siva Sreeraman 
   
 We followed agile methodology by having weekly Scrum with Siva and it helped us in meeting the check points and deliver things at right time. 
