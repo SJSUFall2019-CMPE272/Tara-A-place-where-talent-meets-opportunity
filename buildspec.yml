@@ -17,7 +17,13 @@ phases:
     commands:
       - echo "Starting the build"
       - echo `pwd`
-      - cd backend
+      - cd frontend
+      - sed -i "s/localhost:9000/a9950c81313b311ea9fd30e3648edf6f-109621061.us-east-1.elb.amazonaws.com/g" src/utils.js
+      - npm install
+      - npm run build
+      - aws s3 sync ./build s3://tara-frontend
+      - cd ../backend
+      - sed -i "s/localhost:3000/a9950c81313b311ea9fd30e3648edf6f-109621061.us-east-1.elb.amazonaws.com/g" src/server.js
       - TAG=$(git log -1 --pretty=%h)
       - docker build -t itselavia/tara:$TAG .
       - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
@@ -26,6 +32,6 @@ phases:
   post_build:
     commands:
       - echo "Pushing to Kubernetes"
-      - sed -i "s/VERSION/${TAG}/g" AnnouncementsMicroservice.yaml
-      - /usr/local/bin/kubectl apply -f AnnouncementsMicroservice.yaml
+      - sed -i "s/VERSION/${TAG}/g" tara_kube_manifest.yaml
+      - /usr/local/bin/kubectl apply -f tara_kube_manifest.yaml
       - /usr/local/bin/kubectl get pods
