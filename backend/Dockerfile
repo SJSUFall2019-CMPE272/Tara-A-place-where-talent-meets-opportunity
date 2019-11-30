@@ -12,8 +12,6 @@ RUN apt-get update && \
 
 RUN pip3 --no-cache-dir install --upgrade awscli
 
-RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
-
 WORKDIR /usr/src/app
 
 COPY package*.json ./

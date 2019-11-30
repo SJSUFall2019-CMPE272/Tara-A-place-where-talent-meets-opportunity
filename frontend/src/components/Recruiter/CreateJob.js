@@ -69,6 +69,7 @@ class CreateJob extends Component {
     project_name: "",
     project_type: "",
     required_documents: "",
+    matches:[],
     formError: false
   };
 
@@ -221,7 +222,8 @@ class CreateJob extends Component {
             project_type: this.state.project_type,
             required_documents: this.state.required_documents,
             location: this.state.location,
-            created_by: localStorage.getItem("id")
+            created_by: localStorage.getItem("id"),
+            matches: this.state.matches
           }
       
           e.preventDefault();
@@ -472,7 +474,7 @@ class CreateJob extends Component {
           </div>
 
 
-          <Button onClick={this.getCoordinates}>click</Button>
+          {/* <Button onClick={this.getCoordinates}>click</Button> */}
 
           <div className="col-sm-2">
 
