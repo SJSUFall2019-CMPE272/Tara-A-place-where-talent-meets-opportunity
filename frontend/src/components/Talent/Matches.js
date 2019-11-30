@@ -208,7 +208,7 @@ class Matches extends Component {
         return (
             <>
                 <Navbar />
-                <Accordion defaultActiveKey="0">
+                <Accordion defaultActiveKey="1">
                     <div>
                         <Accordion.Toggle as={Card.Header} eventKey="0">
                             PERFECT MATCH
