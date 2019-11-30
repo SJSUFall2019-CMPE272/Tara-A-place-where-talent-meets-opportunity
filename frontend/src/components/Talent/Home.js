@@ -128,7 +128,7 @@ class Home extends Component {
                         let allMatches = element.matches;
                         allMatches.forEach(data => {
                             console.log("checking talent id");
-                            if (data.talent_id == user_id) {
+                            if (data.talent_id == user_id && data.talentMatch) {
                                 console.log("this opportunity is matched");
                                 hasMatched = true;
                             }
@@ -186,7 +186,7 @@ class Home extends Component {
                                     let allMatches = element.matches;
                                     allMatches.forEach(data => {
                                         console.log("checking talent id");
-                                        if (data.talent_id == user_id && data.talen) {
+                                        if (data.talent_id == user_id && data.talentMatch) {
                                             console.log("this opportunity is matched");
                                             hasMatched = true;
                                         }
