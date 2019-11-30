@@ -28,10 +28,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tara-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:240377662125:certificate/df20d333-7f1e-4a05-8216-0110c1472a42
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
 spec:
   selector:
     app: tara
   ports:
-    - port: 80
+    - port: 443
       targetPort: 9000
   type: LoadBalancer
