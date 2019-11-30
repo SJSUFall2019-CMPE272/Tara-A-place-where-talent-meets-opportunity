@@ -180,7 +180,7 @@ class Home extends Component {
                                 Find your dream job today
                             </Typography>
                             <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
+                                <Grid style={{marginBottom: "10px"}} container spacing={2} justify="center">
 
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
@@ -197,7 +197,7 @@ class Home extends Component {
                         </Container>
                     </div>
                     <Divider />
-                    <Container className={useStyles.cardGrid} maxWidth="md">
+                    <Container style={{marginTop: "10px"}} className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
                             {this.opportunityList()}
