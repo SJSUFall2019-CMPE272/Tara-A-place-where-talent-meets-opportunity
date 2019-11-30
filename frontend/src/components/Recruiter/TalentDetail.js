@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 
+import '../Talent/JobDetails.css'
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -95,42 +96,44 @@ class TalentDetail extends Component {
             fontWeight: 400
         }
         return (
-            <main>
+            <main  className='jobdetail'>
                 <div className="col-sm-12">
-                    <label style={useStyles.heroContent}>Email</label>
+                    <label style={labelstyles}>Email</label>
                     <p>{this.state.talent.email}</p>
                 </div>
                 <div className="col-sm-12">
                     <label style={labelstyles}>Gender</label>
                     <p>{this.state.talent.gender}</p>
                 </div>
+                <div>
                 {this.state.talent.experience &&
                     <div className="col-sm-12">
                         <label style={labelstyles}>Experience</label>
                         {this.state.talent.experience.map(exp =>
                             <div>
                                 <div className="col-sm-12">
-                                    <label style={labelstyles}>project Name</label>
+                                    <label style={labelstyles}>Project Name</label>
                                     <p>{exp.projectName}</p>
                                 </div>
                                 <div className="col-sm-12">
-                                    <label style={labelstyles}>project Type</label>
+                                    <label style={labelstyles}>Project Type</label>
                                     <p>{exp.projectType}</p>
                                 </div>
                                 <div className="col-sm-12">
-                                    <label style={labelstyles}>description</label>
+                                    <label style={labelstyles}>Description</label>
                                     <p>{exp.description}</p>
                                 </div>
                                 <div className="col-sm-12">
-                                    <label style={labelstyles}>role</label>
+                                    <label style={labelstyles}>Role</label>
                                     <p>{exp.role}</p>
                                 </div>
                             </div>)}
-                    </div>
-                }
-                {this.state.talent.gender && <div className="col-sm-12">
+                            </div>
+                       }
+                       </div>
+                     {this.state.talent.gender && <div className="col-sm-12">
                     <label style={labelstyles}>Gender</label>
-                    {this.state.talent.gender}
+                    <p>{this.state.talent.gender}</p>
                 </div>}
                 {this.state.talent.location && <div className="col-sm-12">
                     <label style={labelstyles}>Address</label>

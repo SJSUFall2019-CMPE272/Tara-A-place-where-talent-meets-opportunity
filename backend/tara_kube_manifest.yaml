@@ -32,6 +32,6 @@ spec:
   selector:
     app: tara
   ports:
-    - port: 80
+    - port: 443
       targetPort: 9000
   type: LoadBalancer

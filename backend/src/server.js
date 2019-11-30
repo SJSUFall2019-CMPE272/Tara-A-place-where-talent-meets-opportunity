@@ -9,7 +9,7 @@ import recruiter from "./routes/recruiter";
 import opportunities from "./routes/opportunities";
 
 const app = express();
-
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 app.set("view engine", "ejs");
 // connecting to the front-end
 app.use(cors());
