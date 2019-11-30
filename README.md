@@ -59,7 +59,7 @@ On the client side, we will make a ReactJS application. We are using ReactJS for
 The frontend website is available at the following URL:
 https://dgnchyrkhqge4.cloudfront.net/
 
-
+https://272mlpart.notebook.us-west-1.sagemaker.aws/notebooks/272Project_today-integration%20(1).ipynb
 
 ### Design Thinking
 ![DesignThinking](DesignThinking_As_Is.png)
