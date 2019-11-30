@@ -126,7 +126,7 @@ class SignIn extends Component {
     return (
       <>
       <Navbar/>
-      <Container component="main" maxWidth="xs">
+      <Container style={{ marginTop: "10px" }} component="main" maxWidth="xs">
         {this.state.auth && <p className="error">
           Invalid Login
                 </p>}
