@@ -8,6 +8,10 @@ module "tara_s3_frontend__bucket" {
   bucket_name = "tara-frontend"
 }
 
+module "tara_kubernetes_cluster" {
+  source = "./kubernetes"
+}
+
 
 module "tara_cloudfront_distribution" {
   source = "./cloudfront_distribution"
