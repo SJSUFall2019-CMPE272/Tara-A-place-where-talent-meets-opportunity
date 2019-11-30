@@ -36,6 +36,98 @@ router.get("/", function (req, res) {
 
 });
 
+// to get opportunities for a specific talent
+router.get("/:id/opportunities", function (req, res) {
+
+    var talentId = req.params.id;
+
+    console.log("one")
+
+
+    var opportunities = [];
+
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+
+    var get_matches_params = {
+        TableName: "tara-talent-demo",
+        ProjectionExpression: "matches",
+        KeyConditionExpression: "#id = :id",
+        ExpressionAttributeNames: {
+            "#id": "id"
+        },
+        ExpressionAttributeValues: {
+            ":id": talentId
+        }
+    };
+
+    var matchesData = docClient.query(get_matches_params)
+
+    matchesData.on('success', function (response) {
+
+        console.log(response.data)
+
+        if (response.data.Items[0].matches.length > 0) {
+
+            for (var i=0; i<response.data.Items[0].matches.length; i++) {
+
+                console.log("two")
+
+                var get_match_params = {
+                    TableName: "tara-match-demo",
+                    Key: {
+                        "id": response.data.Items[0].matches[i]
+                    }
+                };
+
+                var get_match_data = docClient.get(get_match_params);
+                
+                get_match_data.on('success', function (data) {
+                    
+                    console.log("get_match succeeded: ", JSON.stringify(data.data.Item.id, null, 2));
+
+                    console.log("three")
+                    var get_opportunity_params = {
+                        TableName: "tara-opportunity-demo",
+                        Key: {
+                            "id": data.data.Item.opportunity_id
+                        }
+                    };
+
+                    var get_opportunity_data = docClient.get(get_opportunity_params);
+
+                    get_opportunity_data.on('success', function (data) {
+                        console.log("get_opportunity succeeded: ", JSON.stringify(data.data.Item.id, null, 2));
+
+                        opportunities.push(data.data.Item);
+                        console.log("opportunities.length: " + opportunities.length)
+                console.log("response.data.Items[0].matches.length: " + response.data.Items[0].matches.length)
+                if (opportunities.length == response.data.Items[0].matches.length) {
+                    console.log("i am here")
+                    sendResult(res, opportunities);
+                }
+
+                    }).send();
+
+                }).send();
+
+                
+            }
+            
+        }
+
+        else {
+            res.send(JSON.stringify({"Message": "No results"}));
+        }
+
+    }).send();
+
+});
+
+function sendResult(res, opportunities) {
+    res.send(opportunities)
+}
+
 // to get particular profile
 router.get("/:id", function (req, res) {
 
@@ -57,15 +149,15 @@ router.get("/:id", function (req, res) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            if(data.Count > 0) {
+            if (data.Count > 0) {
                 console.log("Query succeeded.");
-            console.log(data)
-            delete data.Items[0].password;
-            res.send(data.Items);
+                console.log(data)
+                delete data.Items[0].password;
+                res.send(data.Items);
             }
             else {
-                
-            res.send('{"Message": "No results"}');
+
+                res.send('{"Message": "No results"}');
             }
         }
 
@@ -113,90 +205,90 @@ router.post("/:id", function (req, res) {
 });
 
 
-  router.post("/:id/match", function(req, res) {
-    
+router.post("/:id/match", function (req, res) {
+
     var talentId = req.params.id;
     var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
     console.log(req.body)
     var params = {
         TableName: "tara-match-demo",
         Item: {
-          "id": matchId,
-          "opportunity_id": req.body.opportunity_id,
-          "talent_id": talentId,
-          "talentMatch": true
+            "id": matchId,
+            "opportunity_id": req.body.opportunity_id,
+            "talent_id": talentId,
+            "talentMatch": true
         }
-      };
+    };
 
     var docClient = new AWS.DynamoDB.DocumentClient();
     docClient.put(params, function (err, data) {
         if (err) {
-          console.log(err);
-          
+            console.log(err);
+
         } else {
 
 
             var paramsTalent = {
                 TableName: "tara-talent-demo",
-                Key:{
+                Key: {
                     "id": talentId
                 },
                 UpdateExpression: "SET #matches = list_append(#matches, :vals)",
                 ExpressionAttributeNames: {
                     "#matches": "matches"
                 },
-                ExpressionAttributeValues:{
+                ExpressionAttributeValues: {
                     ":vals": [matchId]
                 }
             };
-        
+
             docClient.update(paramsTalent, function (err, data) {
                 if (err) {
-                  console.log(err);
-                  
+                    console.log(err);
+
                 } else {
                     console.log('Updated match object of talent');
                 }
-              });
+            });
 
 
 
-              var paramsOppor = {
+            var paramsOppor = {
                 TableName: "tara-opportunity-demo",
-                Key:{
+                Key: {
                     "id": req.body.opportunity_id
                 },
                 UpdateExpression: "SET #matches = list_append(#matches, :vals)",
                 ExpressionAttributeNames: {
                     "#matches": "matches"
                 },
-                ExpressionAttributeValues:{
+                ExpressionAttributeValues: {
                     ":vals": [matchId]
                 }
             };
-        
+
             docClient.update(paramsOppor, function (err, data) {
                 if (err) {
-                  console.log(err);
-                  
+                    console.log(err);
+
                 } else {
-            
+
                     console.log("Updated match object of opporunity")
-                  
+
                 }
-              });
+            });
 
-    
-          res.status(201).send({
-            success: true,
-            message: 'Created a match object',
-            id: matchId
-          });
+
+            res.status(201).send({
+                success: true,
+                message: 'Created a match object',
+                id: matchId
+            });
         }
-      });
+    });
 
-      
-    
-  });
+
+
+});
 
 module.exports = router;
