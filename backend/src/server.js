@@ -12,7 +12,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 // connecting to the front-end
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors());
 
 app.use(
   bodyParser.urlencoded({

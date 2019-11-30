@@ -24,8 +24,6 @@ phases:
       - aws s3 sync ./build s3://tara-frontend
       - aws cloudfront create-invalidation --distribution-id EZ6B8EB5GBUXQ --paths /\*
       - cd ../backend
-      - sed -i "s/localhost:3000/dgnchyrkhqge4.cloudfront.net/g" src/server.js
-      - sed -i "s/http/https/g" src/server.js
       - TAG=$(git log -1 --pretty=%h)
       - docker build -t itselavia/tara:$TAG .
       - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
