@@ -50,7 +50,7 @@ const Opportunity = props => (
 
                 {/* </Button> */}
                 <Button size="small" color="primary">
-                    <Link to={"#" + props.opportunity.id}>View Matches</Link>
+                    <Link to="/rmatches/">View Matches</Link>
                 </Button>
             </CardActions>
         </Card>
