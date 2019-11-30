@@ -48,15 +48,14 @@ const Opportunity = props => (
                     {props.opportunity.description}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Toggle />
-                {/* <Button color="primary"> */}
 
-                {/* </Button> */}
-                <Button size="small" color="primary">
-                    <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
-                </Button>
-            </CardActions>
+            {/* <Toggle /> */}
+            <button onClick={() => props.handleMatch(props.opportunity.id)}>Match</button>
+
+            {/* </Button> */}
+            <Button size="small" color="primary">
+                <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
+            </Button>
         </Card>
     </Grid>
 )
@@ -115,10 +114,26 @@ class Home extends Component {
         opportunity: {}
     }
     componentDidMount = () => {
+        let user_id = localStorage.getItem("id");
         axios
             .get(`${util.BASE_URL}/opportunities`)
             .then(res => {
                 console.log(res.data);
+                let opportunities = res.data;
+                let resopo = opportunities.filter(data => {
+                    if (data.matches && data.matches.length) {
+                        let matches = data.matches;
+                        matches.map(match => {
+                            if (match.talent_id == user_id) {
+                                return false;
+                            }
+                            else return true;
+                        }
+                        )
+                    }
+                    else return true;
+                });
+                console.log(resopo);
                 this.setState({ opportunities: res.data, error: "" })
             })
             .catch(err => {
@@ -136,19 +151,45 @@ class Home extends Component {
 
     opportunityList() {
         return this.state.opportunities.map(currentOpportunity => {
-            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
+            return <Opportunity handleMatch={this.handleMatchs} opportunity={currentOpportunity} key={currentOpportunity.id} />;
         })
     }
 
-
-    unmatch() {
-        // axios.delete('${util.BASE_URL}/deletematch`')
-        //     .then(response => {console.log(response.data)});
-    }
-
-    match() {
-        // axios.add('${util.BASE_URL}/addmatch`')
-        //     .then(response => {console.log(response.data)});
+    handleMatchs = (id) => {
+        let data = {
+            "opportunity_id": id
+        };
+        console.log(data);
+        let user_id = localStorage.getItem("id");
+        axios.post(`${util.BASE_URL}/talent/${user_id}/match`, data)
+            .then((res) => {
+                if (res.status === 201) {
+                    console.log("am here");
+                    axios
+                        .get(`${util.BASE_URL}/opportunities`)
+                        .then(res => {
+                            console.log(res.data);
+                            let opportunities = res.data;
+                            let resopo = opportunities.filter(data => {
+                                if (data.matches && data.matches.length > 0) {
+                                    let matches = data.matches;
+                                    if (matches.talent_id === user_id) {
+                                        return -1;
+                                    }
+                                }
+                                else return 1;
+                            })
+                            console.log(resopo);
+                            this.setState({ opportunities: resopo, error: "" })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.setState({ error: err.response.data.message }
+                            )
+                        });
+                }
+            })
+            .catch((err) => console.log(err));
     }
 
 
@@ -169,48 +210,48 @@ class Home extends Component {
                 </AppBar> */}
                 <Tabs style={{ position: 'relative' }} defaultActiveKey="home">
                     <Tab eventKey="home" title="Home">
-                    <main>
-                    {/* Hero unit */}
-                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
-                        <Container maxWidth="sm">
-                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                                Available Jobs
+                        <main>
+                            {/* Hero unit */}
+                            <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
+                                <Container maxWidth="sm">
+                                    <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                                        Available Jobs
                             </Typography>
-                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                                Find your dream job today
+                                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                                        Find your dream job today
                             </Typography>
-                            <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
+                                    <div className={useStyles.heroButtons}>
+                                        <Grid container spacing={2} justify="center">
 
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/matches">Show matched jobs</Link>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/updateprofile">Update Profile</Link>
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                                            <Grid item>
+                                                <Button variant="outlined" color="primary">
+                                                    <Link to="/matches">Show matched jobs</Link>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="outlined" color="primary">
+                                                    <Link to="/updateprofile">Update Profile</Link>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                </Container>
                             </div>
-                        </Container>
-                    </div>
-                    <Divider />
-                    <Container className={useStyles.cardGrid} maxWidth="md">
-                        {/* End hero unit */}
-                        <Grid container spacing={4}>
-                            {this.opportunityList()}
-                        </Grid>
-                    </Container>
-                </main>
+                            <Divider />
+                            <Container className={useStyles.cardGrid} maxWidth="md">
+                                {/* End hero unit */}
+                                <Grid container spacing={4}>
+                                    {this.opportunityList()}
+                                </Grid>
+                            </Container>
+                        </main>
                     </Tab>
                     <Tab eventKey="profile" title="Map">
-                    <Map/>
+                        <Map />
 
                     </Tab>
                 </Tabs>
-                
+
 
             </React.Fragment>
         );
