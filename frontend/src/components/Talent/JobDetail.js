@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import './JobDetails.css'
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -96,51 +97,51 @@ const Toggle = () => {
             fontWeight: 400
         }
         return (
-           
-            <main>
+            <main className='jobdetail'>
+               
 
-            <div className="col-sm-12"  className={useStyles.margin}>
+            <div    size="medium" color="primary" aria-label="add"    className={useStyles.margin}>
                 <h1><label style={labelstyles}>Job Title</label></h1>
                 <p>{this.state.opportunity.title}</p>
             </div>
            
-            <div className="col-sm-12"  className={useStyles.heroContent}>
+            <div  className={useStyles.heroContent}>
                 <label style={labelstyles}>Description</label>
                 <p>{this.state.opportunity.description}</p>
             </div>
 
-            <div className="col-sm-12"  className={useStyles.cardContent}>
+            <div   className={useStyles.cardContent}>
                 <label style={labelstyles}>Project Name</label>
                 <p>{this.state.opportunity.project_name}</p>
             </div>
 
-            <div className="col-sm-12" className={useStyles.margin}>
+            <div  className={useStyles.margin}>
                 <label style={labelstyles}>Project Type</label>
                 <p>{this.state.opportunity.project_type}</p>
             </div>
 
             <div>  {
-            this.state.opportunity.required_skills && <div className="col-sm-12" className={useStyles.margin}>
+            this.state.opportunity.required_skills && <div className={useStyles.margin}>
                 <label style={labelstyles}>Required Skills</label>
                 {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
             </div>
         }</div>
 
       <div> {
-            this.state.opportunity.gender && <div className="col-sm-12" className={useStyles.heroContent}>
-                <label style={labelstyles}>Gender</label>
+            this.state.opportunity.gender && <div >
+                <label style={useStyles.heroContent} >Gender</label>
                 <p>{this.state.opportunity.gender}</p>
             </div>
         }
         </div> 
        <div>{
-            this.state.opportunity.location && <div className="col-sm-12" className={useStyles.heroContent}>
-                <h1>  <label style={labelstyles}>Address</label>    </h1>
+            this.state.opportunity.location && <div  className={useStyles.heroContent}>
+                <h1>  <label style={labelstyles} color='primary'>Address</label>    </h1>
                
                 <p>
                     {this.state.opportunity.location.street}
                 </p>
-                <p>
+                <p className ={useStyles.marginRight}>
                     {this.state.opportunity.location.city}
                 </p>
                 <p>
@@ -150,8 +151,7 @@ const Toggle = () => {
             </div>
     }   
        </div>
-         <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
+                                <Grid container spacing={2} >
                                     <Grid item>
                                         <Toggle />
                                         <Button variant="outlined" color="primary">
@@ -159,7 +159,6 @@ const Toggle = () => {
                                         </Button>
                                     </Grid>
                                 </Grid>
-                            </div>
         </main>
         
     );

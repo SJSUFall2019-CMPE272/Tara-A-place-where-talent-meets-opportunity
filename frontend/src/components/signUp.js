@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -11,6 +12,7 @@ import axios from "axios";
 import util from "../utils";
 import './styleSignUp.css';
 import Navbar from "./Navbar";
+import { Link as RLink, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -177,15 +179,22 @@ class SignUp extends Component {
                 <label htmlFor="password">Confirm Password</label>
                 <input type='password' name='Confirmpassword' onChange={this.getConfirmPassword} noValidate />
               </div>
-              <div className='info'>
-                <small>Password must be eight characters in length.</small>
-              </div>
               <div className='submit'>
                 <button onClick={this.handleSubmit}> Create </button>
               </div>
+              <Grid container>
+              <Grid item>
+                <RLink to="/signin">
+                  <Link href="">
+                    <p>already existing user? login/SignIn</p>
+                  </Link>
+                </RLink>
+              </Grid>
+            </Grid>
             </form>
           </div>
         </div>
+        
       </>
     );
   }

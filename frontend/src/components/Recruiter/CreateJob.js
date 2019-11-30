@@ -8,6 +8,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { Link } from "react-router-dom";
+import Button_ from "@material-ui/core/Button";
 
 import axios from "axios";
 import util from "../../utils";
@@ -203,7 +205,7 @@ class CreateJob extends Component {
           });
         }
       )
-    // .then((result) => {console.log(result)})
+     .then((result) => {console.log(result)})
   }
 
 
@@ -353,13 +355,13 @@ class CreateJob extends Component {
             {this.state.required_skills.map(item => (
               <div key={item}>
                 {item}
-                <Button
+                <Button_
                   color="primary"
                   size="small"
                   onClick={() => this.handleDelete(item)}
                 >
                   x
-                </Button>
+                </Button_>
               </div>
             ))}
           </div>
@@ -463,15 +465,21 @@ class CreateJob extends Component {
           {/* <Button onClick={this.getCoordinates}>click</Button> */}
 
           <div className="col-sm-2">
+          {/* <Link to="/opportunities">  */}
+
           <Button size="lg" variant="info"
           size="lg"
               type="submit"
               name="submit"
               value="Send"
               onClick={this.submitForm}
+              to="/opportunities" renderAs={Link}
             >
-              Submit
+          Submit
+
             </Button>
+            {/* </Link> */}
+
           </div>
           <br></br>
         </FormControl>

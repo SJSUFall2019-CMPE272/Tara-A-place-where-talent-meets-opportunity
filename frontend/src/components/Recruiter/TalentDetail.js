@@ -97,7 +97,7 @@ class TalentDetail extends Component {
         return (
             <main>
                 <div className="col-sm-12">
-                    <label style={labelstyles}>Email</label>
+                    <label style={useStyles.heroContent}>Email</label>
                     <p>{this.state.talent.email}</p>
                 </div>
                 <div className="col-sm-12">
