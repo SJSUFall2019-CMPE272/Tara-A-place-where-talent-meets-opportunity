@@ -90,7 +90,7 @@ class Landing extends Component {
               </div>
               <div class="col-lg-6 col-sm-12">
                 <div class="creators agents">
-                  <h2>For Agents</h2>
+                  <h2>For Talents</h2>
                   <p class="main-desc">Tara's simple yet sophisticated platform makes managing your talent easier than ever.</p>
                   <ul>
                     <li>
@@ -98,12 +98,12 @@ class Landing extends Component {
                       <p>Easily manage your talent's audition schedule, communicate with CDs and get your actors booked.</p>
                     </li>
                     <li>
-                      <h6>Submission Management</h6>
+                      <h6>Submission Profile</h6>
                       <p>Build a dashboard for your entire roster, submit them to projects, and track their progress.</p>
                     </li>
                     <li>
-                      <h6>Build Your Roster</h6>
-                      <p>Search our Talent Database of over 100,000 active performers to find the perfect addition to your roster.</p>
+                      <h6>Build Your Career</h6>
+                      <p>Search our Job Database of over 100,000 active jobs to find the perfect addition to your roster.</p>
                     </li>
                   </ul>
                   {/* <a href="" data-toggle="modal" data-target="#agentsModal" data-cta="product_home_agent_features_learn_more" data-subtype="learn_more" class="more-link cd-cta" id="learnMoreHome7" aria-label="Learn more about how Backstage works for agents">Learn more about agent tools</a> */}
