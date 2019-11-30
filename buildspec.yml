@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Installing and downloading essentials"
+      - echo `pwd`
+      - mkdir ~/.kube
+      - aws s3 cp s3://tara-kubernetes-state-store/.kube/config ~/.kube/config
+      - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv ./kubectl /usr/local/bin
+  build:
+    commands:
+      - echo "Starting the build"
+      - echo `pwd`
+      - cd backend
+      - TAG=$(git log -1 --pretty=%h)
+      - docker build -t itselavia/tara:$TAG .
+      - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
+      - docker push itselavia/tara:$TAG
+
+  post_build:
+    commands:
+      - echo "Pushing to Kubernetes"
+      - sed -i "s/VERSION/${TAG}/g" AnnouncementsMicroservice.yaml
+      - /usr/local/bin/kubectl apply -f AnnouncementsMicroservice.yaml
+      - /usr/local/bin/kubectl get pods

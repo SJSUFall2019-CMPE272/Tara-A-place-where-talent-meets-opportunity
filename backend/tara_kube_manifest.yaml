@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tara-deployment
+  labels:
+    app: tara
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tara
+  template:
+    metadata:
+      labels:
+        app: tara
+    spec:
+      containers:
+      - name: tara-api
+        image: itselavia/tara:VERSION
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tara-service
+spec:
+  selector:
+    app: tara
+  ports:
+    - port: 80
+      targetPort: 9000
+  type: LoadBalancer
