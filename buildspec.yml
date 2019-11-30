@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+  pre_build:
+    commands:
+      - echo "Installing and downloading essentials"
+      - echo `pwd`
+      - mkdir ~/.kube
+      - aws s3 cp s3://tara-kubernetes-state-store/.kube/config ~/.kube/config
+      - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv ./kubectl /usr/local/bin
+  build:
+    commands:
+      - echo "Starting the build"
+      - echo `pwd`
+      - cd frontend
+      - sed -i "s/localhost:9000/a9950c81313b311ea9fd30e3648edf6f-109621061.us-east-1.elb.amazonaws.com/g" src/utils.js
+      - npm install
+      - npm run build
+      - aws s3 sync ./build s3://tara-frontend
+      - aws cloudfront create-invalidation --distribution-id EZ6B8EB5GBUXQ --paths /\*
+      - cd ../backend
+      - sed -i "s/localhost:3000/dgnchyrkhqge4.cloudfront.net/g" src/server.js
+      - sed -i "s/http/https/g" src/server.js
+      - TAG=$(git log -1 --pretty=%h)
+      - docker build -t itselavia/tara:$TAG .
+      - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
+      - docker push itselavia/tara:$TAG
+
+  post_build:
+    commands:
+      - echo "Pushing to Kubernetes"
+      - sed -i "s/VERSION/${TAG}/g" tara_kube_manifest.yaml
+      - /usr/local/bin/kubectl apply -f tara_kube_manifest.yaml
+      - /usr/local/bin/kubectl get pods

@@ -26,6 +26,14 @@ router.get("/", function (req, res) {
 });
 
 
+router.get("/:id/applicants", function (req, res) {
+
+    var opportunityId = req.params.id;
+    var applicants = [];
+
+});
+
+
 router.get("/:id", function (req, res) {
 
     var opportunityId = req.params.id;
@@ -69,6 +77,7 @@ router.post("/", function (req, res) {
     var required_documents = req.body.required_documents;
     var required_skills = req.body.required_skills;
     var title = req.body.title;
+    var matches = req.body.matches
 
     var id = "o" + (Math.floor(Math.random() * 10000)).toString();
 
@@ -87,7 +96,8 @@ router.post("/", function (req, res) {
             "project_type": project_type,
             "required_documents": required_documents,
             "required_skills": required_skills,
-            "title": title
+            "title": title,
+            "matches": matches
 
         }
     };

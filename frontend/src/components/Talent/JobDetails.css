@@ -1,0 +1,132 @@
+p, div {
+    font-family: Lato;
+  }
+  
+  
+    /* Colors:
+    https://coolors.co/22223b-4a4e69-eadae4-9a8c98-c9ada7 
+ 
+  
+  YANKEES BLUE: #22223B
+  INDEPENDENCE: #4A4E69
+  PLATINUM: #EADAE4
+  SPANISH GRAY: #9A8C98
+  SILVER PINK: #C9ADA7 */
+ 
+  
+
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    max-width: 80%;
+    min-width: 100px;
+    min-height: 400px;
+    padding: 20px 40px;
+    border-radius: 6px;
+    box-shadow: 0px 8px 36px #222;
+    background-color: #fefefe;
+  }
+  
+  col-sm-12 {
+    background-color: #d4d5d6;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 30px;
+    height: 30px;
+    padding: 0 4px 0 1rem;
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0.3rem 0.3rem 0;
+  }
+
+  .form-wrapper > h2 {
+    display: flex;
+    justify-content: center;
+    font-family: "Segoe UI", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 2em;
+    font-weight: lighter;
+    margin-top: 0.25em;
+    color: #222;
+  }
+  
+  form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .info {
+    padding-bottom: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  
+  label {
+    margin-bottom: 0.5em;
+    color: #444;
+    font-weight: lighter;
+  }
+  
+  input {
+    padding: 10px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #d6d1d5;
+  }
+  
+  input::placeholder {
+    font-size: 1.2em;
+    font-weight: lighter;
+    color: #bbb;
+  }
+  
+  button {
+    min-width: 100%;
+    cursor: pointer;
+    margin-right: 0.25em;
+    margin-top: 0.5em;
+    padding: 	0.938em;
+    border: none;
+    border-radius: 4px;
+    background-color: #22223B;
+    color: #fefefe;
+  }
+  button:hover {
+    background-color: #4A4E69;
+    color: #fefefe;
+  }
+  
+  .error {
+    color:#db2269;
+    font-size: 0.5em;
+    display: relative;
+  }
+  
+  .state,
+  .city,
+  .street {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .fullName {
+    width: 100%;
+  }
+  
+  .city,
+  .state {
+    width: 100%;
+  }
+  
+  .submit {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .jobdetail{
+    align-content: center;
+
+    left: 450px;
+  }

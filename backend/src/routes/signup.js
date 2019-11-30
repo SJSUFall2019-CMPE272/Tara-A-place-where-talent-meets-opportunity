@@ -17,25 +17,37 @@ router.post("/", function (req, res) {
   var tableName;
   var id;
 
+  var params;
+
   if (type === "talent") {
     tableName = "tara-talent-demo";
     id = "t" + (Math.floor(Math.random() * 10000)).toString();
+    params = {
+      TableName: tableName,
+      Item: {
+        "id": id,
+        "email": email,
+        "name": name,
+        "password": hashedPassword,
+        "matches": []
+      }
+    };
   }
   else if (type === "recruiter") {
     tableName = "tara-recruiter-demo";
     id = "r" + (Math.floor(Math.random() * 10000)).toString();
+    params = {
+      TableName: tableName,
+      Item: {
+        "id": id,
+        "email": email,
+        "name": name,
+        "password": hashedPassword
+      }
+    };
   }
 
   console.log(tableName);
-  var params = {
-    TableName: tableName,
-    Item: {
-      "id": id,
-      "email": email,
-      "name": name,
-      "password": hashedPassword
-    }
-  };
 
 
   docClient.put(params, function (err, data) {

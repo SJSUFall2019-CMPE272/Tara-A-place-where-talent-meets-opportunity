@@ -11,7 +11,7 @@
 
 
 terraform/.terraform/
-
+terraform/kubernetes/.terraform
 terraform/*.tfstate
 
 terraform/terraform.tfstate.backup

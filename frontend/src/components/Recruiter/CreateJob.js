@@ -8,6 +8,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { Link } from "react-router-dom";
+import Button_ from "@material-ui/core/Button";
 
 import axios from "axios";
 import util from "../../utils";
@@ -56,8 +58,8 @@ class CreateJob extends Component {
     value: "",
     expiry_date: "",
     location: {
-      lat: number,
-      lng: number,
+      lat: 0,
+      lng: 0,
       address: "",
       zip: number,
       city: "",
@@ -187,14 +189,52 @@ class CreateJob extends Component {
   getCoordinates = e => {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address="${this.state.location.address}${this.state.location.city}+"&key=AIzaSyCwHAPMx05VRNJAcKwuhYafHFIaiexgxzw`)
       .then(res => res.json())
+      // .then((result) => {console.log(result)})
+
       .then(
         (result) => {
+          let lat = result.results[0].geometry.location.lat;
+          let lng = result.results[0].geometry.location.lng;
+          console.log(result.results[0].geometry.location.lat);
+          console.log(result.results[0].geometry.location.lng);
+
           let location = { ...this.state.location };
-          location.lat = result.results[0].geometry.location.lat;
-          location.lng = result.results[0].geometry.location.lng;
+          // console.log(location)
+          // console.log(result.results[0].geometry.location.lat);
+          location.lat = lat;
+          location.lng = lng;
+          // console.log(location)
+
           this.setState({
             location: location
           });
+          console.log(this.state.location);
+          const UserData = {
+            title: this.state.title,
+            gender: this.state.gender,
+            age_range: this.state.age_range,
+            description: this.state.description,
+            required_skills: this.state.required_skills,
+            expiry_date: this.state.expiry_date,
+            ethnicity: [],
+            project_name: this.state.project_name,
+            project_type: this.state.project_type,
+            required_documents: this.state.required_documents,
+            location: this.state.location,
+            created_by: localStorage.getItem("id")
+          }
+      
+          e.preventDefault();
+            axios
+              .post(`${util.BASE_URL}/opportunities`, UserData)
+              .then(res => this.setState({ auth: res.data.message }))
+              .catch(err => this.setState({ auth: err.response.data.message }));
+      
+            console.log("form sent");
+
+
+
+
         },
         (error) => {
           this.setState({
@@ -202,8 +242,12 @@ class CreateJob extends Component {
             error
           });
         }
+
+        
+
+
+
       )
-    // .then((result) => {console.log(result)})
   }
 
 
@@ -213,41 +257,9 @@ class CreateJob extends Component {
   //send the form
   submitForm = e => {
 
-    const UserData = {
-      title: this.state.title,
-      gender: this.state.gender,
-      age_range: this.state.age_range,
-      description: this.state.description,
-      required_skills: this.state.required_skills,
-      expiry_date: this.state.expiry_date,
-      ethnicity: [],
-      project_name: this.state.project_name,
-      project_type: this.state.project_type,
-      required_documents: this.state.required_documents,
-      location: this.state.location,
-      created_by: localStorage.getItem("id")
+    
     }
 
-    e.preventDefault();
-    if (this.state.jobTitle === "" || this.state.description === "") {
-      this.setState({
-        formError: true
-      });
-      return false;
-    } else {
-      this.setState({
-        formError: false
-      });
-      this.getCoordinates();
-      axios
-        .post(`${util.BASE_URL}/opportunities`, UserData)
-        .then(res => this.setState({ auth: res.data.message }))
-        .catch(err => this.setState({ auth: err.response.data.message }));
-
-      console.log("form sent");
-    }
-
-  };
 
   render() {
     return (
@@ -353,13 +365,13 @@ class CreateJob extends Component {
             {this.state.required_skills.map(item => (
               <div key={item}>
                 {item}
-                <Button
+                <Button_
                   color="primary"
                   size="small"
                   onClick={() => this.handleDelete(item)}
                 >
                   x
-                </Button>
+                </Button_>
               </div>
             ))}
           </div>
@@ -460,18 +472,24 @@ class CreateJob extends Component {
           </div>
 
 
-          {/* <Button onClick={this.getCoordinates}>click</Button> */}
+          <Button onClick={this.getCoordinates}>click</Button>
 
           <div className="col-sm-2">
+
           <Button size="lg" variant="info"
           size="lg"
               type="submit"
               name="submit"
               value="Send"
-              onClick={this.submitForm}
+              onClick={this.getCoordinates}
             >
-              Submit
+          <Link style={{ color: '#FFF' }} to="/opportunities"> 
+
+          Submit
+          </Link>
+
             </Button>
+
           </div>
           <br></br>
         </FormControl>

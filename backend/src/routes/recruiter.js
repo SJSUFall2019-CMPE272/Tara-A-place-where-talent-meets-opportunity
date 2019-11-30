@@ -91,4 +91,74 @@ router.get("/:id/opportunities", function (req, res) {
 
   });
 
+
+  router.post("/match", function (req, res) {
+
+    var opportunity_id = req.body.opportunity_id;
+    var talent_id = req.body.talent_id;
+    var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
+    
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    
+    var params = {
+        TableName: "tara-talent-demo",
+        Key: {
+            "id": talent_id
+        },
+        UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues: {
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": opportunity_id,
+                        "talent_id": talent_id,
+                        "recruiterMatch": true
+                    }]
+                }
+    };
+
+
+    docClient.update(params, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var paramsOppor = {
+                TableName: "tara-opportunity-demo",
+                Key: {
+                    "id": opportunity_id
+                },
+                UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues: {
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": opportunity_id,
+                        "talent_id": talent_id,
+                        "recruiterMatch": true
+                    }]
+                }
+            };
+
+            docClient.update(paramsOppor, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Updated match object of opporunity")
+                }
+            });
+
+            res.status(201).send({
+                success: true,
+                message: 'Created a match object',
+                id: matchId
+            });
+        }
+    });
+
+});
+
   module.exports = router;
