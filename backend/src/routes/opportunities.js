@@ -77,7 +77,7 @@ router.post("/", function (req, res) {
     var required_documents = req.body.required_documents;
     var required_skills = req.body.required_skills;
     var title = req.body.title;
-    var matches = []
+    var matches = req.body.matches
 
     var id = "o" + (Math.floor(Math.random() * 10000)).toString();
 

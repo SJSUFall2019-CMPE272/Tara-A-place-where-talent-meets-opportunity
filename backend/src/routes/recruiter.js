@@ -96,64 +96,65 @@ router.get("/:id/opportunities", function (req, res) {
 
     var opportunity_id = req.body.opportunity_id;
     var talent_id = req.body.talent_id;
-
-    var params = {
-        TableName: "tara-match-demo",
-        ProjectionExpression: "id, talent_id, opportunity_id, talentMatch",
-        FilterExpression: "#talent_id = :talent_id AND #opportunity_id = :opportunity_id",
-        ExpressionAttributeNames: {
-          "#talent_id": "talent_id",
-          "#opportunity_id": "opportunity_id"
-        },
-        ExpressionAttributeValues: {
-          ":talent_id": talent_id,
-          ":opportunity_id": opportunity_id
-        }
-      };
-
+    var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
+    
     var docClient = new AWS.DynamoDB.DocumentClient();
+    
+    var params = {
+        TableName: "tara-talent-demo",
+        Key: {
+            "id": talent_id
+        },
+        UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues: {
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": opportunity_id,
+                        "talent_id": talent_id,
+                        "recruiterMatch": true
+                    }]
+                }
+    };
 
-    docClient.scan(params, function (err, data) {
+
+    docClient.update(params, function (err, data) {
         if (err) {
             console.log(err);
-            res.status(400).send({
-                success: false,
-                message: err.message
-            });
         } else {
+            var paramsOppor = {
+                TableName: "tara-opportunity-demo",
+                Key: {
+                    "id": opportunity_id
+                },
+                UpdateExpression: "SET #matches = list_append(#matches, :vals)",
+                ExpressionAttributeNames: {
+                    "#matches": "matches"
+                },
+                ExpressionAttributeValues: {
+                    ":vals": [{
+                        "id": matchId,
+                        "opportunity_id": opportunity_id,
+                        "talent_id": talent_id,
+                        "recruiterMatch": true
+                    }]
+                }
+            };
 
-            if(data.Count > 0) {
-                var paramsMatch = {
-                    TableName: "tara-match-demo",
-                    Key:{
-                        "id": data.Items[0].id
-                    },
-                    UpdateExpression: "SET recruiterMatch = :recruiterMatch",
-                    ExpressionAttributeValues:{
-                        ":recruiterMatch": true
-                    }
-                };
+            docClient.update(paramsOppor, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Updated match object of opporunity")
+                }
+            });
 
-                docClient.update(paramsMatch, function (err, matchData) {
-                    if (err) {
-                      console.log(err);
-                      
-                    } else {
-                        console.log(matchData);
-                        console.log('Updated match object of talent');
-                    }
-                  });
-
-
-                  if(data.Items[0].talentMatch == true) {
-                      console.log("perfect match");
-                  }
-
-            }
-
-            console.log(data)
             res.status(201).send({
-                success: true
+                success: true,
+                message: 'Created a match object',
+                id: matchId
             });
         }
     });

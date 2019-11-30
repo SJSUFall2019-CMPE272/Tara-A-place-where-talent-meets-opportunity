@@ -180,7 +180,7 @@ class Home extends Component {
                             </div>
                         </Container>
                     </div>
-                    <Container className={useStyles.cardGrid} maxWidth="md">
+                    <Container style={{ marginTop: "10px", marginBottom:"20px" }} className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
                             {this.talentList()}

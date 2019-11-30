@@ -34,7 +34,7 @@ import Map from "./Map";
 
 const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
-        <Card className={useStyles.card}>
+        <Card  className={useStyles.card}>
             <CardMedia
                 className={useStyles.cardMedia}
                 image="https://source.unsplash.com/random"
@@ -50,10 +50,11 @@ const Opportunity = props => (
             </CardContent>
 
             {/* <Toggle /> */}
-            <button onClick={() => props.handleMatch(props.opportunity.id)}>Match</button>
+            {/* <button onClick={() => props.handleMatch(props.opportunity.id)}>Match</button> */}
+            <Fab style={{ marginBottom: "5px",marginLeft:"5px" }} variant="extended" onClick={() => props.handleMatch(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
 
             {/* </Button> */}
-            <Button size="small" color="primary">
+            <Button style={{ marginBottom: "5px",marginLeft:"10px" }}size="small" color="primary">
                 <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
             </Button>
         </Card>
