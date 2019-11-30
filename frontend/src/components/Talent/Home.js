@@ -115,26 +115,33 @@ class Home extends Component {
     }
     componentDidMount = () => {
         let user_id = localStorage.getItem("id");
+        let unmatchedOpp = [];
         axios
             .get(`${util.BASE_URL}/opportunities`)
             .then(res => {
                 console.log(res.data);
                 let opportunities = res.data;
-                let resopo = opportunities.filter(data => {
-                    if (data.matches && data.matches.length) {
-                        let matches = data.matches;
-                        matches.map(match => {
-                            if (match.talent_id == user_id) {
-                                return false;
+                opportunities.forEach(element => {
+                    let hasMatched = false;
+                    if (element.matches && element.matches.length > 0) {
+                        let allMatches = element.matches;
+                        allMatches.forEach(data => {
+                            console.log("checking talent id");
+                            if (data.talent_id == user_id) {
+                                console.log("this opportunity is matched");
+                                hasMatched = true;
                             }
-                            else return true;
-                        }
-                        )
+
+                        })
                     }
-                    else return true;
-                });
-                console.log(resopo);
-                this.setState({ opportunities: res.data, error: "" })
+                    if (hasMatched == false) {
+                        unmatchedOpp.push(element);
+                        console.log("pushing in new array");
+                    }
+                })
+                console.log("all unmatched oopo");
+                console.log(unmatchedOpp);
+                this.setState({ opportunities: unmatchedOpp, error: "" })
             })
             .catch(err => {
                 console.log(err);
@@ -165,22 +172,34 @@ class Home extends Component {
             .then((res) => {
                 if (res.status === 201) {
                     console.log("am here");
+                    let user_id = localStorage.getItem("id");
+                    let unmatchedOpp = [];
                     axios
                         .get(`${util.BASE_URL}/opportunities`)
                         .then(res => {
                             console.log(res.data);
                             let opportunities = res.data;
-                            let resopo = opportunities.filter(data => {
-                                if (data.matches && data.matches.length > 0) {
-                                    let matches = data.matches;
-                                    if (matches.talent_id === user_id) {
-                                        return -1;
-                                    }
+                            opportunities.forEach(element => {
+                                let hasMatched = false;
+                                if (element.matches && element.matches.length > 0) {
+                                    let allMatches = element.matches;
+                                    allMatches.forEach(data => {
+                                        console.log("checking talent id");
+                                        if (data.talent_id == user_id) {
+                                            console.log("this opportunity is matched");
+                                            hasMatched = true;
+                                        }
+
+                                    })
                                 }
-                                else return 1;
+                                if (hasMatched == false) {
+                                    unmatchedOpp.push(element);
+                                    console.log("pushing in new array");
+                                }
                             })
-                            console.log(resopo);
-                            this.setState({ opportunities: resopo, error: "" })
+                            console.log("all unmatched oopo");
+                            console.log(unmatchedOpp);
+                            this.setState({ opportunities: unmatchedOpp, error: "" })
                         })
                         .catch(err => {
                             console.log(err);

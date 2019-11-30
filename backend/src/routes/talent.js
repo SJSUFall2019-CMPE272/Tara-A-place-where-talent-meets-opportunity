@@ -69,7 +69,7 @@ router.get("/:id/opportunities", function (req, res) {
 
         if (response.data.Items[0].matches.length > 0) {
 
-            for (var i=0; i<response.data.Items[0].matches.length; i++) {
+            for (var i = 0; i < response.data.Items[0].matches.length; i++) {
 
                 console.log("two")
 
@@ -81,9 +81,9 @@ router.get("/:id/opportunities", function (req, res) {
                 };
 
                 var get_match_data = docClient.get(get_match_params);
-                
+
                 get_match_data.on('success', function (data) {
-                    
+
                     console.log("get_match succeeded: ", JSON.stringify(data.data.Item.id, null, 2));
 
                     console.log("three")
@@ -101,23 +101,23 @@ router.get("/:id/opportunities", function (req, res) {
 
                         opportunities.push(data.data.Item);
                         console.log("opportunities.length: " + opportunities.length)
-                console.log("response.data.Items[0].matches.length: " + response.data.Items[0].matches.length)
-                if (opportunities.length == response.data.Items[0].matches.length) {
-                    console.log("i am here")
-                    sendResult(res, opportunities);
-                }
+                        console.log("response.data.Items[0].matches.length: " + response.data.Items[0].matches.length)
+                        if (opportunities.length == response.data.Items[0].matches.length) {
+                            console.log("i am here")
+                            sendResult(res, opportunities);
+                        }
 
                     }).send();
 
                 }).send();
 
-                
+
             }
-            
+
         }
 
         else {
-            res.send(JSON.stringify({"Message": "No results"}));
+            res.send(JSON.stringify({ "Message": "No results" }));
         }
 
     }).send();
@@ -208,6 +208,7 @@ router.post("/:id", function (req, res) {
 router.post("/:id/match", function (req, res) {
 
     var talentId = req.params.id;
+    console.log(talentId);
     var matchId = "m" + (Math.floor(Math.random() * 10000)).toString();
     console.log(req.body)
     var params = {
@@ -216,19 +217,19 @@ router.post("/:id/match", function (req, res) {
             "id": talentId
         },
         UpdateExpression: "SET #matches = list_append(#matches, :vals)",
-                ExpressionAttributeNames: {
-                    "#matches": "matches"
-                },
-                ExpressionAttributeValues: {
-                    ":vals": [{
-                        "id": matchId,
-                        "opportunity_id": req.body.opportunity_id,
-                        "talent_id": talentId,
-                        "talentMatch": true
-                    }]
-                }
+        ExpressionAttributeNames: {
+            "#matches": "matches"
+        },
+        ExpressionAttributeValues: {
+            ":vals": [{
+                "id": matchId,
+                "opportunity_id": req.body.opportunity_id,
+                "talent_id": talentId,
+                "talentMatch": true
+            }]
+        }
     };
-
+    console.log("updated in talent");
     var docClient = new AWS.DynamoDB.DocumentClient();
     docClient.update(params, function (err, data) {
         if (err) {
