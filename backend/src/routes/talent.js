@@ -186,7 +186,7 @@ router.post("/:id", function (req, res) {
         }
     };
 
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
     docClient.update(params, function (err, data) {
         if (err) {
 

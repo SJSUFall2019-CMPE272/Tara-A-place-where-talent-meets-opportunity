@@ -34,7 +34,7 @@ import Map from "./Map";
 
 const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
-        <Card  className={useStyles.card}>
+        <Card className={useStyles.card}>
             <CardMedia
                 className={useStyles.cardMedia}
                 image="https://source.unsplash.com/random"
@@ -51,10 +51,10 @@ const Opportunity = props => (
 
             {/* <Toggle /> */}
             {/* <button onClick={() => props.handleMatch(props.opportunity.id)}>Match</button> */}
-            <Fab style={{ marginBottom: "5px",marginLeft:"5px" }} variant="extended" onClick={() => props.handleMatch(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
+            <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
 
             {/* </Button> */}
-            <Button style={{ marginBottom: "5px",marginLeft:"10px" }}size="small" color="primary">
+            <Button style={{ marginBottom: "5px", marginLeft: "10px" }} size="small" color="primary">
                 <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
             </Button>
         </Card>
@@ -172,7 +172,7 @@ class Home extends Component {
         axios.post(`${util.BASE_URL}/talent/${user_id}/match`, data)
             .then((res) => {
                 if (res.status === 201) {
-                    console.log("am here");
+                    console.log("updated the match");
                     let user_id = localStorage.getItem("id");
                     let unmatchedOpp = [];
                     axios
@@ -186,7 +186,7 @@ class Home extends Component {
                                     let allMatches = element.matches;
                                     allMatches.forEach(data => {
                                         console.log("checking talent id");
-                                        if (data.talent_id == user_id) {
+                                        if (data.talent_id == user_id && data.talen) {
                                             console.log("this opportunity is matched");
                                             hasMatched = true;
                                         }

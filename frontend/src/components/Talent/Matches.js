@@ -46,7 +46,33 @@ const Opportunity = props => (
         </Card_>
     </Grid>
 )
+const MatchedOpportunity = props => (
+    <Grid item xs={12} sm={6} md={4}>
+        <Card_ className={useStyles.card}>
+            <CardMedia
+                className={useStyles.cardMedia}
+                image="https://source.unsplash.com/random"
+                title="Image title"
+            />
+            <CardContent className={useStyles.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {props.opportunity.title}
+                </Typography>
+                <Typography>
+                    {props.opportunity.description}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                {/* <Button color="primary"> */}
 
+                {/* </Button> */}
+                <Button size="small" color="primary">
+                    <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
+                </Button>
+            </CardActions>
+        </Card_>
+    </Grid>
+)
 
 
 const useStyles = makeStyles(theme => ({
@@ -97,17 +123,59 @@ const Toggle = () => {
 class Matches extends Component {
     state = {
         opportunities: [],
+        perfectopportunityList: [],
+        yourMatchedopportunityList: [],
+        pendingRequestopportunityList: [],
         error: "",
         showDetailsModal: false,
         opportunity: {}
     }
 
     componentDidMount = () => {
+        let user_id = localStorage.getItem("id");
+        let yourMatchedopportunityList = [];
+        let perfectopportunityList = [];
+        let pendingRequestopportunityList = [];
         axios
             .get(`${util.BASE_URL}/opportunities`)
             .then(res => {
                 console.log(res.data);
-                this.setState({ opportunities: res.data, error: "" })
+                let opportunities = res.data;
+                opportunities.forEach(element => {
+                    let hasMatched = false;
+                    let talentMatch = false;
+                    let opportunityMatch = false;
+                    if (element.matches && element.matches.length > 0) {
+                        let allMatches = element.matches;
+                        allMatches.forEach(data => {
+                            console.log("checking talent id");
+                            if (data.talent_id == user_id && data.talentMatch && data.opportunityMatch) {
+                                console.log("this opportunity is matched");
+                                hasMatched = true;
+                            }
+                            else if (data.talent_id == user_id && data.talentMatch) {
+                                talentMatch = true;
+                            }
+
+                            else if (data.talent_id == user_id && data.oppurtunityMatch) {
+                                opportunityMatch = true;
+                            }
+
+                        })
+                    }
+                    if (hasMatched == true) {
+                        perfectopportunityList.push(element);
+                        console.log("pushing in new array");
+                    }
+                    if (talentMatch == true) {
+                        yourMatchedopportunityList.push(element);
+                    }
+                    if (opportunityMatch == true) {
+                        pendingRequestopportunityList.push(element);
+                    }
+                })
+                console.log("all unmatched oopo");
+                this.setState({ perfectopportunityList: perfectopportunityList, yourMatchedopportunityList: yourMatchedopportunityList, pendingRequestopportunityList: pendingRequestopportunityList, error: "" })
             })
             .catch(err => {
                 console.log(err);
@@ -118,49 +186,60 @@ class Matches extends Component {
 
 
 
-    opportunityList() {
-        return this.state.opportunities.map(currentOpportunity => {
+    perfectopportunityList() {
+        return this.state.perfectopportunityList.map(currentOpportunity => {
             return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
         })
     }
 
+    yourMatchedopportunityList() {
+        return this.state.yourMatchedopportunityList.map(currentOpportunity => {
+            return <MatchedOpportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
+        })
+    }
+
+    pendingRequestopportunityList() {
+        return this.state.pendingRequestopportunityList.map(currentOpportunity => {
+            return <MatchedOpportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
+        })
+    }
 
     render() {
         return (
             <>
-            <Navbar/>
-            <Accordion defaultActiveKey="0">
-                <div>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                       PERFECT MATCH
+                <Navbar />
+                <Accordion defaultActiveKey="0">
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="0">
+                            PERFECT MATCH
                 </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                        <Grid container spacing={4}>
-                            {this.opportunityList()}
-                        </Grid>
-                    </Accordion.Collapse>
-                </div>
-                <div>
-                    <Accordion.Toggle as={Card.Header} eventKey="1">
-                        Your Requests
+                        <Accordion.Collapse eventKey="0">
+                            <Grid container spacing={4}>
+                                {this.perfectopportunityList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="1">
+                            Your Requests
                 </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="1">
-                        <Grid container spacing={4}>
-                            {this.opportunityList()}
-                        </Grid>
-                    </Accordion.Collapse>
-                </div>
-                <div>
-                    <Accordion.Toggle as={Card.Header} eventKey="2">
-                        Match Requests
+                        <Accordion.Collapse eventKey="1">
+                            <Grid container spacing={4}>
+                                {this.yourMatchedopportunityList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="2">
+                            Match Requests
                 </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="2">
-                    <Grid container spacing={4}>
-                            {this.opportunityList()}
-                        </Grid>
-                    </Accordion.Collapse>
-                </div>
-            </Accordion>
+                        <Accordion.Collapse eventKey="2">
+                            <Grid container spacing={4}>
+                                {this.pendingRequestopportunityList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                </Accordion>
             </>
 
 
