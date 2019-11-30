@@ -14,6 +14,7 @@ import UpdateRecruiterProfile from "./components/Recruiter/UpdateProfile";
 import Opportunities from  "./components/Recruiter/Opportunities";
 
 import Matches from  "./components/Talent/Matches";
+import RMatches from  "./components/Recruiter/Matches";
 
 class Main extends Component {
   state = {};
@@ -34,6 +35,8 @@ class Main extends Component {
         <Route path="/matches" component={Matches} />
         <Route path="/recruiterupdateprofile" component={UpdateRecruiterProfile} />
         <Route path="/opportunities" component={Opportunities} />
+        <Route path="/rmatches" component={RMatches} />
+
 
 
 
