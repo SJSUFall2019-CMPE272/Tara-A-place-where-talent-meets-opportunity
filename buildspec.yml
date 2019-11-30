@@ -1,6 +1,9 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 8.0
   pre_build:
     commands:
       - echo "Installing and downloading essentials"
@@ -15,7 +18,6 @@ phases:
       - echo "Starting the build"
       - echo `pwd`
       - cd backend
-      - service docker start
       - TAG=$(git log -1 --pretty=%h)
       - docker build -t itselavia/tara:$TAG .
       - echo $DOCKER_HUB_PASSWORD | docker login --username itselavia --password-stdin
