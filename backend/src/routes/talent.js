@@ -43,6 +43,7 @@ router.get("/:id/opportunities", function (req, res) {
 
     var opportunities = [];
     var all_opportunities = [];
+    var response_to_send = {}
 
     var docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -56,33 +57,55 @@ router.get("/:id/opportunities", function (req, res) {
 
         all_opportunities = response.data.Items;
 
+        var get_matches_params = {
+            TableName: "tara-talent-demo",
+            ProjectionExpression: "matches",
+            KeyConditionExpression: "#id = :id",
+            ExpressionAttributeNames: {
+                "#id": "id"
+            },
+            ExpressionAttributeValues: {
+                ":id": talentId
+            }
+        };
+    
+        var matchesData = docClient.query(get_matches_params)
+    
+        matchesData.on('success', function (response) {
+    
+            var all_talent_matches = response.data.Items[0].matches
+
+            if(all_talent_matches.length > 0) {
+                var match_opp_ids = []
+                for (var i = 0; i < all_talent_matches.length; i++) {
+                    match_opp_ids[i] = all_talent_matches[i].opportunity_id
+                }
+
+                for (var i = 0; i < all_opportunities.length; i++) {
+                    var curr_opportunity = all_opportunities[i]
+                    var exists = match_opp_ids.includes(curr_opportunity.id)
+                    if(exists) {
+                        delete all_opportunities[i]
+                    }
+                }
+
+            }
+            var filtered = all_opportunities.filter(function (el) {
+                return el != null;
+              });
+
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(filtered, null, 2))
+    
+        }).send();
+
     }).
         on('error', function (error, response) {
             console.log(error);
         }).send();
 
 
-    var get_matches_params = {
-        TableName: "tara-talent-demo",
-        ProjectionExpression: "matches",
-        KeyConditionExpression: "#id = :id",
-        ExpressionAttributeNames: {
-            "#id": "id"
-        },
-        ExpressionAttributeValues: {
-            ":id": talentId
-        }
-    };
-
-    var matchesData = docClient.query(get_matches_params)
-
-    matchesData.on('success', function (response) {
-
-        console.log(response.data)
-
-
-
-    }).send();
+    
 
 });
 
