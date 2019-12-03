@@ -347,6 +347,8 @@ router.post("/:id/match", function (req, res) {
             }).send();
         }
     }).send();
+
+    res.send(JSON.stringify({message: "success"}));
 });
 
 module.exports = router;

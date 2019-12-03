@@ -186,7 +186,9 @@ router.post("/match", function (req, res) {
 	}).
 	on('error', function (error, response) {
 		console.log(error);
-	}).send();
+    }).send();
+    
+    res.send(JSON.stringify({message: "success"}));
 
 });
 
