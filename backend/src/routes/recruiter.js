@@ -192,5 +192,49 @@ router.post("/match", function (req, res) {
 
 });
 
+
+// to get matches for a specific opportunity
+router.get("/matches/:id", function (req, res) {
+
+    var opportunity_id = req.params.id;
+    var response_to_send = [];
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    var all_talents_data = docClient.scan({TableName: "tara-talent-demo" })
+
+    all_talents_data.on('success', function (response) {
+        var all_talents = response.data.Items;
+
+        for(var i=0; i < all_talents.length; i++) {
+
+            var curr_talent = all_talents[i]
+
+            var opp_exists = false;
+            for(var j=0; j < curr_talent.matches.length; j++) {
+
+                var curr_match_object = curr_talent.matches[j]
+
+                if(curr_match_object.opportunity_id === opportunity_id) {
+                    opp_exists = true
+                }
+            }
+
+            if(!opp_exists) {
+                delete curr_talent.password
+                response_to_send.push(curr_talent)
+            }
+
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(response_to_send, null, 2))
+
+    }).
+    on('error', function (error, response) {
+        console.log(error);
+    }).send();
+
+});
+
 module.exports = router;
 
