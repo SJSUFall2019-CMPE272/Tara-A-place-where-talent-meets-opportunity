@@ -28,8 +28,37 @@ router.get("/", function (req, res) {
 
 router.get("/:id/applicants", function (req, res) {
 
-    var opportunityId = req.params.id;
+    var opportunity_id = req.params.id;
     var applicants = [];
+
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    var all_talents_data = docClient.scan({TableName: "tara-talent-demo" })
+
+    all_talents_data.on('success', function (response) {
+
+        var all_talents = response.data.Items;
+
+        for(var i=0; i < all_talents.length; i++) {
+
+            var curr_talent = all_talents[i]
+
+            for(var j=0; j < curr_talent.matches.length; j++) {
+
+                var curr_match_object = curr_talent.matches[j]
+
+                if(curr_match_object.opportunity_id === opportunity_id) {
+                    delete curr_talent.password
+                    applicants.push(curr_talent)
+                }
+            }
+
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(applicants, null, 2))
+        
+    }).send();
 
 });
 
