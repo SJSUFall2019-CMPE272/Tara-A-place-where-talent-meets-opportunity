@@ -7,6 +7,19 @@ export default class Navbar extends Component {
   state = {
     logout: false
   }
+  HomeURL(){
+    return <>
+    {localStorage.getItem("type") == "talent" ?
+                <li className="navbar-item">
+                  <Link to="/home" className="navbar-brand">
+                    Home
+                </Link>
+                </li> : <li className="navbar-item">
+                  <Link to="/recruiterhome" className="nav-link">
+                    Home
+                </Link>
+                </li>}</>
+  }
 
   handleLogout = e => {
     e.preventDefault();
@@ -29,22 +42,14 @@ export default class Navbar extends Component {
                 Tara
               </Link>
             </li>
+            {localStorage.getItem("id") ? 
+            this.HomeURL() :
+            <li className="navbar-item">
+                  <Link to="/" className="navbar-brand">
+                    Home
+                </Link>
+            </li>}
 
-            {localStorage.getItem("type") == "talent" ?
-              <li className="navbar-item">
-                <Link to="/home" className="navbar-brand">
-                  Home
-              </Link>
-              </li> : <li className="navbar-item">
-                <Link to="/recruiterhome" className="nav-link">
-                  Home
-              </Link>
-              </li>}
-            {/* </ul> */}
-            {/* </div> */}
-
-            {/* <div className="collpase navbar-collapse"> */}
-            {/* <ul className="navbar-nav mr-auto"> */}
             {localStorage.getItem("id") ? <li className="navbar-item">
               <Link to="/" onClick={this.handleLogout} className="nav-link">
                 Log Out
