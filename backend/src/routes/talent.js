@@ -38,9 +38,7 @@ router.get("/:id/opportunities", function (req, res) {
 
     var talentId = req.params.id;
 
-    var opportunities = [];
     var all_opportunities = [];
-    var response_to_send = {}
 
     var docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -69,8 +67,10 @@ router.get("/:id/opportunities", function (req, res) {
         var matchesData = docClient.query(get_matches_params)
     
         matchesData.on('success', function (response) {
-    
-            var all_talent_matches = response.data.Items[0].matches
+
+            if(response.data.ScannedCount > 0) {
+
+                var all_talent_matches = response.data.Items[0].matches
 
             if(all_talent_matches.length > 0) {
                 var match_opp_ids = []
@@ -93,16 +93,21 @@ router.get("/:id/opportunities", function (req, res) {
 
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(filtered, null, 2))
+
+            }
+            else {
+
+                res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({message: "Requested data doesn't exist"}, null, 2))
+
+            }
     
         }).send();
 
     }).
-        on('error', function (error, response) {
+        on('error', function (error) {
             console.log(error);
         }).send();
-
-
-    
 
 });
 

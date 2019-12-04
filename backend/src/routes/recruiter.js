@@ -7,118 +7,118 @@ const router = express.Router();
 
 router.get("/", function (req, res) {
 
-	var params = {
-		TableName: "tara-recruiter-demo",
+    var params = {
+        TableName: "tara-recruiter-demo",
 
-	};
+    };
 
-	var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
-	docClient.scan(params, onScan);
+    docClient.scan(params, onScan);
 
-	function onScan(err, data) {
-		if (err) {
-			console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
-		}
-		else {
-			// print all the opportunities
-			console.log("Scan succeeded.");
-			data.Items.forEach(function (opportunity) {
-				console.log(opportunity);
-			});
-			res.send(data.Items);
-		}
-	}
+    function onScan(err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+        }
+        else {
+            // print all the opportunities
+            console.log("Scan succeeded.");
+            data.Items.forEach(function (opportunity) {
+                console.log(opportunity);
+            });
+            res.send(data.Items);
+        }
+    }
 
 });
 
 // to get details about specific recruiter
 router.get("/:id", function (req, res) {
 
-	var recruiterId = req.params.id;
+    var recruiterId = req.params.id;
 
-	var params = {
-		TableName: "tara-recruiter-demo",
-		KeyConditionExpression: "#id = :id",
-		ExpressionAttributeNames: {
-			"#id": "id"
-		},
-		ExpressionAttributeValues: {
-			":id": recruiterId
-		}
-	};
+    var params = {
+        TableName: "tara-recruiter-demo",
+        KeyConditionExpression: "#id = :id",
+        ExpressionAttributeNames: {
+            "#id": "id"
+        },
+        ExpressionAttributeValues: {
+            ":id": recruiterId
+        }
+    };
 
-	var docClient = new AWS.DynamoDB.DocumentClient();
-	docClient.query(params, function (err, data) {
-		if (err) {
-			console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-		}
-		else {
-			console.log("Query succeeded.");
-			delete data.Items[0].password;
-			res.send(data.Items);
-		}
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    docClient.query(params, function (err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        }
+        else {
+            console.log("Query succeeded.");
+            delete data.Items[0].password;
+            res.send(data.Items);
+        }
 
-	});
+    });
 
 });
 
 // to get all the opportunities created by the recruiter
 router.get("/:id/opportunities", function (req, res) {
 
-	var recruiterId = req.params.id;
+    var recruiterId = req.params.id;
 
-	var params = {
-		TableName: "tara-opportunity-demo",
-		FilterExpression: 'created_by = :created_by',
-		ExpressionAttributeValues: {
-			":created_by": recruiterId
-		}
-	};
+    var params = {
+        TableName: "tara-opportunity-demo",
+        FilterExpression: 'created_by = :created_by',
+        ExpressionAttributeValues: {
+            ":created_by": recruiterId
+        }
+    };
 
-	var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
-	docClient.scan(params, onScan);
+    docClient.scan(params, onScan);
 
-	function onScan(err, data) {
-		if (err) {
-			console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
-		}
-		else {
-			// print all the opportunities
-			console.log("Scan succeeded.");
-			data.Items.forEach(function (opportunity) {
-				console.log(opportunity);
-			});
-			res.send(data.Items);
-		}
-	}
+    function onScan(err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+        }
+        else {
+            // print all the opportunities
+            console.log("Scan succeeded.");
+            data.Items.forEach(function (opportunity) {
+                console.log(opportunity);
+            });
+            res.send(data.Items);
+        }
+    }
 
 });
 
 
 router.post("/match", function (req, res) {
-	var opportunity_id = req.body.opportunity_id;
-	var talent_id = req.body.talent_id;
-	var docClient = new AWS.DynamoDB.DocumentClient();
+    var opportunity_id = req.body.opportunity_id;
+    var talent_id = req.body.talent_id;
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
-	var get_matches_of_talent_params = {
-		TableName: "tara-talent-demo",
-		ProjectionExpression: "matches",
-		KeyConditionExpression: "#id = :id",
-		ExpressionAttributeNames: {
-			"#id": "id"
-		},
-		ExpressionAttributeValues: {
-			":id": talent_id
-		}
-	};
+    var get_matches_of_talent_params = {
+        TableName: "tara-talent-demo",
+        ProjectionExpression: "matches",
+        KeyConditionExpression: "#id = :id",
+        ExpressionAttributeNames: {
+            "#id": "id"
+        },
+        ExpressionAttributeValues: {
+            ":id": talent_id
+        }
+    };
 
-	var get_matches_of_talent = docClient.query(get_matches_of_talent_params)
+    var get_matches_of_talent = docClient.query(get_matches_of_talent_params)
 
-	get_matches_of_talent.on('success', function (response) {
+    get_matches_of_talent.on('success', function (response) {
 
-		var match_obj_for_this_opportunity_exists = false
+        var match_obj_for_this_opportunity_exists = false
         var talent_current_matches = response.data.Items[0].matches;
         for (var i = 0; i < talent_current_matches.length; i++) {
 
@@ -183,12 +183,12 @@ router.post("/match", function (req, res) {
 
         }
 
-	}).
-	on('error', function (error, response) {
-		console.log(error);
-    }).send();
-    
-    res.send(JSON.stringify({message: "success"}));
+    }).
+        on('error', function (error, response) {
+            console.log(error);
+        }).send();
+
+    res.send(JSON.stringify({ message: "success" }));
 
 });
 
@@ -202,48 +202,61 @@ router.get("/matches/:id", function (req, res) {
     var recruiter_matches = [];
     var docClient = new AWS.DynamoDB.DocumentClient();
 
-    var all_talents_data = docClient.scan({TableName: "tara-talent-demo" })
+    var all_talents_data = docClient.scan({ TableName: "tara-talent-demo" })
 
     all_talents_data.on('success', function (response) {
-        var all_talents = response.data.Items;
 
-        for(var i=0; i < all_talents.length; i++) {
+        if (response.data.ScannedCount > 0) {
 
-            var curr_talent = all_talents[i]
+            var all_talents = response.data.Items;
 
-            var opp_exists = false;
-            for(var j=0; j < curr_talent.matches.length; j++) {
+            for (var i = 0; i < all_talents.length; i++) {
 
-                var curr_match_object = curr_talent.matches[j]
+                var curr_talent = all_talents[i]
 
-                if(curr_match_object.opportunity_id === opportunity_id) {
-                    opp_exists = true
+                var opp_exists = false;
+                for (var j = 0; j < curr_talent.matches.length; j++) {
 
-                    if(curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == true) {
-                        perfect_matches.push(curr_talent)
+                    var curr_match_object = curr_talent.matches[j]
+
+                    if (curr_match_object.opportunity_id === opportunity_id) {
+                        opp_exists = true
+
+                        if (curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == true) {
+                            perfect_matches.push(curr_talent)
+                        }
+
+                        if (curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == false) {
+                            recruiter_matches.push(curr_talent)
+                        }
                     }
 
-                    if(curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == false) {
-                        recruiter_matches.push(curr_talent)
-                    }
+                }
+
+                if (!opp_exists) {
+                    delete curr_talent.password
+                    response_to_send.push(curr_talent)
                 }
 
             }
 
-            if(!opp_exists) {
-                delete curr_talent.password
-                response_to_send.push(curr_talent)
-            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({ "not_applied": response_to_send, "perfect_matches": perfect_matches, "recruiter_matches": recruiter_matches }, null, 2))
+
+
 
         }
+        else {
 
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({"not_applied": response_to_send, "perfect_matches": perfect_matches, "recruiter_matches": recruiter_matches}, null, 2))
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({ message: "Requested data doesn't exist" }, null, 2))
+        }
+
 
     }).
-    on('error', function (error, response) {
-        console.log(error);
-    }).send();
+        on('error', function (error) {
+            console.log(error);
+        }).send();
 
 });
 
