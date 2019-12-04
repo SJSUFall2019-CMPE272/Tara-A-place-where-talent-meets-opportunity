@@ -133,49 +133,11 @@ class Matches extends Component {
 
     componentDidMount = () => {
         let user_id = localStorage.getItem("id");
-        let yourMatchedopportunityList = [];
-        let perfectopportunityList = [];
-        let pendingRequestopportunityList = [];
         axios
-            .get(`${util.BASE_URL}/opportunities`)
+            .get(`${util.BASE_URL}/talent/${user_id}/matches`)
             .then(res => {
                 console.log(res.data);
-                let opportunities = res.data;
-                opportunities.forEach(element => {
-                    let hasMatched = false;
-                    let talentMatch = false;
-                    let opportunityMatch = false;
-                    if (element.matches && element.matches.length > 0) {
-                        let allMatches = element.matches;
-                        allMatches.forEach(data => {
-                            console.log("checking talent id");
-                            if (data.talent_id == user_id && data.talentMatch && data.opportunityMatch) {
-                                console.log("this opportunity is matched");
-                                hasMatched = true;
-                            }
-                            else if (data.talent_id == user_id && data.talentMatch) {
-                                talentMatch = true;
-                            }
-
-                            else if (data.talent_id == user_id && data.oppurtunityMatch) {
-                                opportunityMatch = true;
-                            }
-
-                        })
-                    }
-                    if (hasMatched == true) {
-                        perfectopportunityList.push(element);
-                        console.log("pushing in new array");
-                    }
-                    if (talentMatch == true) {
-                        yourMatchedopportunityList.push(element);
-                    }
-                    if (opportunityMatch == true) {
-                        pendingRequestopportunityList.push(element);
-                    }
-                })
-                console.log("all unmatched oopo");
-                this.setState({ perfectopportunityList: perfectopportunityList, yourMatchedopportunityList: yourMatchedopportunityList, pendingRequestopportunityList: pendingRequestopportunityList, error: "" })
+                this.setState({ perfectopportunityList: res.data.perfect_matches, yourMatchedopportunityList: res.data.applications, pendingRequestopportunityList: res.data.requested_matches })
             })
             .catch(err => {
                 console.log(err);

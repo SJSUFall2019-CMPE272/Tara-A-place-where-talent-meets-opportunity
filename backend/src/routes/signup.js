@@ -58,7 +58,6 @@ router.post("/", function (req, res) {
         message: "Error: Couldn't write to DynamoDB"
       });
     } else {
-
       res.status(200).send({
         success: true,
         message: '200',

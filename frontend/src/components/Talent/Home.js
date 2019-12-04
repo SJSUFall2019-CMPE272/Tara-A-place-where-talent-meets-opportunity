@@ -61,18 +61,6 @@ const Opportunity = props => (
     </Grid>
 )
 
-
-
-const Toggle = () => {
-    const [isToggledOn, setToggle] = React.useState(false)
-    const toggle = () => setToggle(!isToggledOn)
-    return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
-            {isToggledOn ? 'UNMATCH' : 'MATCH'}
-        </Fab>
-    )
-}
-
 const useStyles = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
@@ -116,33 +104,10 @@ class Home extends Component {
     }
     componentDidMount = () => {
         let user_id = localStorage.getItem("id");
-        let unmatchedOpp = [];
         axios
-            .get(`${util.BASE_URL}/opportunities`)
+            .get(`${util.BASE_URL}/talent/${user_id}/opportunities`)
             .then(res => {
-                console.log(res.data);
-                let opportunities = res.data;
-                opportunities.forEach(element => {
-                    let hasMatched = false;
-                    if (element.matches && element.matches.length > 0) {
-                        let allMatches = element.matches;
-                        allMatches.forEach(data => {
-                            console.log("checking talent id");
-                            if (data.talent_id == user_id && data.talentMatch) {
-                                console.log("this opportunity is matched");
-                                hasMatched = true;
-                            }
-
-                        })
-                    }
-                    if (hasMatched == false) {
-                        unmatchedOpp.push(element);
-                        console.log("pushing in new array");
-                    }
-                })
-                console.log("all unmatched oopo");
-                console.log(unmatchedOpp);
-                this.setState({ opportunities: unmatchedOpp, error: "" })
+                this.setState({ opportunities: res.data, error: "" });
             })
             .catch(err => {
                 console.log(err);
@@ -171,36 +136,16 @@ class Home extends Component {
         let user_id = localStorage.getItem("id");
         axios.post(`${util.BASE_URL}/talent/${user_id}/match`, data)
             .then((res) => {
-                if (res.status === 201) {
+                console.log(res);
+                if (res.status === 200) {
                     console.log("updated the match");
-                    let user_id = localStorage.getItem("id");
-                    let unmatchedOpp = [];
                     axios
-                        .get(`${util.BASE_URL}/opportunities`)
+                        .get(`${util.BASE_URL}/talent/${user_id}/opportunities`)
                         .then(res => {
+                            console.log("im to get all matches")
                             console.log(res.data);
                             let opportunities = res.data;
-                            opportunities.forEach(element => {
-                                let hasMatched = false;
-                                if (element.matches && element.matches.length > 0) {
-                                    let allMatches = element.matches;
-                                    allMatches.forEach(data => {
-                                        console.log("checking talent id");
-                                        if (data.talent_id == user_id && data.talentMatch) {
-                                            console.log("this opportunity is matched");
-                                            hasMatched = true;
-                                        }
-
-                                    })
-                                }
-                                if (hasMatched == false) {
-                                    unmatchedOpp.push(element);
-                                    console.log("pushing in new array");
-                                }
-                            })
-                            console.log("all unmatched oopo");
-                            console.log(unmatchedOpp);
-                            this.setState({ opportunities: unmatchedOpp, error: "" })
+                            this.setState({ opportunities: opportunities, error: "" })
                         })
                         .catch(err => {
                             console.log(err);
@@ -222,12 +167,6 @@ class Home extends Component {
             <React.Fragment>
                 <Navbar />
                 <CssBaseline />
-                {/* <AppBar position="relative">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit" noWrap>
-                        </Typography>
-                    </Toolbar>
-                </AppBar> */}
                 <Tabs style={{ position: 'relative' }} defaultActiveKey="home">
                     <Tab eventKey="home" title="Home">
                         <main>
