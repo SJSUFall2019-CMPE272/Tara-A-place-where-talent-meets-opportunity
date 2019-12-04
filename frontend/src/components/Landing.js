@@ -15,15 +15,15 @@ class Landing extends Component {
       <main>
         <Header/> 
      
-        <section className="intro">
+        <section style={{marginBottom:"40px",marginTop:"40px"}} >
             <h2>About Us</h2>
             <div className="col-sm-12">
              <h5>Indian cinema is the largest national film industry in terms of the number of films produced and the number of tickets sold, with 3.5 billion tickets sold worldwide annually.Having said that, If you are the person who has this passion for pursuing your career in Cinema. Either it may be on-screen like a Lead actor, actress, junior artist or off-screen Direction of Photography, Director, Playback Singer, Dance Choreographer, etc.. You might be located in many rural parts of India but we heard you. On the other hand, dear passionate Indian Movie Makers are you looking for some passionate, young, new talent and dedicated artists to showcase in your upcoming dream project? Yes, we heard you too.</h5>
             </div>
         </section>
 
-        <div>
-             <div className="services">
+        <div >
+             <div style={{marginBottom:"40px",marginTop:"40px"}} className="services">
                 <div className="service-one">
                 <p className="service-icon"></p>
                 <p className="service-title">Create your profile</p>
@@ -45,7 +45,7 @@ class Landing extends Component {
 
             </div>
 
-            <div className="gallery">
+            <div style={{marginBottom:"40px",marginTop:"40px"}} className="gallery">
          <div className="gallery-item-one"></div>
          <div className="gallery-item-two"></div>
          <div className="gallery-item-three"></div>
@@ -56,7 +56,7 @@ class Landing extends Component {
         </div>
         
 
-        <section>
+        <section style={{marginBottom:"40px",marginTop:"40px"}}>
             <h2>Our Vision and Mission</h2>
             <div className="col-sm-10">
               <h5>Create opportunity for every member of the talent workforce. </h5>
@@ -66,7 +66,7 @@ class Landing extends Component {
 
 
 
-        <div class="row justify-content-between">
+        <div style={{marginBottom:"40px",marginTop:"40px"}} class="row justify-content-between">
               <div class="col-lg-6 col-sm-12">
                 <div  className="creators">
                   <h2>For Creators</h2>
@@ -111,7 +111,7 @@ class Landing extends Component {
               </div>
             </div>
 
-       <Footer/>
+       <Footer style={{marginBottom:"40px",marginTop:"40px"}}/>
       </main>
     );
   }
