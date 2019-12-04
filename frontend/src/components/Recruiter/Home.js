@@ -142,15 +142,9 @@ class Home extends Component {
             <React.Fragment>
                 <Navbar />
                 <CssBaseline />
-                {/* <AppBar position="relative">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit" noWrap>
-                        </Typography>
-                    </Toolbar>
-                </AppBar> */}
                 <main>
                     {/* Hero unit */}
-                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
+                    <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
                         <Container maxWidth="sm">
                             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                                 Talent Pool
@@ -180,7 +174,7 @@ class Home extends Component {
                             </div>
                         </Container>
                     </div>
-                    <Container style={{ marginTop: "10px", marginBottom:"20px" }} className={useStyles.cardGrid} maxWidth="md">
+                    <Container style={{ marginTop: "10px", marginBottom: "20px" }} className={useStyles.cardGrid} maxWidth="md">
                         {/* End hero unit */}
                         <Grid container spacing={4}>
                             {this.talentList()}

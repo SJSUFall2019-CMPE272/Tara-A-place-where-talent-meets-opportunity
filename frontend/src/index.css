@@ -16,10 +16,6 @@ body * {
 body>#root{
   height: 100%;
 }
-
-#root>.container{
-  height: 100%;
-}
 .container { 
   background-color: #fff;
   width: 100%;
