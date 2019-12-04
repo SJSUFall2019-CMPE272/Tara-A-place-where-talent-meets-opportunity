@@ -152,7 +152,7 @@ class TalentDetail extends Component {
                                     <Grid item>
                                         <Toggle />
                                         <Button variant="outlined" color="primary">
-                                            <Link to="/recruiterhome">Home</Link>
+                                            <Link to="/recruiterhome">Back</Link>
                                         </Button>
                                     </Grid>
                                 </Grid>

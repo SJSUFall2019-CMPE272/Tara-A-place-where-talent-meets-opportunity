@@ -1,12 +1,10 @@
-import React, { Component } from "react";
-import AppBar from '@material-ui/core/AppBar';
+import React, { Component } from 'react';
+
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -17,17 +15,21 @@ import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Navbar from "../Navbar";
 import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
-import { Modal, Button as RButton } from "react-bootstrap";
 import util from "../../utils";
+import { Modal, Button as RButton } from "react-bootstrap";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-
-
-
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import axios from "axios";
 import { red } from "@material-ui/core/colors";
 
-const Talent = props => (
+
+
+const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
         <Card className={useStyles.card}>
             <CardMedia
@@ -37,33 +39,24 @@ const Talent = props => (
             />
             <CardContent className={useStyles.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
-                    {props.talent.name.firstName + " " + props.talent.name.lastName}
+                    {props.opportunity.title}
+                </Typography>
+                <Typography>
+                    {props.opportunity.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Toggle />
+                {/* <Toggle /> */}
                 {/* <Button color="primary"> */}
 
                 {/* </Button> */}
                 <Button size="small" color="primary">
-                    <Link to={"/talentdetail/" + props.talent.id}>View Profile</Link>
+                    <Link to={"/rmatches/" + props.opportunity.id}>View Matches</Link>
                 </Button>
             </CardActions>
         </Card>
     </Grid>
 )
-
-const Toggle = () => {
-    const [isToggledOn, setToggle] = React.useState(false)
-    const toggle = () => setToggle(!isToggledOn)
-    return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
-            {isToggledOn ? 'UNMATCH' : 'MATCH'}
-        </Fab>
-    )
-}
-
-
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -99,19 +92,23 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-class Home extends Component {
+
+class Opportunities extends Component {
     state = {
-        talents: [],
+        opportunities: [],
         error: "",
-        showDetailsModal: false,
-        talent: {}
+        opportunity: {}
     }
+
+
     componentDidMount = () => {
+        const id = localStorage.getItem("id");
+        console.log(id)
         axios
-            .get(`${util.BASE_URL}/talent`)
+            .get(`${util.BASE_URL}/recruiter/${id}/opportunities`)
             .then(res => {
                 console.log(res.data);
-                this.setState({ talents: res.data, error: "" })
+                this.setState({ opportunities: res.data, error: "" })
             })
             .catch(err => {
                 console.log(err);
@@ -119,35 +116,24 @@ class Home extends Component {
                 )
             });
     }
-    handleViewDetails = (talent) => {
-        this.setState({ showDetailsModal: true, talent: talent })
-    }
-    handleClose = () => {
-        this.setState({ showDetailsModal: false, talent: {} })
-    }
 
-    talentList() {
-        return this.state.talents.map(currentTalent => {
-            return <Talent talent={currentTalent} key={currentTalent.id} />;
+    opportunityList() {
+        return this.state.opportunities.map(currentOpportunity => {
+            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
         })
     }
 
 
+
     render() {
-        const labelstyles = {
-            fontSize: '20px',
-            fontWeight: 400
-        }
         return (
-            <React.Fragment>
+            <main>
                 <Navbar />
                 <CssBaseline />
-                <main>
-                    {/* Hero unit */}
-                    <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
+                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
                         <Container maxWidth="sm">
                             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                                Talent Pool
+                            Jobs Posted by You
                             </Typography>
                             <Typography variant="h5" align="center" color="textSecondary" paragraph>
                                 Find the perfect talent from your dream project today
@@ -157,11 +143,6 @@ class Home extends Component {
                                     <Grid item>
                                         <Button variant="outlined" color="primary">
                                             <Link to="/createjob">Create a Job</Link>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/opportunities">Posted Jobs</Link>
                                         </Button>
                                     </Grid>
 
@@ -174,17 +155,21 @@ class Home extends Component {
                             </div>
                         </Container>
                     </div>
-                    <Container style={{ marginTop: "10px", marginBottom: "20px" }} className={useStyles.cardGrid} maxWidth="md">
-                        {/* End hero unit */}
-                        <Grid container spacing={4}>
-                            {this.talentList()}
-                        </Grid>
-                    </Container>
-                </main>
-            </React.Fragment>
+                <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
+                <Container maxWidth="sm">
+                </Container>
+                </div>
+                <div style={{marginTop: "30px", paddingBottom:"30px"}}>
+                <Container className={useStyles.cardGrid} maxWidth="md">
+                    {/* End hero unit */}
+                    <Grid container spacing={4}>
+                        {this.opportunityList()}
+                    </Grid>
+                </Container>
+                </div>
+            </main>
         );
     }
 }
 
-
-export default Home;
+export default Opportunities;

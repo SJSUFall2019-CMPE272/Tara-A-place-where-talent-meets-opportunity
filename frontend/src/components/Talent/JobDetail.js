@@ -155,7 +155,10 @@ const Toggle = () => {
                                     <Grid item>
                                         <Toggle />
                                         <Button variant="outlined" color="primary">
-                                            <Link to="/home">Home</Link>
+                                        {localStorage.getItem("type") == "talent" ?
+                                        <Link to="/home">Back</Link>:
+                                        <Link to="/recruiterhome">Back</Link>
+                                        }
                                         </Button>
                                     </Grid>
                                 </Grid>

@@ -16,6 +16,7 @@ import Fab from '@material-ui/core/Fab';
 import util from "../../utils";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
+import Container from '@material-ui/core/Container';
 
 
 const Talent = props => (
@@ -90,72 +91,132 @@ class Matches extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            talents: [],
+            perfectTalentList: [],
+            TalentList: [],
+            yourMatchedTalentList: [],
             error: "",
-            talent: {}
+            talent: {},
+            opportunity:{},
         }
     }
-    
+
 
     componentDidMount = () => {
         axios
-            .get(`${util.BASE_URL}/talent`)
+            .get(`${util.BASE_URL}/recruiter/matches/${this.props.match.params.id}`) // This will list all the talents who have matched with this opportunity
             .then(res => {
                 console.log(res.data);
-                this.setState({ talents: res.data, error: "" })
+                this.setState({ perfectTalentList: res.data.perfect_matches,
+                    yourMatchedTalentList:res.data.recruiter_matches,
+                    TalentList:res.data.not_applied,
+                     error: "" 
+                    })
             })
             .catch(err => {
                 console.log(err);
                 this.setState({ error: err.response.data.message }
                 )
             });
+            axios
+            .get(`${util.BASE_URL}/opportunities/` + this.props.match.params.id)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ opportunity: res.data[0], error: "" })
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ error: err.response.data.message }
+                )
+            });
+        
     }
 
 
 
-    talentList() {
-        return this.state.talents.map(currentTalent => {
+    perfectTalentList() {
+        return this.state.perfectTalentList.map(currentTalent => {
             return <Talent talent={currentTalent} key={currentTalent.id} />;
         })
     }
 
+    yourMatchedTalentList() {
+        return this.state.yourMatchedTalentList.map(currentTalent => {
+            return <Talent talent={currentTalent} key={currentTalent.id} />;
+        })
+    }
+    pendingRequestTalentList() {
+        return this.state.TalentList.map(currentTalent => {
+            return <Talent talent={currentTalent} key={currentTalent.id} />;
+        })
+    }
 
     render() {
         return (
             <>
-            <Navbar/>
-            <Accordion defaultActiveKey="0">
-                <div>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                       PERFECT MATCH
+                <Navbar />
+                <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
+                        <Container maxWidth="sm">
+                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                                Talent Pool
+                            </Typography>
+                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                                Find the perfect talent from your dream project today
+                            </Typography>
+                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                                Job Title: {this.state.opportunity.title}
+                            </Typography>
+                            <div className={useStyles.heroButtons}>
+                                <Grid container spacing={2} justify="center">
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary">
+                                            <Link to={"/jobdetail/" + this.props.match.params.id}>Job Description</Link>
+                                        </Button>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary">
+                                            <Link to="/recruiterupdateprofile">Update Profile</Link>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Container>
+                    </div>
+                <Grid container spacing={4}>
+                    {this.pendingRequestTalentList()}
+                </Grid>
+                <Accordion defaultActiveKey="0">
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="0">
+                            PERFECT MATCH
                 </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                        <Grid container spacing={4}>
-                            {this.talentList()}
-                        </Grid>
-                    </Accordion.Collapse>
-                </div>
-                <div>
-                    <Accordion.Toggle as={Card.Header} eventKey="1">
-                        Your Requests
+                        <Accordion.Collapse eventKey="0">
+                            <Grid container spacing={4}>
+                                {this.perfectTalentList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="1">
+                            Your Requests
                 </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="1">
-                        <Grid container spacing={4}>
-                            {this.talentList()}
-                        </Grid>
-                    </Accordion.Collapse>
-                </div>
-                <div>
+                        <Accordion.Collapse eventKey="1">
+                            <Grid container spacing={4}>
+                                {this.yourMatchedTalentList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                    {/* <div>
                     <Accordion.Toggle as={Card.Header} eventKey="2">
                         Match Requests
                 </Accordion.Toggle>
                     <Accordion.Collapse eventKey="2">
                     <Grid container spacing={4}>
-                            {this.talentList()}
                         </Grid>
                     </Accordion.Collapse>
-                </div>
-            </Accordion>
+                </div> */}
+                </Accordion>
+                
             </>
 
 
