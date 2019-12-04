@@ -35,10 +35,7 @@ const Opportunity = props => (
                 </Typography>
             </CardContent>
             <CardActions>
-                <Toggle />
-                {/* <Button color="primary"> */}
-
-                {/* </Button> */}
+                <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
                 <Button size="small" color="primary">
                     <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
                 </Button>
@@ -63,9 +60,6 @@ const MatchedOpportunity = props => (
                 </Typography>
             </CardContent>
             <CardActions>
-                {/* <Button color="primary"> */}
-
-                {/* </Button> */}
                 <Button size="small" color="primary">
                     <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
                 </Button>
@@ -109,17 +103,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
-const Toggle = () => {
-    const [isToggledOn, setToggle] = React.useState(false)
-    const toggle = () => setToggle(!isToggledOn)
-    return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" className={useStyles.margin}>
-            {isToggledOn ? 'UNMATCH' : 'MATCH'}
-        </Fab>
-    )
-}
-
 class Matches extends Component {
     state = {
         opportunities: [],
@@ -145,12 +128,39 @@ class Matches extends Component {
                 )
             });
     }
-
+    handleMatchs = (id) => {
+        let data = {
+            "opportunity_id": id
+        };
+        console.log(data);
+        let user_id = localStorage.getItem("id");
+        axios.post(`${util.BASE_URL}/talent/${user_id}/match`, data)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    console.log("updated the match");
+                    axios
+                        .get(`${util.BASE_URL}/talent/${user_id}/opportunities`)
+                        .then(res => {
+                            console.log("im to get all matches")
+                            console.log(res.data);
+                            let opportunities = res.data;
+                            this.setState({ opportunities: opportunities, error: "" })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.setState({ error: err.response.data.message }
+                            )
+                        });
+                }
+            })
+            .catch((err) => console.log(err));
+    }
 
 
     perfectopportunityList() {
         return this.state.perfectopportunityList.map(currentOpportunity => {
-            return <Opportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
+            return <Opportunity opportunity={currentOpportunity} handleMatchs={this.handleMatchs} key={currentOpportunity.id} />;
         })
     }
 
