@@ -28,7 +28,26 @@ const Talent = props => (
                 </Typography>
             </CardContent>
             <CardActions>
-            <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.talent.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
+                <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.talent.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
+
+                <Button size="small" color="primary">
+                    <Link to={"/talentdetail/" + props.talent.id}>View Profile</Link>
+                </Button>
+            </CardActions>
+        </Card>
+    </Grid>
+)
+
+const MatchedTalent = props => (
+    <Grid item xs={12} sm={6} md={4}>
+        <Card className={useStyles.card}>
+            <CardContent className={useStyles.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {props.talent.name.firstName + " " + props.talent.name.lastName}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                {/* <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.talent.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab> */}
 
                 <Button size="small" color="primary">
                     <Link to={"/talentdetail/" + props.talent.id}>View Profile</Link>
@@ -132,18 +151,18 @@ class Matches extends Component {
 
 
 
-    perfectTalentList() {
+    perfectTalentList() { // Perfect matches
         return this.state.perfectTalentList.map(currentTalent => {
-            return <Talent talent={currentTalent} key={currentTalent.id} />;
+            return <MatchedTalent talent={currentTalent} key={currentTalent.id} />;
         })
     }
 
-    yourMatchedTalentList() {
+    yourMatchedTalentList() { //Talents recruiter matched for this opportunity
         return this.state.yourMatchedTalentList.map(currentTalent => {
-            return <Talent talent={currentTalent} key={currentTalent.id} />;
+            return <MatchedTalent talent={currentTalent} key={currentTalent.id} />;
         })
     }
-    pendingRequestTalentList() {
+    pendingRequestTalentList() { //Talents that havent applied
         return this.state.TalentList.map(currentTalent => {
             return <Talent handleMatch={this.handleMatches} talent={currentTalent} key={currentTalent.id} />;
         })
@@ -225,28 +244,37 @@ class Matches extends Component {
                         </div>
                     </Container>
                 </div>
-                <Grid container spacing={4}>
-                    {this.pendingRequestTalentList()}
-                </Grid>
+                <Container style={{ marginTop: "10px" }} className={useStyles.cardGrid} maxWidth="md">
+
+                    <Grid container spacing={4}>
+                        {this.pendingRequestTalentList()}
+                    </Grid>
+                </Container>
                 <Accordion>
                     <div>
-                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                            PERFECT MATCH
-                </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">
-                            <Grid container spacing={4}>
-                                {this.perfectTalentList()}
-                            </Grid>
+                        <Accordion.Toggle as={Card.Header} eventKey="1">
+                           <h5> Your Requests</h5>
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey="1">
+                            <Container style={{ marginTop: "10px" }} className={useStyles.cardGrid} maxWidth="md">
+
+                                <Grid container spacing={4}>
+                                    {this.yourMatchedTalentList()}
+                                </Grid>
+                            </Container>
                         </Accordion.Collapse>
                     </div>
                     <div>
-                        <Accordion.Toggle as={Card.Header} eventKey="1">
-                            Your Requests
+                        <Accordion.Toggle as={Card.Header} eventKey="0">
+                        <h5>Perfect Matches </h5>
                 </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="1">
-                            <Grid container spacing={4}>
-                                {this.yourMatchedTalentList()}
-                            </Grid>
+                        <Accordion.Collapse eventKey="0">
+                            <Container style={{ marginTop: "10px" }} className={useStyles.cardGrid} maxWidth="md">
+
+                                <Grid container spacing={4}>
+                                    {this.perfectTalentList()}
+                                </Grid>
+                            </Container>
                         </Accordion.Collapse>
                     </div>
                     {/* <div>
