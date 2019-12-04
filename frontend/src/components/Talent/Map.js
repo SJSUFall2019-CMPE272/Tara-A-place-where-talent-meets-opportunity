@@ -93,9 +93,10 @@ class MapLocation extends Component {
 
   render() {
     const position = [this.state.location.lat, this.state.location.lng]
+    console.log("position"+position)
     return (
       <div className="col-sm-12">
-        <Map className="map" center={position} zoom={this.state.zoom}>
+        <Map style={{width:"100%",height: "600px"}}className="map" center={position} zoom={this.state.zoom} >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
