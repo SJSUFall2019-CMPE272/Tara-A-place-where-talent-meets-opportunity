@@ -142,8 +142,10 @@ router.get("/:id/matches", function (req, res) {
     var matchesData = docClient.query(get_matches_params)
 
     matchesData.on('success', function (response) {
-    
-        var all_talent_matches = response.data.Items[0].matches
+
+        if(response.data.ScannedCount > 0) {
+
+            var all_talent_matches = response.data.Items[0].matches
 
         if(all_talent_matches.length > 0) {
             var match_opp_ids = []
@@ -171,6 +173,19 @@ router.get("/:id/matches", function (req, res) {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(response_to_send, null, 2))
 
+
+        }
+
+        else {
+            res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({message: "Requested data doesn't exist"}, null, 2))
+        }
+    
+        
+    })
+    .on('error', function (response) {
+        console.log(response);
+        
     }).send();
 
 
