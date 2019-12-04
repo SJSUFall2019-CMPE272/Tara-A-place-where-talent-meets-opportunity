@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
+import Navbar from "../Navbar";
 
 import '../Talent/JobDetails.css'
 
@@ -48,7 +49,7 @@ const Toggle = () => {
     const [isToggledOn, setToggle] = React.useState(false)
     const toggle = () => setToggle(!isToggledOn)
     return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add"  position="center-bottom" className={useStyles.margin}>
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
             {isToggledOn ? 'UNMATCH' : 'MATCH'}
         </Fab>
     )
@@ -96,69 +97,71 @@ class TalentDetail extends Component {
             fontWeight: 400
         }
         return (
-            <main  className='jobdetail'>
-                <div className="col-sm-12">
-                    <label style={labelstyles}>Email</label>
-                    <p>{this.state.talent.email}</p>
-                </div>
-                <div className="col-sm-12">
-                    <label style={labelstyles}>Gender</label>
-                    <p>{this.state.talent.gender}</p>
-                </div>
-                <div>
-                {this.state.talent.experience &&
+            <>
+                <Navbar />
+                <main className='jobdetail'>
                     <div className="col-sm-12">
-                        <label style={labelstyles}>Experience</label>
-                        {this.state.talent.experience.map(exp =>
-                            <div>
-                                <div className="col-sm-12">
-                                    <label style={labelstyles}>Project Name</label>
-                                    <p>{exp.projectName}</p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <label style={labelstyles}>Project Type</label>
-                                    <p>{exp.projectType}</p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <label style={labelstyles}>Description</label>
-                                    <p>{exp.description}</p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <label style={labelstyles}>Role</label>
-                                    <p>{exp.role}</p>
-                                </div>
-                            </div>)}
+                        <label style={labelstyles}>Email</label>
+                        <p>{this.state.talent.email}</p>
+                    </div>
+                    <div className="col-sm-12">
+                        <label style={labelstyles}>Gender</label>
+                        <p>{this.state.talent.gender}</p>
+                    </div>
+                    <div>
+                        {this.state.talent.experience &&
+                            <div className="col-sm-12">
+                                <label style={labelstyles}>Experience</label>
+                                {this.state.talent.experience.map(exp =>
+                                    <div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>Project Name</label>
+                                            <p>{exp.projectName}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>Project Type</label>
+                                            <p>{exp.projectType}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>Description</label>
+                                            <p>{exp.description}</p>
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <label style={labelstyles}>Role</label>
+                                            <p>{exp.role}</p>
+                                        </div>
+                                    </div>)}
                             </div>
-                       }
-                       </div>
-                     {this.state.talent.gender && <div className="col-sm-12">
-                    <label style={labelstyles}>Gender</label>
-                    <p>{this.state.talent.gender}</p>
-                </div>}
-                {this.state.talent.location && <div className="col-sm-12">
-                    <label style={labelstyles}>Address</label>
-                    <p>
-                        {this.state.talent.location.street}
-                    </p>
-                    <p>
-                        {this.state.talent.location.city}
-                    </p>
-                    <p>
-                        {this.state.talent.location.state}
-                    </p>
-                </div>}
-                <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
-                                    <Grid item>
-                                        <Toggle />
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/recruiterhome">Back</Link>
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </div>
-            </main>
-
+                        }
+                    </div>
+                    {this.state.talent.gender && <div className="col-sm-12">
+                        <label style={labelstyles}>Gender</label>
+                        <p>{this.state.talent.gender}</p>
+                    </div>}
+                    {this.state.talent.location && <div className="col-sm-12">
+                        <label style={labelstyles}>Address</label>
+                        <p>
+                            {this.state.talent.location.street}
+                        </p>
+                        <p>
+                            {this.state.talent.location.city}
+                        </p>
+                        <p>
+                            {this.state.talent.location.state}
+                        </p>
+                    </div>}
+                    <div className={useStyles.heroButtons}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item>
+                                <Toggle />
+                                <Button variant="outlined" color="primary">
+                                    <Link to="/recruiterhome">Back</Link>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </main>
+            </>
         );
     }
 }

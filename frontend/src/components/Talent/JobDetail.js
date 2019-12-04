@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import './JobDetails.css'
+import Navbar from "../Navbar";
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -50,7 +51,7 @@ const Toggle = () => {
     const [isToggledOn, setToggle] = React.useState(false)
     const toggle = () => setToggle(!isToggledOn)
     return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add"  position="center-bottom" className={useStyles.margin}>
+        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
             {isToggledOn ? 'UNMATCH' : 'MATCH'}
         </Fab>
     )
@@ -59,21 +60,21 @@ const Toggle = () => {
 
 
 
- class JobDetail extends Component {
+class JobDetail extends Component {
     constructor(props) {
         super(props);
 
-    
+
         this.state = {
             error: "",
             showDetailsModal: false,
             opportunity: {}
         }
-      }
+    }
 
 
 
-    
+
     componentDidMount = () => {
         axios
             .get(`${util.BASE_URL}/opportunities/` + this.props.match.params.id)
@@ -91,80 +92,82 @@ const Toggle = () => {
 
 
     render() {
-       
+
         const labelstyles = {
             fontSize: '20px',
             fontWeight: 400
         }
         return (
-            <main className='jobdetail'>
-               
+            <>
+                <Navbar />
+                <main className='jobdetail'>
 
-            <div    size="medium" color="primary" aria-label="add"    className={useStyles.margin}>
-                <h1><label style={labelstyles}>Job Title</label></h1>
-                <p>{this.state.opportunity.title}</p>
-            </div>
-           
-            <div  className={useStyles.heroContent}>
-                <label style={labelstyles}>Description</label>
-                <p>{this.state.opportunity.description}</p>
-            </div>
 
-            <div   className={useStyles.cardContent}>
-                <label style={labelstyles}>Project Name</label>
-                <p>{this.state.opportunity.project_name}</p>
-            </div>
+                    <div size="medium" color="primary" aria-label="add" className={useStyles.margin}>
+                        <h1><label style={labelstyles}>Job Title</label></h1>
+                        <p>{this.state.opportunity.title}</p>
+                    </div>
 
-            <div  className={useStyles.margin}>
-                <label style={labelstyles}>Project Type</label>
-                <p>{this.state.opportunity.project_type}</p>
-            </div>
+                    <div className={useStyles.heroContent}>
+                        <label style={labelstyles}>Description</label>
+                        <p>{this.state.opportunity.description}</p>
+                    </div>
 
-            <div>  {
-            this.state.opportunity.required_skills && <div className={useStyles.margin}>
-                <label style={labelstyles}>Required Skills</label>
-                {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
-            </div>
-        }</div>
+                    <div className={useStyles.cardContent}>
+                        <label style={labelstyles}>Project Name</label>
+                        <p>{this.state.opportunity.project_name}</p>
+                    </div>
 
-      <div> {
-            this.state.opportunity.gender && <div >
-                <label style={useStyles.heroContent} >Gender</label>
-                <p>{this.state.opportunity.gender}</p>
-            </div>
-        }
-        </div> 
-       <div>{
-            this.state.opportunity.location && <div  className={useStyles.heroContent}>
-                <h1>  <label style={labelstyles} color='primary'>Address</label>    </h1>
-               
-                <p>
-                    {this.state.opportunity.location.street}
-                </p>
-                <p className ={useStyles.marginRight}>
-                    {this.state.opportunity.location.city}
-                </p>
-                <p>
-                    {this.state.opportunity.location.state}
-                </p>
-                
-            </div>
-    }   
-       </div>
-                                <Grid container spacing={2} >
-                                    <Grid item>
-                                        <Toggle />
-                                        <Button variant="outlined" color="primary">
-                                        {localStorage.getItem("type") == "talent" ?
-                                        <Link to="/home">Back</Link>:
-                                        <Link to="/recruiterhome">Back</Link>
-                                        }
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-        </main>
-        
-    );
+                    <div className={useStyles.margin}>
+                        <label style={labelstyles}>Project Type</label>
+                        <p>{this.state.opportunity.project_type}</p>
+                    </div>
+
+                    <div>  {
+                        this.state.opportunity.required_skills && <div className={useStyles.margin}>
+                            <label style={labelstyles}>Required Skills</label>
+                            {this.state.opportunity.required_skills.map(skill => <p>{skill}</p>)}
+                        </div>
+                    }</div>
+
+                    <div> {
+                        this.state.opportunity.gender && <div >
+                            <label style={useStyles.heroContent} >Gender</label>
+                            <p>{this.state.opportunity.gender}</p>
+                        </div>
+                    }
+                    </div>
+                    <div>{
+                        this.state.opportunity.location && <div className={useStyles.heroContent}>
+                            <h1>  <label style={labelstyles} color='primary'>Address</label>    </h1>
+
+                            <p>
+                                {this.state.opportunity.location.street}
+                            </p>
+                            <p className={useStyles.marginRight}>
+                                {this.state.opportunity.location.city}
+                            </p>
+                            <p>
+                                {this.state.opportunity.location.state}
+                            </p>
+
+                        </div>
+                    }
+                    </div>
+                    <Grid container spacing={2} >
+                        <Grid item>
+                            <Toggle />
+                            <Button variant="outlined" color="primary">
+                                {localStorage.getItem("type") == "talent" ?
+                                    <Link to="/home">Back</Link> :
+                                    <Link to="/recruiterhome">Back</Link>
+                                }
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </main>
+            </>
+        );
     }
 
 }
