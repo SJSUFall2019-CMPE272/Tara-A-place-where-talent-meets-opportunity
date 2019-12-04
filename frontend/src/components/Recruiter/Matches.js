@@ -28,10 +28,8 @@ const Talent = props => (
                 </Typography>
             </CardContent>
             <CardActions>
-                <Toggle />
-                {/* <Button color="primary"> */}
+            <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.talent.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
 
-                {/* </Button> */}
                 <Button size="small" color="primary">
                     <Link to={"/talentdetail/" + props.talent.id}>View Profile</Link>
                 </Button>
@@ -96,7 +94,7 @@ class Matches extends Component {
             yourMatchedTalentList: [],
             error: "",
             talent: {},
-            opportunity:{},
+            opportunity: {},
         }
     }
 
@@ -106,18 +104,19 @@ class Matches extends Component {
             .get(`${util.BASE_URL}/recruiter/matches/${this.props.match.params.id}`) // This will list all the talents who have matched with this opportunity
             .then(res => {
                 console.log(res.data);
-                this.setState({ perfectTalentList: res.data.perfect_matches,
-                    yourMatchedTalentList:res.data.recruiter_matches,
-                    TalentList:res.data.not_applied,
-                     error: "" 
-                    })
+                this.setState({
+                    perfectTalentList: res.data.perfect_matches,
+                    yourMatchedTalentList: res.data.recruiter_matches,
+                    TalentList: res.data.not_applied,
+                    error: ""
+                })
             })
             .catch(err => {
                 console.log(err);
                 this.setState({ error: err.response.data.message }
                 )
             });
-            axios
+        axios
             .get(`${util.BASE_URL}/opportunities/` + this.props.match.params.id)
             .then(res => {
                 console.log(res.data);
@@ -128,7 +127,7 @@ class Matches extends Component {
                 this.setState({ error: err.response.data.message }
                 )
             });
-        
+
     }
 
 
@@ -146,46 +145,90 @@ class Matches extends Component {
     }
     pendingRequestTalentList() {
         return this.state.TalentList.map(currentTalent => {
-            return <Talent talent={currentTalent} key={currentTalent.id} />;
+            return <Talent handleMatch={this.handleMatches} talent={currentTalent} key={currentTalent.id} />;
         })
+    }
+
+    handleMatches = (id) => {
+        let data = {
+            "talent_id": id,
+            "opportunity_id": this.props.match.params.id,
+        };
+        console.log(data);
+        let user_id = localStorage.getItem("id");
+        axios.post(`${util.BASE_URL}/recruiter/match`, data)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    console.log("updated the match");
+                    axios
+                        .get(`${util.BASE_URL}/recruiter/matches/${this.props.match.params.id}`) // This will list all the talents who have matched with this opportunity
+                        .then(res => {
+                            console.log(res.data);
+                            this.setState({
+                                perfectTalentList: res.data.perfect_matches,
+                                yourMatchedTalentList: res.data.recruiter_matches,
+                                TalentList: res.data.not_applied,
+                                error: ""
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.setState({ error: err.response.data.message }
+                            )
+                        });
+                    axios
+                        .get(`${util.BASE_URL}/opportunities/` + this.props.match.params.id)
+                        .then(res => {
+                            console.log(res.data);
+                            this.setState({ opportunity: res.data[0], error: "" })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.setState({ error: err.response.data.message }
+                            )
+                        });
+                }
+            })
+            .catch((err) => console.log(err));
     }
 
     render() {
         return (
             <>
                 <Navbar />
-                <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
-                        <Container maxWidth="sm">
-                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                                Talent Pool
+                <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
+                    <Container maxWidth="sm">
+                        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                            Talent Pool
                             </Typography>
-                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                                Find the perfect talent from your dream project today
+                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                            Find the perfect talent from your dream project today
                             </Typography>
-                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                                Job Title: {this.state.opportunity.title}
-                            </Typography>
-                            <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to={"/jobdetail/" + this.props.match.params.id}>Job Description</Link>
-                                        </Button>
-                                    </Grid>
-
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/recruiterupdateprofile">Update Profile</Link>
-                                        </Button>
-                                    </Grid>
+                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                            Job Title: {this.state.opportunity.title}
+                        </Typography>
+                        <div className={useStyles.heroButtons}>
+                            <Grid container spacing={2} justify="center">
+                                <Grid item>
+                                    <Button variant="outlined" color="primary">
+                                        <Link to={"/jobdetail/" + this.props.match.params.id}>Job Description</Link>
+                                    </Button>
                                 </Grid>
-                            </div>
-                        </Container>
-                    </div>
+
+                                <Grid item>
+                                    <Button variant="outlined" color="primary">
+                                        <Link to="/recruiterupdateprofile">Update Profile</Link>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </Container>
+                </div>
                 <Grid container spacing={4}>
                     {this.pendingRequestTalentList()}
                 </Grid>
-                <Accordion defaultActiveKey="0">
+                <Accordion>
                     <div>
                         <Accordion.Toggle as={Card.Header} eventKey="0">
                             PERFECT MATCH
@@ -216,7 +259,7 @@ class Matches extends Component {
                     </Accordion.Collapse>
                 </div> */}
                 </Accordion>
-                
+
             </>
 
 
