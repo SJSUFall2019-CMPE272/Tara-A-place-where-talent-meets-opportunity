@@ -199,6 +199,7 @@ router.get("/matches/:id", function (req, res) {
     var opportunity_id = req.params.id;
     var response_to_send = [];
     var perfect_matches = [];
+    var recruiter_matches = [];
     var docClient = new AWS.DynamoDB.DocumentClient();
 
     var all_talents_data = docClient.scan({TableName: "tara-talent-demo" })
@@ -221,6 +222,10 @@ router.get("/matches/:id", function (req, res) {
                     if(curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == true) {
                         perfect_matches.push(curr_talent)
                     }
+
+                    if(curr_match_object.recruiterMatch == true && curr_match_object.talentMatch == false) {
+                        recruiter_matches.push(curr_talent)
+                    }
                 }
 
             }
@@ -233,7 +238,7 @@ router.get("/matches/:id", function (req, res) {
         }
 
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({"not_applied": response_to_send, "perfect_matches": perfect_matches}, null, 2))
+        res.send(JSON.stringify({"not_applied": response_to_send, "perfect_matches": perfect_matches, "recruiter_matches": recruiter_matches}, null, 2))
 
     }).
     on('error', function (error, response) {
