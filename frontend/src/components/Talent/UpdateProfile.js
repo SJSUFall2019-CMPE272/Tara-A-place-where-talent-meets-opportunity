@@ -15,6 +15,7 @@ import Divider from '@material-ui/core/Divider';
 import util from "../../utils";
 import "./CreateForm.css";
 import axios from "axios";
+import Link from '@material-ui/core/Link';
 
 
 const useStyles = makeStyles(theme => ({
@@ -237,6 +238,8 @@ class UpdateProfile extends Component {
     return (
       <>
         <Navbar />
+
+      <main className='jobdetail'>
         <FormControl>
           <div className="col-sm-6">
             <TextField
@@ -332,7 +335,7 @@ class UpdateProfile extends Component {
             />
           </div>
 
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <TextField
               fullWidth
               className="col-sm-6"
@@ -356,10 +359,11 @@ class UpdateProfile extends Component {
             ))}
           </div>
 
-          <div className="col-sm-12">
-            <form onChange={this.experienceHandleChange} >
+          <div  className="col-sm-12">
+            <form  style={{marginBottom: "10px", marginTop:"10px"}}onChange={this.experienceHandleChange} >
               <Button
-                variant="contained"
+              size="small"
+                variant="outlined"
                 color="primary"
                 className={useStyles.button}
                 type="submit"
@@ -378,7 +382,7 @@ class UpdateProfile extends Component {
                   let ProjectTypeId = `ProjectType-${idx}`
                   let DescriptionId = `DescriptionId-${idx}`
                   return (
-                    <>
+                    <div style={{marginBottom: "10px", marginTop:"10px"}}>
                       <div className="col-sm-12 row my-auto" key={idx}>
                         {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
 
@@ -445,8 +449,7 @@ class UpdateProfile extends Component {
 
 
                       </div>
-                      <Divider />
-                    </>
+                    </div>
                   )
                 })
               }
@@ -454,6 +457,7 @@ class UpdateProfile extends Component {
           </div>
 
           <div className="col-sm-6">
+          <Link to="/home" style={{color:"#FFF"}}>
             <Button
               variant="contained"
               color="primary"
@@ -462,13 +466,17 @@ class UpdateProfile extends Component {
               name="submit"
               value="Send"
               onClick={this.submitForm}
+              size="large"
             >
               Submit
             </Button>
+            </Link>
           </div>
           <br></br>
         </FormControl>
+      </main>
       </>
+
     );
   }
 }

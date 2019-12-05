@@ -37,12 +37,12 @@ const useStyles = makeStyles(theme => ({
 
 class UpdateProfile extends Component {
   state = {
-    name:{
-     firstName: "",
-     lastName:"",
+    name: {
+      firstName: "",
+      lastName: "",
     },
-     email: "",
-     contact: {
+    email: "",
+    contact: {
       phone: ["", ""]
 
     },
@@ -57,9 +57,9 @@ class UpdateProfile extends Component {
         console.log(res.data);
         console.log(prevState)
         Object.assign(prevState, res.data[0]);
-        this.setState({ 
-          name:prevState.name,
-          email:prevState.email,
+        this.setState({
+          name: prevState.name,
+          email: prevState.email,
 
         });
       })
@@ -73,12 +73,12 @@ class UpdateProfile extends Component {
   addExperience = (e) => {
     e.preventDefault();
     this.setState((prevState) => ({
-      experience: [...prevState.experience, {role:"", project_name:"",project_type:"",description:""}],
+      experience: [...prevState.experience, { role: "", project_name: "", project_type: "", description: "" }],
     }));
   }
 
   experienceHandleChange = (e) => {
-    if (["role", "project_name","project_type","description"].includes(e.target.className) ) {
+    if (["role", "project_name", "project_type", "description"].includes(e.target.className)) {
       let experience = [...this.state.experience]
       experience[e.target.dataset.id][e.target.className] = e.target.value
       this.setState({ experience }, () => console.log(this.state.experience))
@@ -88,7 +88,7 @@ class UpdateProfile extends Component {
     console.log(this.state.experience)
   }
 
-   //END--Experience Form methods
+  //END--Experience Form methods
 
 
   getfirstName = e => {
@@ -154,7 +154,7 @@ class UpdateProfile extends Component {
   //send the form
   submitForm = e => {
     const data = {
-      name: {...this.state.name},
+      name: { ...this.state.name },
       contact: { ...this.state.contact },
       email: this.state.email,
 
@@ -189,83 +189,86 @@ class UpdateProfile extends Component {
     return (
       <>
         <Navbar />
-        <FormControl>
-          <div className="col-sm-12">
-            <TextField
-              required
-              id="standard-required"
-              label="First Name"
-              value={this.state.name.firstName}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getfirstName}
-            />
-            <TextField
-              required
-              id="standard-required"
-              label="Last Name"
-              value={this.state.name.lastName}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getlastName}
-            />
-          </div>
+
+        <main className='jobdetail'>
+          <FormControl>
+            <div className="col-sm-12">
+              <TextField
+                required
+                id="standard-required"
+                label="First Name"
+                value={this.state.name.firstName}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getfirstName}
+              />
+              <TextField
+                required
+                id="standard-required"
+                label="Last Name"
+                value={this.state.name.lastName}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getlastName}
+              />
+            </div>
 
 
-          <div className="col-sm-12">
-            <TextField
-              required
-              id="standard-required"
-              label="Email ID"
-              value={this.state.email}
-              className={useStyles.email}
-              margin="normal"
-              onChange={this.getEmail}
-            />
-          </div>
+            <div className="col-sm-12">
+              <TextField
+                required
+                id="standard-required"
+                label="Email ID"
+                value={this.state.email}
+                className={useStyles.email}
+                margin="normal"
+                onChange={this.getEmail}
+              />
+            </div>
 
 
-          <div className="col-sm-12">
-            <TextField
-              required
-              id="standard-required"
-              label="Primary Contact"
-              value={this.state.contact.phone[0]}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getPrimaryPhone}
-            />
+            <div className="col-sm-12">
+              <TextField
+                required
+                id="standard-required"
+                label="Primary Contact"
+                value={this.state.contact.phone[0]}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getPrimaryPhone}
+              />
             </div>
 
             <div className="col-sm-12">
-            <TextField
-              id="standard"
-              label="Secondary Contact"
-              value={this.state.contact.phone[1]}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getSecondaryPhone}
-            />
-          </div>
-   
-          <div className="col-sm-12">
-            <Button
-              variant="contained"
-              color="primary"
-              className={useStyles.button}
-              type="submit"
-              name="submit"
-              value="Send"
-              onClick={this.submitForm}
-            >
-              Submit
+              <TextField
+                id="standard"
+                label="Secondary Contact"
+                value={this.state.contact.phone[1]}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getSecondaryPhone}
+              />
+            </div>
+
+            <div className="col-sm-12">
+              <Button
+                variant="contained"
+                color="primary"
+                className={useStyles.button}
+                type="submit"
+                name="submit"
+                value="Send"
+                onClick={this.submitForm}
+              >
+                Submit
             </Button>
-            <Button variant="outlined" color="primary">
-                                            <Link to="/recruiterhome">Home</Link>
-                                        </Button>
-          </div>
-          <br></br>
-        </FormControl>
+              <Button variant="outlined" color="primary">
+                <Link to="/recruiterhome">Home</Link>
+              </Button>
+            </div>
+            <br></br>
+          </FormControl>
+        </main>
       </>
     );
   }
