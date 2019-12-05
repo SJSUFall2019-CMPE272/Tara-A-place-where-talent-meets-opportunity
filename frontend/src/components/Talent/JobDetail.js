@@ -47,15 +47,15 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const Toggle = () => {
-    const [isToggledOn, setToggle] = React.useState(false)
-    const toggle = () => setToggle(!isToggledOn)
-    return (
-        <Fab variant="extended" onClick={toggle} size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
-            {isToggledOn ? 'UNMATCH' : 'MATCH'}
-        </Fab>
-    )
-}
+// const Toggle = () => {
+//     const [isToggledOn, setToggle] = React.useState(false)
+//     const toggle = () => setToggle(!isToggledOn)
+//     return (
+        
+//             {isToggledOn ? 'UNMATCH' : 'MATCH'}
+//         </Fab>
+//     )
+// }
 
 
 
@@ -154,15 +154,15 @@ class JobDetail extends Component {
                         </div>
                     }
                     </div>
-                    <Grid container spacing={2} >
+                    <Grid container style={{marginBottom:"20px"}}  spacing={2} >
                         <Grid item>
-                            <Toggle />
-                            <Button variant="outlined" color="primary">
+                        <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}> Match</Fab>
+                            <Fab variant="extended"  size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
                                 {localStorage.getItem("type") == "talent" ?
-                                    <Link to="/home">Back</Link> :
+                                    <Link style={{color:"#FFF"}} to="/home">Back</Link> :
                                     <Link to="/recruiterhome">Back</Link>
                                 }
-                            </Button>
+                            </Fab>
                         </Grid>
                     </Grid>
                 </main>
