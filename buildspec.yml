@@ -20,7 +20,7 @@ phases:
       - echo "Starting the build"
       - echo `pwd`
       - cd frontend
-      - sed -i "s/localhost:9000/a9950c81313b311ea9fd30e3648edf6f-109621061.us-east-1.elb.amazonaws.com/g" src/utils.js
+      - sed -i "s/localhost:9000/34.239.109.200:9000/g" src/utils.js
       - npm install
       - npm run build
       - aws s3 sync ./build s3://tara-frontend
