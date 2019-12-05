@@ -153,10 +153,12 @@ class TalentDetail extends Component {
                     <div className={useStyles.heroButtons}>
                         <Grid container spacing={2} justify="center">
                             <Grid item>
-                                <Toggle />
-                                <Button variant="outlined" color="primary">
-                                    <Link to="/recruiterhome">Back</Link>
-                                </Button>
+                                {/* <Toggle /> */}
+                                <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}> Match</Fab>
+
+                                <Fab variant="extended"  size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
+                                    <Link style={{color:"#FFF"}} to="/recruiterhome">Back</Link>
+                                </Fab>
                             </Grid>
                         </Grid>
                     </div>
