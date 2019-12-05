@@ -155,9 +155,12 @@ class TalentDetail extends Component {
                             <Grid item>
                                 {/* <Toggle /> */}
                                 <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}> Match</Fab>
+                            </Grid>
 
-                                <Fab variant="extended"  size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
-                                    <Link style={{color:"#FFF"}} to="/recruiterhome">Back</Link>
+                            <Grid item>
+
+                                <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
+                                    <Link style={{ color: "#FFF" }} to="/recruiterhome">Back</Link>
                                 </Fab>
                             </Grid>
                         </Grid>
