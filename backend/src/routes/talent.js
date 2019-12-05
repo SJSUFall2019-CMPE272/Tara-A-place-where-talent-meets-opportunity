@@ -183,7 +183,7 @@ router.get("/:id/matches", function (req, res) {
 
         else {
             res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({message: "Requested data doesn't exist"}, null, 2))
+        res.send(JSON.stringify({message: "Requested data does not exist"}, null, 2))
         }
     
         
