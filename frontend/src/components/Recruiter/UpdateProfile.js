@@ -251,7 +251,8 @@ class UpdateProfile extends Component {
             </div>
 
             <div className="col-sm-12">
-              <Button
+              <Button 
+              style={{marginRight:"20px"}}
                 variant="contained"
                 color="primary"
                 className={useStyles.button}
