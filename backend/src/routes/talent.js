@@ -167,10 +167,14 @@ router.get("/:id/matches", function (req, res) {
             }
 
         }
+
+        var app_filtered = applications.filter(function (el) {
+            return el != null;
+          });
         
         var response_to_send = {
             "perfect_matches": perfect_matches,
-            "applications": applications,
+            "applications": app_filtered,
             "requested_matches": requested_matches
         }
 
