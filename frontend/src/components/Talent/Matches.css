@@ -1,0 +1,24 @@
+.pie-chart>svg{
+    width: 50%;
+}
+
+.pending-request{
+    background-color: #E38627;
+    height: 20px;
+    width: 30px;
+}
+
+.perfect{
+    background-color: #C13C37;
+    height: 20px;
+    width: 30px;
+}
+
+.matched{
+    background-color: #6A2135;
+    height: 20px;
+    width: 30px;
+}
+.matches{
+    height: 100%;
+}

@@ -16,6 +16,7 @@
     "react-cookies": "^0.1.1",
     "react-dom": "^16.10.2",
     "react-leaflet": "^2.6.0",
+    "react-minimal-pie-chart": "^6.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "reactstrap": "^8.1.1"

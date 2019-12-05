@@ -30,7 +30,7 @@ import Map from "./Map";
 const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
         <Card className={useStyles.card}>
-            <CardContent style={{height:"200px"}} className={useStyles.cardContent}>
+            <CardContent style={{ height: "200px" }} className={useStyles.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
                     {props.opportunity.title}
                 </Typography>
@@ -192,8 +192,6 @@ class Home extends Component {
 
                     </Tab>
                 </Tabs>
-
-
             </React.Fragment>
         );
     }

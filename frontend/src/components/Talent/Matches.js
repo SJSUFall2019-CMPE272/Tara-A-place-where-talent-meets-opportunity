@@ -16,7 +16,8 @@ import Fab from '@material-ui/core/Fab';
 import util from "../../utils";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-
+import PieChart from 'react-minimal-pie-chart';
+import "./Matches.css";
 
 const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
@@ -176,9 +177,38 @@ class Matches extends Component {
 
     render() {
         return (
-            <>
+            <div className="matches">
                 <Navbar />
-                <Accordion defaultActiveKey="1">
+                <div className="row my-5">
+                    <PieChart className="col-sm-6 pie-chart"
+                        data={[
+                            { title: 'One', value: this.state.pendingRequestopportunityList.length, color: '#E38627' },
+                            { title: 'Two', value: this.state.perfectopportunityList.length, color: '#C13C37' },
+                            { title: 'Three', value: this.state.yourMatchedopportunityList.length, color: '#6A2135' },
+                        ]}
+                    />
+                    <div className="col-sm-6">
+                        <div>
+                            <div class="pending-request rounded">
+                            </div>
+                            <p>Pending opportunity</p>
+                        </div>
+                        <div>
+                            <div class="perfect rounded">
+
+                            </div>
+                            <p>Perfect opportunity</p>
+                        </div>
+                        <div>
+                            <div class="matched rounded">
+
+                            </div>
+                            <p>Matched Opportunity</p>
+                        </div>
+
+                    </div>
+                </div>
+                <Accordion defaultActiveKey="0">
                     <div>
                         <Accordion.Toggle as={Card.Header} eventKey="0">
                             PERFECT MATCH
@@ -189,16 +219,8 @@ class Matches extends Component {
                             </Grid>
                         </Accordion.Collapse>
                     </div>
-                    <div>
-                        <Accordion.Toggle as={Card.Header} eventKey="1">
-                            Your Requests
-                </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="1">
-                            <Grid container spacing={4}>
-                                {this.yourMatchedopportunityList()}
-                            </Grid>
-                        </Accordion.Collapse>
-                    </div>
+                </Accordion>
+                <Accordion defaultActiveKey="2">
                     <div>
                         <Accordion.Toggle as={Card.Header} eventKey="2">
                             Match Requests
@@ -210,7 +232,19 @@ class Matches extends Component {
                         </Accordion.Collapse>
                     </div>
                 </Accordion>
-            </>
+                <Accordion defaultActiveKey="3">
+                    <div>
+                        <Accordion.Toggle as={Card.Header} eventKey="3">
+                            Your Requests
+                </Accordion.Toggle>
+                        <Accordion.Collapse eventKey="3">
+                            <Grid container spacing={4}>
+                                {this.yourMatchedopportunityList()}
+                            </Grid>
+                        </Accordion.Collapse>
+                    </div>
+                </Accordion>
+            </div>
 
 
         );
