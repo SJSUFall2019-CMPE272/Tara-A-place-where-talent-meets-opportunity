@@ -35,7 +35,7 @@ const Opportunity = props => (
                 </Typography>
             </CardContent>
             <CardActions>
-                <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatch(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
+                <Fab style={{ marginBottom: "5px", marginLeft: "5px" }} variant="extended" onClick={() => props.handleMatchs(props.opportunity.id)} size="small" color="primary" aria-label="add" className={useStyles.margin}>Match</Fab>
                 <Button size="small" color="primary">
                     <Link to={"/jobdetail/" + props.opportunity.id}>View Details</Link>
                 </Button>
@@ -140,12 +140,10 @@ class Matches extends Component {
                 if (res.status === 200) {
                     console.log("updated the match");
                     axios
-                        .get(`${util.BASE_URL}/talent/${user_id}/opportunities`)
+                        .get(`${util.BASE_URL}/talent/${user_id}/matches`)
                         .then(res => {
-                            console.log("im to get all matches")
                             console.log(res.data);
-                            let opportunities = res.data;
-                            this.setState({ opportunities: opportunities, error: "" })
+                            this.setState({ perfectopportunityList: res.data.perfect_matches, yourMatchedopportunityList: res.data.applications, pendingRequestopportunityList: res.data.requested_matches })
                         })
                         .catch(err => {
                             console.log(err);
@@ -160,7 +158,7 @@ class Matches extends Component {
 
     perfectopportunityList() {
         return this.state.perfectopportunityList.map(currentOpportunity => {
-            return <Opportunity opportunity={currentOpportunity} handleMatchs={this.handleMatchs} key={currentOpportunity.id} />;
+            return <MatchedOpportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
         })
     }
 
@@ -172,7 +170,7 @@ class Matches extends Component {
 
     pendingRequestopportunityList() {
         return this.state.pendingRequestopportunityList.map(currentOpportunity => {
-            return <MatchedOpportunity opportunity={currentOpportunity} key={currentOpportunity.id} />;
+            return <Opportunity opportunity={currentOpportunity} handleMatchs={this.handleMatchs} key={currentOpportunity.id} />;
         })
     }
 
