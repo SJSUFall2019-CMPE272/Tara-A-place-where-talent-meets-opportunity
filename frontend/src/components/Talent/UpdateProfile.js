@@ -16,6 +16,7 @@ import util from "../../utils";
 import "./CreateForm.css";
 import axios from "axios";
 import Link from '@material-ui/core/Link';
+import { Link as Link_}  from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -239,242 +240,245 @@ class UpdateProfile extends Component {
       <>
         <Navbar />
 
-      <main className='jobdetail'>
-        <FormControl>
-          <div className="col-sm-6">
-            <TextField
-              required
-              id="standard-required"
-              label="First Name"
-              name="firstName"
-              value={this.state.name.firstName}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getName}
-            />
-            <TextField
-              required
-              id="standard-required"
-              label="Last Name"
-              value={this.state.name.lastName}
-              className={useStyles.textField}
-              margin="normal"
-              name="lastName"
-              onChange={this.getName}
-            />
-          </div>
+        <main className='jobdetail'>
+          <FormControl>
+            <div className="col-sm-6">
+              <TextField
+                required
+                id="standard-required"
+                label="First Name"
+                name="firstName"
+                value={this.state.name.firstName}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getName}
+              />
+              <TextField
+                required
+                id="standard-required"
+                label="Last Name"
+                value={this.state.name.lastName}
+                className={useStyles.textField}
+                margin="normal"
+                name="lastName"
+                onChange={this.getName}
+              />
+            </div>
 
-          <div className="col-sm-6">
-            <FormControl margin="normal" component="fieldset" className={useStyles.formControl}>
-              <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup aria-label="gender" name="gender" value={this.state.gender} onChange={this.getGender}>
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                <FormControlLabel value="other" control={<Radio />} label="Other" />
-              </RadioGroup>
-            </FormControl>
-          </div>
+            <div className="col-sm-6">
+              <FormControl margin="normal" component="fieldset" className={useStyles.formControl}>
+                <FormLabel component="legend">Gender</FormLabel>
+                <RadioGroup aria-label="gender" name="gender" value={this.state.gender} onChange={this.getGender}>
+                  <FormControlLabel value="female" control={<Radio />} label="Female" />
+                  <FormControlLabel value="male" control={<Radio />} label="Male" />
+                  <FormControlLabel value="other" control={<Radio />} label="Other" />
+                </RadioGroup>
+              </FormControl>
+            </div>
 
-          <div className="col-sm-8">
-            <TextField
-              required
-              id="standard-required"
-              label="Email ID"
-              value={this.state.email}
-              className={useStyles.email}
-              margin="normal"
-              disabled
-            />
-          </div>
-          <div className="col-sm-8">
-            <TextField
-              required
-              id="standard-required"
-              label="State"
-              value={this.state.address.add_state}
-              className={useStyles.textField}
-              margin="normal"
-              name="add_state"
-              onChange={this.getAddress}
-            />
-          </div>
+            <div className="col-sm-8">
+              <TextField
+                required
+                id="standard-required"
+                label="Email ID"
+                value={this.state.email}
+                className={useStyles.email}
+                margin="normal"
+                disabled
+              />
+            </div>
+            <div className="col-sm-8">
+              <TextField
+                required
+                id="standard-required"
+                label="State"
+                value={this.state.address.add_state}
+                className={useStyles.textField}
+                margin="normal"
+                name="add_state"
+                onChange={this.getAddress}
+              />
+            </div>
 
-          <div className="col-sm-8">
-            <TextField
-              required
-              id="standard-required"
-              label="zip"
-              value={this.state.address.zip}
-              className={useStyles.textField}
-              margin="normal"
-              name="zip"
-              onChange={this.getAddress}
-            />
-          </div>
+            <div className="col-sm-8">
+              <TextField
+                required
+                id="standard-required"
+                label="zip"
+                value={this.state.address.zip}
+                className={useStyles.textField}
+                margin="normal"
+                name="zip"
+                onChange={this.getAddress}
+              />
+            </div>
 
-          <div className="col-sm-6">
-            <TextField
-              required
-              id="standard-required"
-              label="Primary Contact"
-              value={this.state.contact.phone[0]}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getPrimaryPhone}
-            />
-          </div>
+            <div className="col-sm-6">
+              <TextField
+                required
+                id="standard-required"
+                label="Primary Contact"
+                value={this.state.contact.phone[0]}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getPrimaryPhone}
+              />
+            </div>
 
-          <div className="col-sm-6">
-            <TextField
-              id="standard"
-              label="Secondary Contact"
-              value={this.state.contact.phone[1]}
-              className={useStyles.textField}
-              margin="normal"
-              onChange={this.getSecondaryPhone}
-            />
-          </div>
+            <div className="col-sm-6">
+              <TextField
+                id="standard"
+                label="Secondary Contact"
+                value={this.state.contact.phone[1]}
+                className={useStyles.textField}
+                margin="normal"
+                onChange={this.getSecondaryPhone}
+              />
+            </div>
 
-          <div className="col-sm-4">
-            <TextField
-              fullWidth
-              className="col-sm-6"
-              id="standard"
-              label="Skills"
-              className={useStyles.textField}
-              value={this.state.value}
-              margin="normal"
-              placeholder="Type and press enter to add"
-              onKeyDown={this.handleKeyDown}
-              onChange={this.handleChange}
-            />
+            <div className="col-sm-4">
+              <TextField
+                fullWidth
+                className="col-sm-6"
+                id="standard"
+                label="Skills"
+                className={useStyles.textField}
+                value={this.state.value}
+                margin="normal"
+                placeholder="Type and press enter to add"
+                onKeyDown={this.handleKeyDown}
+                onChange={this.handleChange}
+              />
 
-            {this.state.skills.map(item => (
-              <div className="col-sm-6" key={item}>
-                {item}
-                <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
-                  x
+              {this.state.skills.map(item => (
+                <div className="col-sm-6" key={item}>
+                  {item}
+                  <Button color="primary" size="small" onClick={() => this.handleDelete(item)} >
+                    x
                 </Button>
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
+            </div>
 
-          <div  className="col-sm-12">
-            <form  style={{marginBottom: "10px", marginTop:"10px"}}onChange={this.experienceHandleChange} >
-              <Button
-              size="small"
-                variant="outlined"
-                color="primary"
-                className={useStyles.button}
-                type="submit"
-                name="submit"
-                value="Send"
-                onClick={this.addExperience}
-              >
-                Add Experience
+            <div className="col-sm-12">
+              <form style={{ marginBottom: "10px", marginTop: "10px" }} onChange={this.experienceHandleChange} >
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  className={useStyles.button}
+                  type="submit"
+                  name="submit"
+                  value="Send"
+                  onClick={this.addExperience}
+                >
+                  Add Experience
               <AddIcon />
-              </Button>
+                </Button>
 
-              {
-                this.state.experience.map((val, idx) => {
-                  let RoleId = `Role-${idx}`
-                  let ProjectId = `Project-${idx}`
-                  let ProjectTypeId = `ProjectType-${idx}`
-                  let DescriptionId = `DescriptionId-${idx}`
-                  return (
-                    <div style={{marginBottom: "10px", marginTop:"10px"}}>
-                      <div className="col-sm-12 row my-auto" key={idx}>
-                        {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
+                {
+                  this.state.experience.map((val, idx) => {
+                    let RoleId = `Role-${idx}`
+                    let ProjectId = `Project-${idx}`
+                    let ProjectTypeId = `ProjectType-${idx}`
+                    let DescriptionId = `DescriptionId-${idx}`
+                    return (
+                      <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+                        <div className="col-sm-12 row my-auto" key={idx}>
+                          {/* <label className="col-sm-12">{`Experience #${idx + 1}`}</label> */}
 
 
-                        <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
-                        <div className="col-sm-12">
-                          <label>Role:</label>
-                          {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
-                          <input
-                            type="text"
-                            name={RoleId}
-                            data-id={idx}
-                            id={RoleId}
-                            value={this.state.experience[idx].role}
-                            className="role"
+                          <h5>{`Experience`} <span class="badge badge-secondary">{idx + 1}</span></h5>
+                          <div className="col-sm-12">
+                            <label>Role:</label>
+                            {/* <TextField fullWidth name={RoleId}className="col-sm-6" label="Role">  */}
+                            <input
+                              type="text"
+                              name={RoleId}
+                              data-id={idx}
+                              id={RoleId}
+                              value={this.state.experience[idx].role}
+                              className="role"
 
-                          />
-                          {/* </TextField> */}
+                            />
+                            {/* </TextField> */}
+                          </div>
+
+                          <div className="col-sm-12">
+                            <label>Project Name:</label>
+                            {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
+                            <input
+                              type="text"
+                              name={ProjectId}
+                              data-id={idx}
+                              id={ProjectId}
+                              value={this.state.experience[idx].projectName}
+                              className="projectName"
+                            />
+                            {/* </TextField> */}
+                          </div>
+
+                          <div className="col-sm-12">
+                            <label>Project Type:</label>
+                            {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
+                            <input
+                              type="text"
+                              name={ProjectTypeId}
+                              data-id={idx}
+                              id={ProjectTypeId}
+                              value={this.state.experience[idx].projectType}
+                              className="projectType"
+                            />
+                            {/* </TextField> */}
+                          </div>
+
+                          <div className="col-sm-12">
+                            <label>Description</label>
+                            {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
+                            <input
+                              multiline rows="3"
+                              type="text"
+                              name={DescriptionId}
+                              data-id={idx}
+                              id={DescriptionId}
+                              value={this.state.experience[idx].description}
+                              className="description"
+                            />
+                            {/* </TextField> */}
+
+                          </div>
+
+
                         </div>
-
-                        <div className="col-sm-12">
-                          <label>Project Name:</label>
-                          {/* <TextField fullWidth className="col-sm-6" label="Project name">  */}
-                          <input
-                            type="text"
-                            name={ProjectId}
-                            data-id={idx}
-                            id={ProjectId}
-                            value={this.state.experience[idx].projectName}
-                            className="projectName"
-                          />
-                          {/* </TextField> */}
-                        </div>
-
-                        <div className="col-sm-12">
-                          <label>Project Type:</label>
-                          {/* <TextField fullWidth className="col-sm-6" label="Project Type">  */}
-                          <input
-                            type="text"
-                            name={ProjectTypeId}
-                            data-id={idx}
-                            id={ProjectTypeId}
-                            value={this.state.experience[idx].projectType}
-                            className="projectType"
-                          />
-                          {/* </TextField> */}
-                        </div>
-
-                        <div className="col-sm-12">
-                          <label>Description</label>
-                          {/* <TextField fullWidth className="col-sm-6" label="Description" multiline rows="3">  */}
-                          <input
-                            multiline rows="3"
-                            type="text"
-                            name={DescriptionId}
-                            data-id={idx}
-                            id={DescriptionId}
-                            value={this.state.experience[idx].description}
-                            className="description"
-                          />
-                          {/* </TextField> */}
-
-                        </div>
-
-
                       </div>
-                    </div>
-                  )
-                })
-              }
-            </form>
-          </div>
+                    )
+                  })
+                }
+              </form>
+            </div>
 
-          <div className="col-sm-6">
-          <Link to="/home" style={{color:"#FFF"}}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={useStyles.button}
-              type="submit"
-              name="submit"
-              value="Send"
-              onClick={this.submitForm}
-              size="large"
-            >
-              Submit
+            <div className="col-sm-6">
+              <Link to="/home" style={{ color: "#FFF" }}>
+                <Button
+                  style={{ marginRight: "20px" }}
+                  variant="contained"
+                  color="primary"
+                  className={useStyles.button}
+                  type="submit"
+                  name="submit"
+                  value="Send"
+                  onClick={this.submitForm}
+                >
+                  Submit
             </Button>
-            </Link>
-          </div>
-          <br></br>
-        </FormControl>
-      </main>
+              </Link>
+              <Button variant="outlined" color="primary">
+                <Link_ to="/home">Back</Link_>
+              </Button>
+            </div>
+            <br></br>
+          </FormControl>
+        </main>
       </>
 
     );
