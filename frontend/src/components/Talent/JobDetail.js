@@ -156,10 +156,6 @@ class JobDetail extends Component {
                     </div>
                     <Grid container style={{ marginBottom: "20px" }} spacing={2} >
                         <Grid item>
-                            <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}> Match</Fab>
-                        </Grid>
-                        <Grid item>
-
                             <Fab variant="extended" size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
                                 {localStorage.getItem("type") == "talent" ?
                                     <Link style={{ color: "#FFF" }} to="/home">Back</Link> :
