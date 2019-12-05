@@ -98,7 +98,7 @@ router.get("/:id/opportunities", function (req, res) {
             else {
 
                 res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({message: "Requested data doesn't exist"}, null, 2))
+                res.send(JSON.stringify({message: "Requested data doesn't exist"}, null, 2))
 
             }
     
@@ -130,8 +130,7 @@ router.get("/:id/matches", function (req, res) {
             all_opportunities_map[all_opportunities[i].id] = all_opportunities[i]
         }
 
-    }).send();
-
+        
     var get_matches_params = {
         TableName: "tara-talent-demo",
         ProjectionExpression: "matches",
@@ -175,6 +174,8 @@ router.get("/:id/matches", function (req, res) {
             "requested_matches": requested_matches
         }
 
+        console.log(response_to_send)
+
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(response_to_send, null, 2))
 
@@ -192,6 +193,9 @@ router.get("/:id/matches", function (req, res) {
         console.log(response);
         
     }).send();
+
+    }).send();
+
 
 
 });
