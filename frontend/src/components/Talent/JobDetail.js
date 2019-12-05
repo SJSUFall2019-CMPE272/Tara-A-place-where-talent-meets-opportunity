@@ -160,7 +160,7 @@ class JobDetail extends Component {
                             <Fab variant="extended"  size="medium" color="primary" aria-label="add" position="center-bottom" className={useStyles.margin}>
                                 {localStorage.getItem("type") == "talent" ?
                                     <Link style={{color:"#FFF"}} to="/home">Back</Link> :
-                                    <Link to="/recruiterhome">Back</Link>
+                                    <Link style={{color:"#FFF"}} to="/recruiterhome">Back</Link>
                                 }
                             </Fab>
                         </Grid>
