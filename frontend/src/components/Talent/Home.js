@@ -11,22 +11,17 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Navbar from "../Navbar";
-import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
 import util from "../../utils";
-import { Modal, Button as RButton } from "react-bootstrap";
-import ToggleButton from '@material-ui/lab/ToggleButton';
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
+import 'leaflet/dist/leaflet.css';
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import axios from "axios";
-import { red } from "@material-ui/core/colors";
 
 import Map from "./Map";
 
@@ -35,12 +30,7 @@ import Map from "./Map";
 const Opportunity = props => (
     <Grid item xs={12} sm={6} md={4}>
         <Card className={useStyles.card}>
-            <CardMedia
-                className={useStyles.cardMedia}
-                image="https://source.unsplash.com/random"
-                title="Image title"
-            />
-            <CardContent className={useStyles.cardContent}>
+            <CardContent style={{height:"200px"}} className={useStyles.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
                     {props.opportunity.title}
                 </Typography>
@@ -79,14 +69,11 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         height: '100%',
-        display: 'flex',
+        // display: 'flex',
         flexDirection: 'column',
     },
-    cardMedia: {
-        paddingTop: '56.25%', // 16:9
-    },
     cardContent: {
-        flexGrow: 1,
+        height: '250px',
     },
 }));
 
@@ -163,7 +150,7 @@ class Home extends Component {
                 <Navbar />
                 <CssBaseline />
                 <Tabs style={{ position: 'relative' }} defaultActiveKey="home">
-                    <Tab eventKey="home" title="Home">
+                    <Tab eventKey="home" title="Card View">
                         <main>
                             {/* Hero unit */}
                             <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
@@ -200,7 +187,7 @@ class Home extends Component {
                             </Container>
                         </main>
                     </Tab>
-                    <Tab eventKey="profile" title="Map">
+                    <Tab eventKey="profile" title="Map View">
                         <Map />
 
                     </Tab>
