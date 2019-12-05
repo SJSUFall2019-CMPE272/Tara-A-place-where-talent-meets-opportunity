@@ -37,7 +37,7 @@ const Opportunity = props => (
                 image="https://source.unsplash.com/random"
                 title="Image title"
             />
-            <CardContent style={{height:"180px"}} className={useStyles.cardContent}>
+            <CardContent style={{ height: "180px" }} className={useStyles.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
                     {props.opportunity.title}
                 </Typography>
@@ -127,45 +127,45 @@ class Opportunities extends Component {
 
     render() {
         return (
-            <main>
+            <main style={{ height: "100%" }}>
                 <Navbar />
                 <CssBaseline />
-                    <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
-                        <Container maxWidth="sm">
-                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
+                    <Container maxWidth="sm">
+                        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                             Jobs Posted by You
                             </Typography>
-                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                                Find the perfect talent from your dream project today
+                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                            Find the perfect talent from your dream project today
                             </Typography>
-                            <div className={useStyles.heroButtons}>
-                                <Grid container spacing={2} justify="center">
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/createjob">Create a Job</Link>
-                                        </Button>
-                                    </Grid>
-
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            <Link to="/recruiterupdateprofile">Update Profile</Link>
-                                        </Button>
-                                    </Grid>
+                        <div className={useStyles.heroButtons}>
+                            <Grid container spacing={2} justify="center">
+                                <Grid item>
+                                    <Button variant="outlined" color="primary">
+                                        <Link to="/createjob">Create a Job</Link>
+                                    </Button>
                                 </Grid>
-                            </div>
-                        </Container>
-                    </div>
-                <div style={{marginTop: "30px"}} className={useStyles.heroContent}>
-                <Container maxWidth="sm">
-                </Container>
+
+                                <Grid item>
+                                    <Button variant="outlined" color="primary">
+                                        <Link to="/recruiterupdateprofile">Update Profile</Link>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </Container>
                 </div>
-                <div style={{marginTop: "30px", paddingBottom:"30px"}}>
-                <Container className={useStyles.cardGrid} maxWidth="md">
-                    {/* End hero unit */}
-                    <Grid container spacing={4}>
-                        {this.opportunityList()}
-                    </Grid>
-                </Container>
+                <div style={{ marginTop: "30px" }} className={useStyles.heroContent}>
+                    <Container maxWidth="sm">
+                    </Container>
+                </div>
+                <div style={{ marginTop: "30px", paddingBottom: "30px" }}>
+                    <Container className={useStyles.cardGrid} maxWidth="md">
+                        {/* End hero unit */}
+                        <Grid container spacing={4}>
+                            {this.opportunityList()}
+                        </Grid>
+                    </Container>
                 </div>
             </main>
         );

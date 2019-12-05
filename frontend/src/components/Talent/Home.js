@@ -24,7 +24,7 @@ import Tab from 'react-bootstrap/Tab';
 import axios from "axios";
 
 import Map from "./Map";
-
+import "./home.css";
 
 
 const Opportunity = props => (
@@ -146,7 +146,7 @@ class Home extends Component {
             fontWeight: 400
         }
         return (
-            <React.Fragment>
+            <div class="talent-home">
                 <Navbar />
                 <CssBaseline />
                 <Tabs style={{ position: 'relative' }} defaultActiveKey="home">
@@ -192,7 +192,7 @@ class Home extends Component {
 
                     </Tab>
                 </Tabs>
-            </React.Fragment>
+            </div>
         );
     }
 }
