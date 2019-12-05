@@ -33,7 +33,7 @@ router.get("/", function (req, res) {
 
 });
 
-// to get opportunities for a specific talent
+// returns all the opportunities to which the talent has NOT applied
 router.get("/:id/opportunities", function (req, res) {
 
     var talentId = req.params.id;
