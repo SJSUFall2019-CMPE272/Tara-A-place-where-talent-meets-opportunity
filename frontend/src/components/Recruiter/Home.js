@@ -37,7 +37,7 @@ const Opportunity = props => (
                 image="https://source.unsplash.com/random"
                 title="Image title"
             />
-            <CardContent className={useStyles.cardContent}>
+            <CardContent style={{height:"180px"}} className={useStyles.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
                     {props.opportunity.title}
                 </Typography>
